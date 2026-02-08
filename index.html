@@ -114,13 +114,27 @@ padding:40px 20px;
 
 #memberSlider{
 display:flex;
-overflow-x:auto;
-scroll-snap-type:x mandatory;
--webkit-overflow-scrolling:touch;
-overscroll-behavior-x:contain;
-min-height:260px;
+gap:18px;
+padding:10px 16px;
+overflow:hidden;
+position:relative;
 }
-#memberSlider::-webkit-scrollbar{display:none;}
+
+.member-card{
+flex:0 0 72%;
+min-width:72%;
+margin-right:6px;
+text-align:center;
+transition:transform .35s ease;
+}
+
+.member-card img{
+width:170px;
+height:210px;
+object-fit:cover;
+border-radius:20px;
+}
+
 
 .member-card{
 flex:0 0 80%;
@@ -280,71 +294,62 @@ loop();
 el.addEventListener("touchstart",()=>stop=true,{passive:true});
 el.addEventListener("touchend",()=>setTimeout(()=>{stop=false;loop();},1200),{passive:true});
 }
-
-/* MEMBERS */
 /* ================= MEMBERS ================= */
 
-let memberAuto = null;
+let memberIndex = 0;
+let memberTimer = null;
 
 async function loadMembers(){
 
   try{
 
     const res = await fetch(API+"?action=members");
-    const data = await res.json();
+    const members = await res.json();
 
     const slider = document.getElementById("memberSlider");
-    slider.innerHTML = "";
+    slider.innerHTML="";
 
-    // isi member
-    data.forEach(m=>{
+    members.forEach(m=>{
       slider.innerHTML += `
-      <div class="member-card">
-        <img src="images/members/${m.username.toLowerCase().trim()}.png?v=9"
-        onerror="this.src='images/members/default.png'">
-        <h3>${m.name}</h3>
-        <p>${m.bio}</p>
-      </div>`;
+        <div class="member-card">
+          <img src="images/members/${m.username.toLowerCase().trim()}.png?v=11"
+          onerror="this.src='images/members/default.png'">
+          <h3>${m.name}</h3>
+          <p>${m.bio}</p>
+        </div>`;
     });
 
-    // DUPLIKAT (ini rahasia biar infinite)
-    slider.innerHTML += slider.innerHTML;
-
-    startMemberAuto();
-
-    // pause saat disentuh
-    slider.addEventListener("touchstart", stopMemberAuto, {passive:true});
-    slider.addEventListener("touchend", ()=>setTimeout(startMemberAuto,1500), {passive:true});
+    startMemberSlide();
 
   }catch(e){
-    console.log("member load error", e);
+    console.log("member error",e);
   }
 }
 
-function startMemberAuto(){
+function startMemberSlide(){
 
   const slider = document.getElementById("memberSlider");
-  if(memberAuto) return;
+  const cards = slider.children;
 
-  memberAuto = requestAnimationFrame(function loop(){
+  if(cards.length===0) return;
 
-    slider.scrollLeft += 0.35;
+  function move(){
 
-    // kalau sudah setengah (karena kita duplikat)
-    if(slider.scrollLeft >= slider.scrollWidth/2){
-      slider.scrollLeft = 0;
+    memberIndex++;
+
+    if(memberIndex >= cards.length){
+      memberIndex = 0;
     }
 
-    memberAuto = requestAnimationFrame(loop);
-  });
+    const shift = memberIndex * (cards[0].offsetWidth + 18);
+
+    slider.style.transform = `translateX(-${shift}px)`;
+
+  }
+
+  memberTimer = setInterval(move, 3200);
 }
 
-function stopMemberAuto(){
-  if(memberAuto){
-    cancelAnimationFrame(memberAuto);
-    memberAuto = null;
-  }
-}
 
 /* PRODUCTS */
 async function loadProducts(){
