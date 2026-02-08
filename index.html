@@ -149,15 +149,45 @@ text-decoration:none;
 </section>
 
 <!-- MEMBER PROFILE -->
-<section class="member">
-<h2>Meet Our Member</h2>
+<script>
 
-<img id="memberFoto" src="">
-<h3 id="memberNama"></h3>
-<p id="memberDesk"></p>
+const API_MEMBER = "https://script.google.com/macros/s/AKfycbzDlUfUmpwhEsMBgswred-PZx9LK7N1MCZ0rD62SstaVtH4GYHnspgDTsVqlQrgcCKZcQ/exec";
 
-<a class="button" href="#">Terhubung dengan Member</a>
-</section>
+let members = [];
+let index = 0;
+
+async function ambilMembers(){
+  try{
+    const res = await fetch(API_MEMBER);
+    members = await res.json();
+
+    if(members.length > 0){
+      tampilMember();
+      setInterval(tampilMember, 5000);
+    }
+
+  }catch(err){
+    console.log("Gagal ambil member", err);
+  }
+}
+
+function tampilMember(){
+  const m = members[index];
+
+  const foto = "images/members/" + m.username + ".png";
+
+  document.getElementById("memberFoto").src = foto;
+  document.getElementById("memberNama").innerText = m.name;
+  document.getElementById("memberDesk").innerText = "Member aktif GILT Club";
+
+  index++;
+  if(index >= members.length) index = 0;
+}
+
+window.onload = ambilMembers;
+
+</script>
+
 
 
   <script>
