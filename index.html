@@ -93,22 +93,23 @@ padding-bottom:30px;
 .slider{
 display:flex;
 overflow-x:auto;
-scroll-behavior:smooth;
+scroll-snap-type:x mandatory;
 -webkit-overflow-scrolling:touch;
 gap:0;
-padding:20px 0;
+padding:20px 12px;
 }
-
 
 .card{
-flex:0 0 100%;
-max-width:100%;
+flex:0 0 78%;
+max-width:78%;
+margin:0 10px;
 box-sizing:border-box;
-padding:20px;
+padding:18px 14px;
 background:#F2E8D5;
-margin:0;
-border-radius:0;
+border-radius:18px;
+scroll-snap-align:center;
 }
+
 
 .card img{
 width:220px;
@@ -215,6 +216,19 @@ height:210px;
 object-fit:cover;
 border-radius:20px;
 }
+.navcal{
+background:#2E5D3A;
+color:white;
+border:none;
+border-radius:12px;
+padding:8px 12px;
+font-size:16px;
+}
+#memberSlider{
+min-height:260px;
+scroll-snap-type:x mandatory;
+-webkit-overflow-scrolling:touch;
+}
 
 </style>
 </head>
@@ -253,9 +267,16 @@ border-radius:20px;
   
 <!-- SCHEDULE -->
 <section class="schedule">
+
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;padding:0 8px;">
+    <button onclick="prevWeek()" class="navcal">◀</button>
+    <div style="font-weight:700">Jadwal Main</div>
+    <button onclick="nextWeek()" class="navcal">▶</button>
+  </div>
+
   <div id="calendarStrip" class="calendar-strip"></div>
-</section>
-  
+  </section>
+
 <!-- STORE -->
 <section class="store">
 <h2>Product on Sale (Diskon Gede)</h2>
@@ -267,8 +288,6 @@ border-radius:20px;
 <h2>Meet Our Member</h2>
 <div id="memberSlider" style="display:flex;overflow-x:auto;scroll-snap-type:x mandatory;width:100%;">
 </div>
-<h3 id="memberNama"></h3>
-<p id="memberDesk"></p>
 <a class="button">Terhubung dengan Member</a>
 </section>
   <footer style="
@@ -296,7 +315,7 @@ async function loadMembers(){
   try{
     const res=await fetch(API+"?action=members");
     members=await res.json();
-    showMember();
+    tampilMember();
   }catch(e){
     console.log("member load error");
   }
@@ -311,7 +330,8 @@ function tampilMember(){
 
   slider.innerHTML+=`
   <div class="member-card">
-    <img src="images/members/${m.username}.png">
+    <img src="images/members/${m.username.toLowerCase().trim()}.png?v=5"
+     onerror="this.src='images/members/default.png'">
     <h3>${m.name}</h3>
     <p>${m.bio}</p>
   </div>`;
@@ -353,7 +373,7 @@ async function loadProducts(){
 
       slider.innerHTML+=`
       <div class="card">
-        <img src="${foto}">
+        <img src="${foto}?v=3" onerror="this.src='images/members/default.png'">
         <div><b>${p.name}</b></div>
         <div style="font-size:12px">${p.desc}</div>
         ${hargaHTML}
@@ -461,7 +481,7 @@ async function loadSchedule(){
 
 function getJakartaToday(){
   const now=new Date();
-  return new Date(now.toLocaleString("en-US",{timeZone:"Asia/Makassar"}));
+  return new Date(now.toLocaleString("en-US",{timeZone:"Asia/Jakarta"}));
 }
 
 function renderCalendar(){
