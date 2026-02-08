@@ -11,7 +11,10 @@ margin:0;
 font-family: Arial, Helvetica, sans-serif;
 background:#F2E8D5;
 color:#2E5D3A;
+overflow-x:hidden;
 }
+
+/* HEADER */
 .header{
 position:fixed;
 top:0;
@@ -24,23 +27,23 @@ align-items:center;
 padding:0 10px;
 box-shadow:0 2px 10px rgba(0,0,0,0.08);
 z-index:999;
+overflow:hidden;
 }
 
-/* logo */
 .logo{
 height:46px;
 flex-shrink:0;
 }
 
-/* menu container */
 .menu{
 display:flex;
 gap:6px;
-flex-wrap:wrap;
+flex:1;
+overflow-x:auto;
 margin-left:8px;
 }
+.menu::-webkit-scrollbar{display:none;}
 
-/* tombol menu */
 .menu a{
 font-size:12px;
 padding:6px 10px;
@@ -50,19 +53,6 @@ text-decoration:none;
 color:#2E5D3A;
 font-weight:600;
 white-space:nowrap;
-}
-
-.header{
-overflow:hidden;
-}
-
-.menu{
-flex:1;
-overflow-x:auto;
-}
-
-.menu::-webkit-scrollbar{
-display:none;
 }
 
 /* GENERAL */
@@ -75,17 +65,13 @@ text-align:center;
 flex-direction:column;
 }
 
-/* HERO */
 .hero{
 min-height:220px;
 padding:12px 18px 0;
 }
 
-
-/* ===== MOBILE PRODUCT CAROUSEL ===== */
-
+/* PRODUCT */
 .store{
-height:auto;
 background:#fff;
 padding-bottom:30px;
 }
@@ -95,31 +81,29 @@ display:flex;
 overflow-x:auto;
 scroll-snap-type:x mandatory;
 -webkit-overflow-scrolling:touch;
-gap:0;
 padding:20px 12px;
+overscroll-behavior-x:contain;
 }
+.slider::-webkit-scrollbar{display:none;}
 
 .card{
 flex:0 0 78%;
 max-width:78%;
 margin:0 10px;
-box-sizing:border-box;
 padding:18px 14px;
 background:#F2E8D5;
 border-radius:18px;
 scroll-snap-align:center;
 }
 
-
 .card img{
 width:220px;
 height:220px;
 object-fit:contain;
 border-radius:16px;
-margin:auto;
 display:block;
+margin:auto;
 }
-
 
 /* MEMBER */
 .member{
@@ -128,82 +112,16 @@ color:white;
 padding:40px 20px;
 }
 
-.member img{
-width:160px;
-height:200px;
-border-radius:20px;
-object-fit:contain;
-background:white;
-margin-bottom:15px;
-}
-
-.button{
-background:#2E5D3A;
-color:white;
-padding:12px 20px;
-border-radius:12px;
-margin-top:10px;
-display:inline-block;
-text-decoration:none;
-}
-/* CALENDAR */
-.schedule{
-background:#F2E8D5;
-padding:20px 10px 10px;
-}
-
-.calendar-strip{
+#memberSlider{
 display:flex;
 overflow-x:auto;
-gap:12px;
-padding:10px;
+scroll-snap-type:x mandatory;
+-webkit-overflow-scrolling:touch;
+overscroll-behavior-x:contain;
+min-height:260px;
 }
+#memberSlider::-webkit-scrollbar{display:none;}
 
-.day-box{
-min-width:90px;
-min-height:150px;
-padding:8px 6px;
-justify-content:flex-start;
-}
-
-.day-box .join-btn{
-margin-top:auto;
-padding:8px 12px;
-font-size:12px;
-}
-
-.day-box.active{
-background:#2E5D3A;
-color:white;
-}
-
-.day-name{
-font-size:12px;
-font-weight:bold;
-}
-
-.day-date{
-font-size:18px;
-font-weight:bold;
-margin-top:4px;
-}
-
-.schedule-info{
-margin-top:15px;
-background:white;
-border-radius:18px;
-padding:18px;
-box-shadow:0 6px 18px rgba(0,0,0,0.08);
-}
-
-.join-btn{
-background:#2E5D3A;
-color:white;
-border:none;
-padding:12px 20px;
-border-radius:12px;
-margin-top:12px;
-}
 .member-card{
 flex:0 0 100%;
 scroll-snap-align:center;
@@ -216,6 +134,61 @@ height:210px;
 object-fit:cover;
 border-radius:20px;
 }
+
+/* CALENDAR */
+.schedule{
+background:#F2E8D5;
+padding:20px 10px 10px;
+}
+
+.calendar-strip{
+display:flex;
+overflow-x:auto;
+gap:12px;
+padding:10px;
+scroll-behavior:smooth;
+-webkit-overflow-scrolling:touch;
+touch-action:pan-x;
+overscroll-behavior-x:contain;
+}
+.calendar-strip::-webkit-scrollbar{display:none;}
+
+.day-box{
+min-width:90px;
+min-height:150px;
+padding:8px 6px;
+background:white;
+border-radius:14px;
+display:flex;
+flex-direction:column;
+align-items:center;
+user-select:none;
+-webkit-user-select:none;
+}
+
+.day-box.active{
+background:#2E5D3A;
+color:white;
+}
+
+.day-box.selected{
+outline:3px solid #2E5D3A;
+transform:scale(1.05);
+}
+
+.day-name{font-size:12px;font-weight:bold;}
+.day-date{font-size:18px;font-weight:bold;margin-top:4px;}
+
+.join-btn{
+background:#2E5D3A;
+color:white;
+border:none;
+padding:8px 12px;
+border-radius:12px;
+margin-top:auto;
+font-size:12px;
+}
+
 .navcal{
 background:#2E5D3A;
 color:white;
@@ -223,33 +196,35 @@ border:none;
 border-radius:12px;
 padding:8px 12px;
 font-size:16px;
-}
-#memberSlider{
-min-height:260px;
-scroll-snap-type:x mandatory;
--webkit-overflow-scrolling:touch;
+z-index:5;
+touch-action:manipulation;
 }
 
+footer{
+text-align:center;
+padding:22px 10px;
+background:#2E5D3A;
+color:white;
+font-size:12px;
+}
 </style>
 </head>
 
 <body>
 
-<!-- LOGIN POPUP -->
-<div id="loginBox" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);justify-content:center;align-items:center;z-index:9999;">
-  <div style="background:white;padding:25px;border-radius:18px;width:280px;text-align:center">
-    <h3>Member Login</h3>
-    <input id="loginUser" placeholder="Username" style="width:90%;padding:10px;margin:6px;border-radius:8px;border:1px solid #ccc">
-    <input id="loginPin" type="password" placeholder="PIN" style="width:90%;padding:10px;margin:6px;border-radius:8px;border:1px solid #ccc">
-    <br><br>
-    <button onclick="doLogin()" style="background:#2E5D3A;color:white;padding:10px 18px;border:none;border-radius:10px">Login</button>
-    <br><br>
-    <a href="#" onclick="closeLogin()">Tutup</a>
-    <p id="loginMsg" style="color:red"></p>
-  </div>
+<div id="loginBox" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);justify-content:center;align-items:center;z-index:9999;">
+<div style="background:white;padding:25px;border-radius:18px;width:280px;text-align:center">
+<h3>Member Login</h3>
+<input id="loginUser" placeholder="Username" style="width:90%;padding:10px;margin:6px;border-radius:8px;border:1px solid #ccc">
+<input id="loginPin" type="password" placeholder="PIN" style="width:90%;padding:10px;margin:6px;border-radius:8px;border:1px solid #ccc">
+<br><br>
+<button onclick="doLogin()" style="background:#2E5D3A;color:white;padding:10px 18px;border:none;border-radius:10px">Login</button>
+<br><br>
+<a href="#" onclick="closeLogin()">Tutup</a>
+<p id="loginMsg" style="color:red"></p>
+</div>
 </div>
 
-<!-- HEADER -->
 <div class="header">
 <img src="images/club_product/logo_giltclub.png" class="logo">
 <div class="menu">
@@ -259,300 +234,164 @@ scroll-snap-type:x mandatory;
 </div>
 </div>
 
-<!-- HERO -->
 <section class="hero">
 <h1>WELCOME TO GILT CLUB</h1>
 <p>Tennis Sport & Social Community</p>
 </section>
-  
-<!-- SCHEDULE -->
+
 <section class="schedule">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;padding:0 8px;">
+<button onclick="prevWeek()" class="navcal">◀</button>
+<div style="font-weight:700">Jadwal Main</div>
+<button onclick="nextWeek()" class="navcal">▶</button>
+</div>
+<div id="calendarStrip" class="calendar-strip"></div>
+</section>
 
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;padding:0 8px;">
-    <button onclick="prevWeek()" class="navcal">◀</button>
-    <div style="font-weight:700">Jadwal Main</div>
-    <button onclick="nextWeek()" class="navcal">▶</button>
-  </div>
-
-  <div id="calendarStrip" class="calendar-strip"></div>
-  </section>
-
-<!-- STORE -->
 <section class="store">
 <h2>Product on Sale (Diskon Gede)</h2>
 <div class="slider" id="productSlider"></div>
 </section>
 
-<!-- MEMBER -->
 <section class="member">
 <h2>Meet Our Member</h2>
-<div id="memberSlider" style="display:flex;overflow-x:auto;scroll-snap-type:x mandatory;width:100%;">
-</div>
-<a class="button">Terhubung dengan Member</a>
+<div id="memberSlider"></div>
 </section>
-  <footer style="
-text-align:center;
-padding:22px 10px;
-background:#2E5D3A;
-color:white;
-font-size:12px;
-margin-top:0;">
+
+<footer>
 © 2026 GILT Club Tennis Community — Balikpapan
 </footer>
 
 <script>
-
 const API="https://script.google.com/macros/s/AKfycbxGGBmyUcOcUmp1_3B8hUAmHb_pPJQeiiYj1UQdR6MhCKKUyXkTA1j3V9-OOq3kaboh4g/exec";
 
-/* ================= MEMBERS ================= */
+/* AUTO SCROLL */
+function autoScroll(el,speed=0.4){
+let stop=false;
+function loop(){
+if(stop)return;
+el.scrollLeft+=speed;
+if(el.scrollLeft+el.clientWidth>=el.scrollWidth-1)el.scrollLeft=0;
+requestAnimationFrame(loop);
+}
+loop();
+el.addEventListener("touchstart",()=>stop=true,{passive:true});
+el.addEventListener("touchend",()=>setTimeout(()=>{stop=false;loop();},1200),{passive:true});
+}
 
-/* ================= MEMBERS ================= */
-
-let members=[];
-let memberIndex=0;
-
+/* MEMBERS */
 async function loadMembers(){
-  try{
-    const res=await fetch(API+"?action=members");
-    members=await res.json();
-    tampilMember();
-  }catch(e){
-    console.log("member load error");
-  }
+const res=await fetch(API+"?action=members");
+const data=await res.json();
+const slider=document.getElementById("memberSlider");
+slider.innerHTML="";
+data.forEach(m=>{
+slider.innerHTML+=`
+<div class="member-card">
+<img src="images/members/${m.username.toLowerCase().trim()}.png?v=7" onerror="this.src='images/members/default.png'">
+<h3>${m.name}</h3>
+<p>${m.bio}</p>
+</div>`;
+});
+autoScroll(slider,0.35);
 }
 
-function tampilMember(){
-
- const slider=document.getElementById("memberSlider");
- slider.innerHTML="";
-
- members.forEach(m=>{
-
-  slider.innerHTML+=`
-  <div class="member-card">
-    <img src="images/members/${m.username.toLowerCase().trim()}.png?v=5"
-     onerror="this.src='images/members/default.png'">
-    <h3>${m.name}</h3>
-    <p>${m.bio}</p>
-  </div>`;
-
- });
-
-}
-/* ================= PRODUCTS ================= */
-
-let animating=false;
-
+/* PRODUCTS */
 async function loadProducts(){
-
-  const slider=document.getElementById("productSlider");
-  slider.innerHTML="";
-
-  try{
-    const res=await fetch(API+"?action=products");
-    const products=await res.json();
-
-    products.forEach(p=>{
-
-      const foto="images/club_product/"+p.id+".png";
-      const qty=Number(p.qty);
-
-      let status="";
-      if(qty<=0) status="<div style='color:red'>Habis</div>";
-      else if(qty<=3) status="<div style='color:orange'>Sisa "+qty+"</div>";
-      else status="<div style='color:green'>Tersedia</div>";
-
-      let hargaHTML="";
-      if(Number(p.disc)>0){
-        hargaHTML=`<div style="text-decoration:line-through">Rp ${p.price}</div>
-                   <div style="color:red;font-weight:bold">Rp ${p.dprice}</div>
-                   <div style="background:#2E5D3A;color:white;border-radius:8px;padding:3px 8px;display:inline-block">-${p.disc}%</div>`;
-      }else{
-        hargaHTML=`<div style="font-weight:bold">Rp ${p.price}</div>`;
-      }
-
-      slider.innerHTML+=`
-      <div class="card">
-        <img src="${foto}?v=3" onerror="this.src='images/members/default.png'">
-        <div><b>${p.name}</b></div>
-        <div style="font-size:12px">${p.desc}</div>
-        ${hargaHTML}
-        ${status}
-        <br>
-        <button onclick="beliProduk('${p.id}')" style="background:#2E5D3A;color:white;border:none;padding:8px 14px;border-radius:10px;margin-top:8px">Beli</button>
-      </div>`;
-    });
-
-    startSlider();
-
-    slider.addEventListener("touchstart",()=>animating=false);
-    slider.addEventListener("touchend",()=>setTimeout(startSlider,800));
-
-  }catch(e){
-    console.log("product load error");
-  }
+const res=await fetch(API+"?action=products");
+const data=await res.json();
+const slider=document.getElementById("productSlider");
+slider.innerHTML="";
+data.forEach(p=>{
+const foto="images/club_product/"+p.id+".png";
+const qty=Number(p.qty);
+let status=qty<=0?"<div style='color:red'>Habis</div>":qty<=3?`<div style='color:orange'>Sisa ${qty}</div>`:"<div style='color:green'>Tersedia</div>";
+let harga=Number(p.disc)>0?
+`<div style="text-decoration:line-through">Rp ${p.price}</div>
+<div style="color:red;font-weight:bold">Rp ${p.dprice}</div>
+<div style="background:#2E5D3A;color:white;border-radius:8px;padding:3px 8px;display:inline-block">-${p.disc}%</div>`
+:`<div style="font-weight:bold">Rp ${p.price}</div>`;
+slider.innerHTML+=`
+<div class="card">
+<img src="${foto}?v=5" onerror="this.src='images/members/default.png'">
+<div><b>${p.name}</b></div>
+<div style="font-size:12px">${p.desc}</div>
+${harga}
+${status}
+<br>
+<button onclick="beliProduk('${p.id}')" style="background:#2E5D3A;color:white;border:none;padding:8px 14px;border-radius:10px;margin-top:8px">Beli</button>
+</div>`;
+});
+autoScroll(slider,0.45);
 }
 
-function startSlider(){
-
-  if(animating) return;
-  animating=true;
-
-  const slider=document.getElementById("productSlider");
-
-  function loop(){
-    if(!animating) return;
-
-    slider.scrollLeft+=0.4;
-
-    if(slider.scrollLeft+slider.clientWidth>=slider.scrollWidth){
-      slider.scrollLeft=0;
-    }
-
-    requestAnimationFrame(loop);
-  }
-
-  requestAnimationFrame(loop);
-}
-
-
-/* ================= LOGIN ================= */
-
-function openLogin(){
-  document.getElementById("loginBox").style.display="flex";
-}
-
-function closeLogin(){
-  document.getElementById("loginBox").style.display="none";
-}
-
+/* LOGIN */
+function openLogin(){loginBox.style.display="flex";}
+function closeLogin(){loginBox.style.display="none";}
 async function doLogin(){
-
-  const username=encodeURIComponent(document.getElementById("loginUser").value.trim());
-  const pin=encodeURIComponent(document.getElementById("loginPin").value.trim());
-
-  let data;
-
-  try{
-    const res=await fetch(API+`?action=login&username=${username}&pin=${pin}`);
-    const text=await res.text();
-    data=JSON.parse(text);
-  }catch(e){
-    document.getElementById("loginMsg").innerText="Server sibuk, coba lagi";
-    return;
-  }
-
-  if(data.status==="ok"){
-    localStorage.setItem("giltUser",decodeURIComponent(username));
-    closeLogin();
-    alert("Login berhasil! Silahkan isi saldo untuk transaksi.");
-  }else{
-    document.getElementById("loginMsg").innerText="Username / PIN salah";
-  }
+const u=encodeURIComponent(loginUser.value.trim());
+const p=encodeURIComponent(loginPin.value.trim());
+try{
+const r=await fetch(API+`?action=login&username=${u}&pin=${p}`);
+const d=await r.json();
+if(d.status==="ok"){localStorage.setItem("giltUser",decodeURIComponent(u));closeLogin();alert("Login berhasil!");}
+else loginMsg.innerText="Username / PIN salah";
+}catch{loginMsg.innerText="Server sibuk";}
 }
 
-function beliProduk(id){
-
-  if(!localStorage.getItem("giltUser")){
-    alert("Login member dulu ya");
-    openLogin();
-    return;
-  }
-
-  alert("Nanti ini akan langsung terhubung ke G-Wallet");
-}
-
-
-/* ================= SCHEDULE ================= */
-
-let scheduleData={};
-let offsetDays=0;
-
+/* SCHEDULE */
+let scheduleData={},offsetDays=0,selectedDate=null;
 async function loadSchedule(){
-
-  const res=await fetch(API+"?action=schedule");
-  const arr=await res.json();
-
-  scheduleData={};
-  arr.forEach(e=>scheduleData[e.date]=e);
-
-  renderCalendar();
+const r=await fetch(API+"?action=schedule");
+const arr=await r.json();
+scheduleData={};arr.forEach(e=>scheduleData[e.date]=e);
+renderCalendar();
 }
-
-function getJakartaToday(){
-  const now=new Date();
-  return new Date(now.toLocaleString("en-US",{timeZone:"Asia/Jakarta"}));
-}
+function todayJakarta(){return new Date(new Date().toLocaleString("en-US",{timeZone:"Asia/Jakarta"}));}
 
 function renderCalendar(){
-
-  const strip=document.getElementById("calendarStrip");
-  strip.innerHTML="";
-
-  const today=getJakartaToday();
-
-  for(let i=-3;i<=3;i++){
-
-    const d=new Date(today);
-    d.setDate(today.getDate()+i+offsetDays);
-
-    const key=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
-
-    const box=document.createElement("div");
-    box.className="day-box";
-
-    let isi=`
-      <div class="day-name">${d.toLocaleDateString("id-ID",{weekday:"long"})}</div>
-      <div class="day-date">${d.getDate()}</div>
-    `;
-
-    if(scheduleData[key]){
-
-      const ev=scheduleData[key];
-
-      isi+=`
-        <div style="font-size:11px;margin-top:4px">${ev.title}</div>
-        <div style="font-size:11px">${ev.player}</div>
-        <div style="font-size:11px">Rp${ev.public.toLocaleString()}</div>
-        <div style="font-size:12px;font-weight:bold">M:${ev.member.toLocaleString()}</div>
-        <button class="join-btn" onclick="joinSchedule('${key}')">JOIN</button>
-      `;
-
-      box.classList.add("active");
-    }else{
-      box.style.opacity="0.35";
-    }
-
-    box.innerHTML=isi;
-    strip.appendChild(box);
-  }
-
-  setTimeout(()=>{
-    const boxes=document.querySelectorAll(".day-box");
-    if(boxes[3]) boxes[3].scrollIntoView({inline:"center"});
-  },60);
+const strip=document.getElementById("calendarStrip");
+strip.innerHTML="";
+const today=todayJakarta();
+for(let i=-3;i<=3;i++){
+const d=new Date(today);
+d.setDate(today.getDate()+i+offsetDays);
+const key=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+const box=document.createElement("div");
+box.className="day-box";
+let html=`<div class="day-name">${d.toLocaleDateString("id-ID",{weekday:"long"})}</div><div class="day-date">${d.getDate()}</div>`;
+if(scheduleData[key]){
+const ev=scheduleData[key];
+html+=`<div style="font-size:11px">${ev.title}</div>
+<div style="font-size:11px">${ev.player}</div>
+<div style="font-size:11px">Rp${ev.public.toLocaleString()}</div>
+<div style="font-size:12px;font-weight:bold">M:${ev.member.toLocaleString()}</div>
+<button class="join-btn" onclick="joinSchedule('${key}')">JOIN</button>`;
+box.classList.add("active");
+}
+box.innerHTML=html;
+box.onclick=()=>{
+selectedDate=key;
+document.querySelectorAll(".day-box").forEach(b=>b.classList.remove("selected"));
+box.classList.add("selected");
+};
+strip.appendChild(box);
+}
+setTimeout(()=>{const b=document.querySelectorAll(".day-box");if(b[3])b[3].scrollIntoView({inline:"center"});},80);
+}
+function nextWeek(){offsetDays+=7;renderCalendar();}
+function prevWeek(){offsetDays-=7;renderCalendar();}
+function joinSchedule(d){
+if(!localStorage.getItem("giltUser")){alert("Login member dulu");openLogin();return;}
+alert("Reservasi akan terhubung ke sistem booking");
 }
 
-function joinSchedule(date){
-
-  if(!localStorage.getItem("giltUser")){
-    alert("Login member dulu ya");
-    openLogin();
-    return;
-  }
-
-  alert("Reservasi akan dihubungkan ke sistem booking.");
-}
-
-
-/* ================= INIT ================= */
-
+/* INIT */
 window.addEventListener("DOMContentLoaded",()=>{
-  loadMembers();
-  loadProducts();
-  loadSchedule();
+loadMembers();
+loadProducts();
+loadSchedule();
 });
-
 </script>
 
 </body>
