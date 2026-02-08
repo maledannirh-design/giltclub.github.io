@@ -163,7 +163,7 @@ text-decoration:none;
 
 <script>
 
-const API_MEMBER = "https://script.google.com/macros/s/AKfycbzDlUfUmpwhEsMBgswred-PZx9LK7N1MCZ0rD62SstaVtH4GYHnspgDTsVqlQrgcCKZcQ/exec";
+const API_MEMBER = "https://script.google.com/macros/s/AKfycbzubhV4SW9t9X-7cOvbW-_cYofiF2Dho1py48G5iolSg7GvYedVGdwZ50YmMo6m-YZc_A/exec";
 
 let members = [];
 let currentIndex = 0;
@@ -190,7 +190,7 @@ function tampilMember(){
 
   document.getElementById("memberFoto").src = fotoPath;
   document.getElementById("memberNama").innerText = m.name;
-  document.getElementById("memberDesk").innerText = "Member aktif GILT Club";
+  document.getElementById("memberDesk").innerText = m.bio;
 
   currentIndex++;
   if(currentIndex >= members.length){
