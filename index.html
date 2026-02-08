@@ -109,13 +109,27 @@ text-decoration:none;
 
 <body>
 
+<!-- LOGIN POPUP -->
+<div id="loginBox" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);justify-content:center;align-items:center;z-index:9999;">
+  <div style="background:white;padding:25px;border-radius:18px;width:280px;text-align:center">
+    <h3>Member Login</h3>
+    <input id="loginUser" placeholder="Username" style="width:90%;padding:10px;margin:6px;border-radius:8px;border:1px solid #ccc">
+    <input id="loginPin" type="password" placeholder="PIN" style="width:90%;padding:10px;margin:6px;border-radius:8px;border:1px solid #ccc">
+    <br><br>
+    <button onclick="loginMember()" style="background:#2E5D3A;color:white;padding:10px 18px;border:none;border-radius:10px">Login</button>
+    <br><br>
+    <a href="#" onclick="closeLogin()">Tutup</a>
+    <p id="loginMsg" style="color:red"></p>
+  </div>
+</div>
+
 <!-- HEADER -->
 <div class="header">
 <img src="images/club_product/logo_giltclub.png" class="logo">
 <div class="menu">
 <a href="#">Daftar</a>
-<a href="#">Login Member</a>
-<a href="#">👉🏽VIP Login</a>
+<a href="#" onclick="openLogin()">Login Member</a>
+<a href="#">VIP Login</a>
 </div>
 </div>
 
@@ -144,47 +158,45 @@ text-decoration:none;
 
 const API = "https://script.google.com/macros/s/AKfycbx37iGKCHQKSM8nZXYcC_WYcF_R8jpCvird9jRADp_t/dev";
 
-/* ================= MEMBER ================= */
+/* MEMBER */
 
 let members=[];
 let index=0;
 
 async function loadMembers(){
- const res=await fetch(API+"?action=members");
- members=await res.json();
-
- tampilMember();
- setInterval(tampilMember,5000);
+ try{
+  const res=await fetch(API+"?action=members");
+  members=await res.json();
+  if(!members.length) return;
+  tampilMember();
+  setInterval(tampilMember,5000);
+ }catch(e){console.log(e);}
 }
 
 function tampilMember(){
+ if(!members.length) return;
  const m=members[index];
-
  document.getElementById("memberFoto").src="images/members/"+m.username+".png";
  document.getElementById("memberNama").innerText=m.name;
  document.getElementById("memberDesk").innerText=m.bio;
-
- index++;
- if(index>=members.length) index=0;
+ index=(index+1)%members.length;
 }
 
-/* ================= PRODUCTS ================= */
+/* PRODUCTS */
+
+let sliderInterval;
 
 async function loadProducts(){
-
  const res=await fetch(API+"?action=products");
  const products=await res.json();
-
  const slider=document.getElementById("productSlider");
+ slider.innerHTML="";
 
  products.forEach(p=>{
-
   const foto="images/club_product/"+p.id+".png";
-
-  let status="";
-  if(p.qty<=0) status="<div style='color:red'>Habis</div>";
-  else if(p.qty<=3) status="<div style='color:orange'>Sisa "+p.qty+"</div>";
-  else status="<div style='color:green'>Tersedia</div>";
+  let status=p.qty<=0?"<div style='color:red'>Habis</div>":
+              p.qty<=3?"<div style='color:orange'>Sisa "+p.qty+"</div>":
+              "<div style='color:green'>Tersedia</div>";
 
   slider.innerHTML+=`
   <div class="card" onclick="window.open('${foto}','_blank')">
@@ -198,7 +210,27 @@ async function loadProducts(){
   </div>`;
  });
 
- setInterval(()=>{slider.scrollLeft+=230;},800);
+ clearInterval(sliderInterval);
+ sliderInterval=setInterval(()=>{slider.scrollLeft+=230;},800);
+}
+
+/* LOGIN */
+
+function openLogin(){document.getElementById("loginBox").style.display="flex";}
+function closeLogin(){document.getElementById("loginBox").style.display="none";}
+
+async function loginMember(){
+ const username=encodeURIComponent(document.getElementById("loginUser").value);
+ const pin=encodeURIComponent(document.getElementById("loginPin").value);
+ const res=await fetch(API+`?action=login&username=${username}&pin=${pin}`);
+ const data=await res.json();
+ if(data.status=="ok"){
+  localStorage.setItem("giltUser",username);
+  alert("Login berhasil!");
+  closeLogin();
+ }else{
+  document.getElementById("loginMsg").innerText="Username / PIN salah";
+ }
 }
 
 loadMembers();
