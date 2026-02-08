@@ -29,9 +29,7 @@ box-shadow:0 2px 10px rgba(0,0,0,0.08);
 z-index:999;
 }
 
-.logo{
-height:96px;
-}
+.logo{ height:96px; }
 
 .menu a{
 margin-left:12px;
@@ -41,71 +39,60 @@ font-weight:600;
 font-size:14px;
 }
 
-/* SECTION GENERAL */
 section{
 padding-top:120px;
 display:flex;
 align-items:center;
 justify-content:center;
 text-align:center;
-}
-
-/* WELCOME */
-.hero{
-height:33vh;
 flex-direction:column;
 }
 
-.hero h1{
-margin:0;
-font-size:28px;
-letter-spacing:2px;
-}
+/* HERO */
+.hero{ height:33vh; }
 
-.hero p{
-margin-top:10px;
-font-size:14px;
-}
-
-/* STORE */
 .store{
 height:66vh;
 background:#fff;
-flex-direction:column;
 }
 
 .slider{
 display:flex;
 overflow-x:auto;
-padding:20px;
 gap:15px;
+padding:20px;
 }
 
 .card{
-min-width:200px;
-height:240px;
+min-width:220px;
 background:#F2E8D5;
 border-radius:16px;
-display:flex;
-align-items:center;
-justify-content:center;
-font-weight:bold;
+padding:12px;
+text-align:center;
+box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+.card img{
+width:160px;
+height:160px;
+object-fit:cover;
+border-radius:12px;
+margin-bottom:8px;
 }
 
 /* MEMBER */
 .member{
 background:#E5A9A9;
 color:white;
-flex-direction:column;
 padding:40px 20px;
 }
 
 .member img{
 width:160px;
-border-radius:20px;
-margin-bottom:15px;
-object-fit:cover;
 height:160px;
+border-radius:20px;
+object-fit:cover;
+margin-bottom:15px;
 }
 
 .button{
@@ -125,7 +112,6 @@ text-decoration:none;
 <!-- HEADER -->
 <div class="header">
 <img src="images/club_product/logo_giltclub.png" class="logo">
-
 <div class="menu">
 <a href="#">Daftar Club</a>
 <a href="#">Login Member</a>
@@ -133,7 +119,7 @@ text-decoration:none;
 </div>
 </div>
 
-<!-- WELCOME -->
+<!-- HERO -->
 <section class="hero">
 <h1>WELCOME TO GILT CLUB</h1>
 <p>Tennis Sport & Social Community</p>
@@ -142,63 +128,81 @@ text-decoration:none;
 <!-- STORE -->
 <section class="store">
 <h2>GILT Store</h2>
-<div class="slider">
-<div class="card">Visor Club</div>
-<div class="card">Drink</div>
-<div class="card">Snack</div>
-<div class="card">Apparel</div>
-</div>
+<div class="slider" id="productSlider"></div>
 </section>
 
-<!-- MEMBER PROFILE -->
+<!-- MEMBER -->
 <section class="member">
 <h2>Meet Our Member</h2>
-
-<img id="memberFoto" src="">
+<img id="memberFoto">
 <h3 id="memberNama"></h3>
 <p id="memberDesk"></p>
-
-<a class="button" href="#">Terhubung dengan Member</a>
+<a class="button">Terhubung dengan Member</a>
 </section>
 
 <script>
 
-const API_MEMBER = "https://script.google.com/macros/s/AKfycbx37iGKCHQKSM8nZXYcC_WYcF_R8jpCvird9jRADp_t/dev";
+const API = "https://script.google.com/macros/s/AKfycbzDlUfUmpwhEsMBgswred-PZx9LK7N1MCZ0rD62SstaVtH4GYHnspgDTsVqlQrgcCKZcQ/dev";
 
-let members = [];
-let currentIndex = 0;
+/* ================= MEMBER ================= */
 
-async function ambilMembers(){
-  try{
-    const res = await fetch(API_MEMBER);
-    members = await res.json();
+let members=[];
+let index=0;
 
-    if(members.length > 0){
-      tampilMember();
-      setInterval(tampilMember, 5000);
-    }
+async function loadMembers(){
+ const res=await fetch(API+"?action=members");
+ members=await res.json();
 
-  }catch(err){
-    console.log("Gagal ambil member", err);
-  }
+ tampilMember();
+ setInterval(tampilMember,5000);
 }
 
 function tampilMember(){
-  const m = members[currentIndex];
+ const m=members[index];
 
-  const fotoPath = "images/members/" + m.username.toLowerCase() + ".png";
+ document.getElementById("memberFoto").src="images/members/"+m.username+".png";
+ document.getElementById("memberNama").innerText=m.name;
+ document.getElementById("memberDesk").innerText=m.bio;
 
-  document.getElementById("memberFoto").src = fotoPath;
-  document.getElementById("memberNama").innerText = m.name;
-  document.getElementById("memberDesk").innerText = m.bio;
-
-  currentIndex++;
-  if(currentIndex >= members.length){
-    currentIndex = 0;
-  }
+ index++;
+ if(index>=members.length) index=0;
 }
 
-window.onload = ambilMembers;
+/* ================= PRODUCTS ================= */
+
+async function loadProducts(){
+
+ const res=await fetch(API+"?action=products");
+ const products=await res.json();
+
+ const slider=document.getElementById("productSlider");
+
+ products.forEach(p=>{
+
+  const foto="images/club_product/"+p.id+".png";
+
+  let status="";
+  if(p.qty<=0) status="<div style='color:red'>Habis</div>";
+  else if(p.qty<=3) status="<div style='color:orange'>Sisa "+p.qty+"</div>";
+  else status="<div style='color:green'>Tersedia</div>";
+
+  slider.innerHTML+=`
+  <div class="card" onclick="window.open('${foto}','_blank')">
+    <img src="${foto}">
+    <div><b>${p.name}</b></div>
+    <div style="font-size:12px">${p.desc}</div>
+    <div style="text-decoration:line-through">Rp ${p.price}</div>
+    <div style="color:red;font-weight:bold">Rp ${p.dprice}</div>
+    <div style="background:#2E5D3A;color:white;border-radius:8px;padding:3px 8px;display:inline-block">-${p.disc}%</div>
+    ${status}
+  </div>`;
+ });
+
+ setInterval(()=>{slider.scrollLeft+=230;},800);
+}
+
+loadMembers();
+loadProducts();
 
 </script>
 
