@@ -67,7 +67,7 @@ display:none;
 
 /* GENERAL */
 section{
-padding-top:110px;
+padding-top:80px;
 display:flex;
 align-items:center;
 justify-content:center;
@@ -77,9 +77,10 @@ flex-direction:column;
 
 /* HERO */
 .hero{
-height:33vh;
-padding:20px;
+min-height:220px;
+padding:12px 18px 0;
 }
+
 
 /* ===== MOBILE PRODUCT CAROUSEL ===== */
 
@@ -158,16 +159,16 @@ padding:10px;
 }
 
 .day-box{
-min-width:70px;
-height:95px;
-background:white;
-border-radius:14px;
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-box-shadow:0 4px 10px rgba(0,0,0,0.08);
-cursor:pointer;
+min-width:90px;
+min-height:150px;
+padding:8px 6px;
+justify-content:flex-start;
+}
+
+.day-box .join-btn{
+margin-top:auto;
+padding:8px 12px;
+font-size:12px;
 }
 
 .day-box.active{
@@ -201,6 +202,18 @@ border:none;
 padding:12px 20px;
 border-radius:12px;
 margin-top:12px;
+}
+.member-card{
+flex:0 0 100%;
+scroll-snap-align:center;
+text-align:center;
+}
+
+.member-card img{
+width:170px;
+height:210px;
+object-fit:cover;
+border-radius:20px;
 }
 
 </style>
@@ -241,10 +254,6 @@ margin-top:12px;
 <!-- SCHEDULE -->
 <section class="schedule">
   <div id="calendarStrip" class="calendar-strip"></div>
-
-  <div id="scheduleInfo" class="schedule-info">
-    <h3>Pilih tanggal bermain</h3>
-  </div>
 </section>
   
 <!-- STORE -->
@@ -256,14 +265,27 @@ margin-top:12px;
 <!-- MEMBER -->
 <section class="member">
 <h2>Meet Our Member</h2>
-<img id="memberFoto">
+<div id="memberSlider" style="display:flex;overflow-x:auto;scroll-snap-type:x mandatory;width:100%;">
+</div>
 <h3 id="memberNama"></h3>
 <p id="memberDesk"></p>
 <a class="button">Terhubung dengan Member</a>
 </section>
+  <footer style="
+text-align:center;
+padding:22px 10px;
+background:#2E5D3A;
+color:white;
+font-size:12px;
+margin-top:0;">
+© 2026 GILT Club Tennis Community — Balikpapan
+</footer>
+
 <script>
 
 const API="https://script.google.com/macros/s/AKfycbxGGBmyUcOcUmp1_3B8hUAmHb_pPJQeiiYj1UQdR6MhCKKUyXkTA1j3V9-OOq3kaboh4g/exec";
+
+/* ================= MEMBERS ================= */
 
 /* ================= MEMBERS ================= */
 
@@ -275,25 +297,28 @@ async function loadMembers(){
     const res=await fetch(API+"?action=members");
     members=await res.json();
     showMember();
-    setInterval(showMember,5000);
   }catch(e){
     console.log("member load error");
   }
 }
 
-function showMember(){
-  if(!members.length) return;
+function tampilMember(){
 
-  const m=members[memberIndex];
+ const slider=document.getElementById("memberSlider");
+ slider.innerHTML="";
 
-  document.getElementById("memberFoto").src="images/members/"+m.username.toLowerCase().trim()+".png";
-  document.getElementById("memberNama").innerText=m.name;
-  document.getElementById("memberDesk").innerText=m.bio;
+ members.forEach(m=>{
 
-  memberIndex=(memberIndex+1)%members.length;
+  slider.innerHTML+=`
+  <div class="member-card">
+    <img src="images/members/${m.username}.png">
+    <h3>${m.name}</h3>
+    <p>${m.bio}</p>
+  </div>`;
+
+ });
+
 }
-
-
 /* ================= PRODUCTS ================= */
 
 let animating=false;
