@@ -151,9 +151,44 @@ text-decoration:none;
 <!-- MEMBER PROFILE -->
 <section class="member">
 <h2>Meet Our Member</h2>
-<p>Kak Mimin - "Lala" </p>
+
+<img id="memberFoto" src="">
+<h3 id="memberNama"></h3>
+<p id="memberDesk"></p>
+
 <a class="button" href="#">Terhubung dengan Member</a>
 </section>
+
+
+  <script>
+const members = [
+  {
+    nama: "drg. Andi",
+    foto: "images/members/drg-andi.png",
+    deskripsi: "Bergabung 2024 - Pemain aktif weekend"
+  },
+  {
+    nama: "'Kak Mimin' - Lala",
+    foto: "images/members/kak_mimin-lala.png",
+    deskripsi: "Co - found club GILT Balikpapan, visionaris dengan ide-ide cemerlang dan handle social network Club"
+  }
+];
+
+let index = 0;
+
+function tampilMember(){
+  const m = members[index];
+  document.getElementById("memberFoto").src = m.foto;
+  document.getElementById("memberNama").innerText = m.nama;
+  document.getElementById("memberDesk").innerText = m.deskripsi;
+
+  index++;
+  if(index >= members.length) index = 0;
+}
+
+setInterval(tampilMember, 4000);
+window.onload = tampilMember;
+</script>
 
 </body>
 </html>
