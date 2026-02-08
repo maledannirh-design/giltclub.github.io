@@ -261,125 +261,107 @@ margin-top:12px;
 <p id="memberDesk"></p>
 <a class="button">Terhubung dengan Member</a>
 </section>
-
 <script>
 
 const API="https://script.google.com/macros/s/AKfycbxGGBmyUcOcUmp1_3B8hUAmHb_pPJQeiiYj1UQdR6MhCKKUyXkTA1j3V9-OOq3kaboh4g/exec";
 
-
-/* MEMBERS */
+/* ================= MEMBERS ================= */
 
 let members=[];
-let index=0;
+let memberIndex=0;
 
 async function loadMembers(){
- const res=await fetch(API+"?action=members");
- const text=await res.text();
- members=JSON.parse(text);
- tampilMember();
- setInterval(tampilMember,5000);
+  try{
+    const res=await fetch(API+"?action=members");
+    members=await res.json();
+    showMember();
+    setInterval(showMember,5000);
+  }catch(e){
+    console.log("member load error");
+  }
 }
 
-function tampilMember(){
- if(!members.length)return;
- const m=members[index];
- document.getElementById("memberFoto").src="images/members/"+m.username.toLowerCase().trim()+".png";
- document.getElementById("memberNama").innerText=m.name;
- document.getElementById("memberDesk").innerText=m.bio;
- index=(index+1)%members.length;
+function showMember(){
+  if(!members.length) return;
+
+  const m=members[memberIndex];
+
+  document.getElementById("memberFoto").src="images/members/"+m.username.toLowerCase().trim()+".png";
+  document.getElementById("memberNama").innerText=m.name;
+  document.getElementById("memberDesk").innerText=m.bio;
+
+  memberIndex=(memberIndex+1)%members.length;
 }
 
-/* PRODUCTS */
 
-let sliderInterval;
+/* ================= PRODUCTS ================= */
+
+let animating=false;
 
 async function loadProducts(){
- const res=await fetch(API+"?action=products");
- const text=await res.text();
- const products=JSON.parse(text);
 
- const slider=document.getElementById("productSlider");
- slider.innerHTML="";
+  const slider=document.getElementById("productSlider");
+  slider.innerHTML="";
 
- products.forEach(p=>{
-  const foto="images/club_product/"+p.id+".png";
-  const qty=Number(p.qty);
+  try{
+    const res=await fetch(API+"?action=products");
+    const products=await res.json();
 
-  let status="";
-  if(qty<=0) status="<div style='color:red'>Habis</div>";
-  else if(qty<=3) status="<div style='color:orange'>Sisa "+qty+"</div>";
-  else status="<div style='color:green'>Tersedia</div>";
+    products.forEach(p=>{
 
-  let hargaHTML="";
-  if(Number(p.disc)>0){
-    hargaHTML=`<div style="text-decoration:line-through">Rp ${p.price}</div>
-               <div style="color:red;font-weight:bold">Rp ${p.dprice}</div>
-               <div style="background:#2E5D3A;color:white;border-radius:8px;padding:3px 8px;display:inline-block">-${p.disc}%</div>`;
-  }else{
-    hargaHTML=`<div style="font-weight:bold">Rp ${p.price}</div>`;
-  }
+      const foto="images/club_product/"+p.id+".png";
+      const qty=Number(p.qty);
 
-  slider.innerHTML+=`
-  <div class="card">
-    <img src="${foto}">
-    <div><b>${p.name}</b></div>
-    <div style="font-size:12px">${p.desc}</div>
-    ${hargaHTML}
-    ${status}
-    <br>
-    <button onclick="beliProduk('${p.id}')" style="background:#2E5D3A;color:white;border:none;padding:8px 14px;border-radius:10px;margin-top:8px">Beli</button>
-  </div>`;
- });
+      let status="";
+      if(qty<=0) status="<div style='color:red'>Habis</div>";
+      else if(qty<=3) status="<div style='color:orange'>Sisa "+qty+"</div>";
+      else status="<div style='color:green'>Tersedia</div>";
 
-/* ===== TUNGGU GAMBAR SELESAI LOAD ===== */
-
-const images = slider.querySelectorAll("img");
-let loaded = 0;
-
-images.forEach(img=>{
-  if(img.complete){
-    loaded++;
-  }else{
-    img.onload = ()=>{
-      loaded++;
-      if(loaded === images.length){
-        startSlider();
+      let hargaHTML="";
+      if(Number(p.disc)>0){
+        hargaHTML=`<div style="text-decoration:line-through">Rp ${p.price}</div>
+                   <div style="color:red;font-weight:bold">Rp ${p.dprice}</div>
+                   <div style="background:#2E5D3A;color:white;border-radius:8px;padding:3px 8px;display:inline-block">-${p.disc}%</div>`;
+      }else{
+        hargaHTML=`<div style="font-weight:bold">Rp ${p.price}</div>`;
       }
-    }
+
+      slider.innerHTML+=`
+      <div class="card">
+        <img src="${foto}">
+        <div><b>${p.name}</b></div>
+        <div style="font-size:12px">${p.desc}</div>
+        ${hargaHTML}
+        ${status}
+        <br>
+        <button onclick="beliProduk('${p.id}')" style="background:#2E5D3A;color:white;border:none;padding:8px 14px;border-radius:10px;margin-top:8px">Beli</button>
+      </div>`;
+    });
+
+    startSlider();
+
+    slider.addEventListener("touchstart",()=>animating=false);
+    slider.addEventListener("touchend",()=>setTimeout(startSlider,800));
+
+  }catch(e){
+    console.log("product load error");
   }
-});
-
-// kalau semua sudah cache
-if(loaded === images.length){
-  startSlider();
 }
-setTimeout(startSlider,800);
-
-function startSlider(){
-
-  if(sliderInterval) return; // penting
-
-  let animating=false;
-
-  let animating = false;
 
 function startSlider(){
 
   if(animating) return;
-  animating = true;
+  animating=true;
+
+  const slider=document.getElementById("productSlider");
 
   function loop(){
-
     if(!animating) return;
 
-    const slider = document.getElementById("productSlider");
+    slider.scrollLeft+=0.4;
 
-    if(!slider) return;
-
-    slider.scrollLeft += 0.4;
-
-    if(slider.scrollLeft + slider.clientWidth >= slider.scrollWidth){
-      slider.scrollLeft = 0;
+    if(slider.scrollLeft+slider.clientWidth>=slider.scrollWidth){
+      slider.scrollLeft=0;
     }
 
     requestAnimationFrame(loop);
@@ -388,111 +370,102 @@ function startSlider(){
   requestAnimationFrame(loop);
 }
 
-function stopSlider(){
-  animating = false;
+
+/* ================= LOGIN ================= */
+
+function openLogin(){
+  document.getElementById("loginBox").style.display="flex";
 }
-setTimeout(()=>{
-  const slider = document.getElementById("productSlider");
 
-  slider.addEventListener("touchstart", stopSlider);
-  slider.addEventListener("touchend", ()=>{
-    setTimeout(startSlider,800);
-  });
-},500);
-
-
-/* LOGIN */
-
-function openLogin(){document.getElementById("loginBox").style.display="flex";}
-function closeLogin(){document.getElementById("loginBox").style.display="none";}
+function closeLogin(){
+  document.getElementById("loginBox").style.display="none";
+}
 
 async function doLogin(){
- const username=encodeURIComponent(document.getElementById("loginUser").value.trim());
- const pin=encodeURIComponent(document.getElementById("loginPin").value.trim());
 
- const res=await fetch(API+`?action=login&username=${username}&pin=${pin}`);
-let data;
-try{
-  const text=await res.text();
-  data=JSON.parse(text);
-}catch(e){
-  document.getElementById("loginMsg").innerText="Server sibuk, coba lagi 5 detik";
-  return;
-}
+  const username=encodeURIComponent(document.getElementById("loginUser").value.trim());
+  const pin=encodeURIComponent(document.getElementById("loginPin").value.trim());
 
+  let data;
 
- if(data.status==="ok"){
-  localStorage.setItem("giltUser",decodeURIComponent(username));
-  closeLogin();
-  alert("Login berhasil!\nSilahkan isi saldo minimal untuk melanjutkan transaksi.");
- }else{
-  document.getElementById("loginMsg").innerText="Username / PIN salah";
- }
+  try{
+    const res=await fetch(API+`?action=login&username=${username}&pin=${pin}`);
+    const text=await res.text();
+    data=JSON.parse(text);
+  }catch(e){
+    document.getElementById("loginMsg").innerText="Server sibuk, coba lagi";
+    return;
+  }
+
+  if(data.status==="ok"){
+    localStorage.setItem("giltUser",decodeURIComponent(username));
+    closeLogin();
+    alert("Login berhasil! Silahkan isi saldo untuk transaksi.");
+  }else{
+    document.getElementById("loginMsg").innerText="Username / PIN salah";
+  }
 }
 
 function beliProduk(id){
- if(!localStorage.getItem("giltUser")){
-   alert("Login member dulu ya");
-   openLogin();
-   return;
- }
- alert("Pembelian akan terhubung ke G-Wallet (tahap berikutnya)");
+
+  if(!localStorage.getItem("giltUser")){
+    alert("Login member dulu ya");
+    openLogin();
+    return;
+  }
+
+  alert("Nanti ini akan langsung terhubung ke G-Wallet");
 }
 
-/* ===== SCHEDULE ===== */
-let scheduleData = {};
-let offsetDays = 0;
+
+/* ================= SCHEDULE ================= */
+
+let scheduleData={};
+let offsetDays=0;
 
 async function loadSchedule(){
-  const res = await fetch(API+"?action=schedule");
-  scheduleData = await res.json();
+
+  const res=await fetch(API+"?action=schedule");
+  const arr=await res.json();
+
+  scheduleData={};
+  arr.forEach(e=>scheduleData[e.date]=e);
+
   renderCalendar();
 }
+
 function getJakartaToday(){
-  const now = new Date();
-  const jakarta = new Date(
-    now.toLocaleString("en-US",{timeZone:"Asia/Makassar"})
-  );
-  return jakarta;
+  const now=new Date();
+  return new Date(now.toLocaleString("en-US",{timeZone:"Asia/Makassar"}));
 }
 
 function renderCalendar(){
 
-  const strip = document.getElementById("calendarStrip");
-  strip.innerHTML = "";
+  const strip=document.getElementById("calendarStrip");
+  strip.innerHTML="";
 
-  const today = getJakartaToday();
+  const today=getJakartaToday();
 
   for(let i=-3;i<=3;i++){
 
-    const d = new Date(today);
-    d.setDate(today.getDate() + i + offsetDays);
+    const d=new Date(today);
+    d.setDate(today.getDate()+i+offsetDays);
 
+    const key=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
 
-    const key =
-    d.getFullYear() + "-" +
-    String(d.getMonth()+1).padStart(2,"0") + "-" +
-    String(d.getDate()).padStart(2,"0");
-
-
-    const box = document.createElement("div");
+    const box=document.createElement("div");
     box.className="day-box";
 
-    const hari = d.toLocaleDateString("id-ID",{weekday:"long"});
-    const tanggal = d.getDate();
-
-    // default isi
-    let isi = `
-      <div class="day-name">${hari}</div>
-      <div class="day-date">${tanggal}</div>
+    let isi=`
+      <div class="day-name">${d.toLocaleDateString("id-ID",{weekday:"long"})}</div>
+      <div class="day-date">${d.getDate()}</div>
     `;
 
-    // kalau ada jadwal
     if(scheduleData[key]){
 
-      const ev = scheduleData[key];
+      const ev=scheduleData[key];
 
-      isi += `
+      isi+=`
         <div style="font-size:11px;margin-top:4px">${ev.title}</div>
         <div style="font-size:11px">${ev.player}</div>
         <div style="font-size:11px">Rp${ev.public.toLocaleString()}</div>
@@ -501,50 +474,41 @@ function renderCalendar(){
       `;
 
       box.classList.add("active");
-
     }else{
       box.style.opacity="0.35";
     }
 
-    box.innerHTML = isi;
+    box.innerHTML=isi;
     strip.appendChild(box);
   }
+
   setTimeout(()=>{
-  const boxes = document.querySelectorAll(".day-box");
-  if(boxes[3]){
-    boxes[3].scrollIntoView({inline:"center",behavior:"instant"});
-  }
-},50);
-
+    const boxes=document.querySelectorAll(".day-box");
+    if(boxes[3]) boxes[3].scrollIntoView({inline:"center"});
+  },60);
 }
 
-function nextWeek(){
-  offsetDays += 7;
-  renderCalendar();
-}
-
-function prevWeek(){
-  offsetDays -= 7;
-  renderCalendar();
-}
 function joinSchedule(date){
 
- if(!localStorage.getItem("giltUser")){
-   alert("Login member dulu ya");
-   openLogin();
-   return;
- }
+  if(!localStorage.getItem("giltUser")){
+    alert("Login member dulu ya");
+    openLogin();
+    return;
+  }
 
- alert("Nanti ini akan langsung booking ke G-Wallet");
+  alert("Reservasi akan dihubungkan ke sistem booking.");
 }
 
-window.addEventListener("DOMContentLoaded", ()=>{
+
+/* ================= INIT ================= */
+
+window.addEventListener("DOMContentLoaded",()=>{
   loadMembers();
   loadProducts();
   loadSchedule();
 });
 
-
 </script>
+
 </body>
 </html>
