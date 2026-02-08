@@ -19,25 +19,29 @@ position:fixed;
 top:0;
 left:0;
 right:0;
-height:95px;
+height:70px;
 background:white;
 display:flex;
 align-items:center;
 justify-content:space-between;
-padding:0 15px;
+padding:0 12px;
 box-shadow:0 2px 10px rgba(0,0,0,0.08);
 z-index:999;
 }
 
-.logo{ height:70px; }
+.logo{
+height:50px;
+}
+
+.menu{
+display:flex;
+gap:12px;
+}
 
 .menu a{
-margin-left:12px;
-text-decoration:none;
-color:#2E5D3A;
-font-weight:600;
-font-size:14px;
+font-size:13px;
 }
+
 
 /* GENERAL */
 section{
@@ -55,8 +59,10 @@ height:33vh;
 padding:20px;
 }
 
-/* STORE */
+/* ===== MOBILE PRODUCT CAROUSEL ===== */
+
 .store{
+height:auto;
 background:#fff;
 padding-bottom:30px;
 }
@@ -64,28 +70,36 @@ padding-bottom:30px;
 .slider{
 display:flex;
 overflow-x:auto;
-gap:15px;
-padding:20px;
-scroll-behavior:smooth;
+scroll-snap-type:x mandatory;
+-webkit-overflow-scrolling:touch;
+gap:0;
+padding:20px 0;
+}
+
+.slider::-webkit-scrollbar{
+display:none;
 }
 
 .card{
-min-width:220px;
+flex:0 0 100%;
+max-width:100%;
+scroll-snap-align:center;
+box-sizing:border-box;
+padding:20px;
 background:#F2E8D5;
-border-radius:16px;
-padding:12px;
-text-align:center;
-box-shadow:0 4px 10px rgba(0,0,0,0.1);
+margin:0;
+border-radius:0;
 }
 
 .card img{
-width:160px;
-height:160px;
+width:220px;
+height:220px;
 object-fit:contain;
-background:white;
-border-radius:12px;
-margin-bottom:8px;
+border-radius:16px;
+margin:auto;
+display:block;
 }
+
 
 /* MEMBER */
 .member{
@@ -112,6 +126,87 @@ margin-top:10px;
 display:inline-block;
 text-decoration:none;
 }
+
+  /* SCHEDULE */
+.schedule{
+margin-top:15px;
+width:100%;
+}
+
+.calendar{
+display:flex;
+justify-content:space-between;
+gap:6px;
+padding:10px;
+}
+
+.day{
+background:white;
+padding:8px;
+border-radius:10px;
+font-size:12px;
+width:100%;
+}
+
+.today{
+background:#2E5D3A;
+color:white;
+font-weight:bold;
+}
+
+.mabarBox{
+background:white;
+margin:12px;
+padding:15px;
+border-radius:14px;
+box-shadow:0 4px 12px rgba(0,0,0,0.1);
+}
+
+.joinBtn{
+margin-top:10px;
+background:#2E5D3A;
+color:white;
+border:none;
+padding:12px 20px;
+border-radius:12px;
+font-weight:bold;
+}
+.schedule{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:10px;
+padding:15px;
+}
+
+.dayBox{
+background:white;
+border-radius:14px;
+padding:10px;
+position:relative;
+box-shadow:0 3px 10px rgba(0,0,0,0.1);
+text-align:left;
+}
+
+.date{
+position:absolute;
+top:8px;
+right:10px;
+background:#2E5D3A;
+color:white;
+padding:4px 8px;
+border-radius:8px;
+font-size:12px;
+}
+
+.dayName{
+font-weight:bold;
+margin-bottom:6px;
+}
+
+.dayContent{
+font-size:12px;
+}
+
 </style>
 </head>
 
@@ -145,6 +240,31 @@ text-decoration:none;
 <section class="hero">
 <h1>WELCOME TO GILT CLUB</h1>
 <p>Tennis Sport & Social Community</p>
+  <div class="schedule" id="scheduleBox"></div>
+  <div class="schedule">
+
+  <div class="calendar">
+    <div class="day">MON<br><small>3</small></div>
+    <div class="day">TUE<br><small>4</small></div>
+    <div class="day today">WED<br><small>5</small></div>
+    <div class="day">THU<br><small>6</small></div>
+    <div class="day">FRI<br><small>7</small></div>
+    <div class="day">SAT<br><small>8</small></div>
+    <div class="day">SUN<br><small>9</small></div>
+  </div>
+
+  <div class="mabarBox">
+    <b>Jadwal Mabar</b><br>
+    10 - 12 Orang<br>
+    Rp100.000 / member<br>
+    <span style="color:#2E5D3A;font-weight:bold">Member: Rp75.000</span>
+
+    <br><br>
+    <button class="joinBtn">JOIN</button>
+  </div>
+
+</div>
+
 </section>
 
 <!-- STORE -->
@@ -253,36 +373,29 @@ if(loaded === images.length){
   startSlider();
 }
 
+  
 function startSlider(){
 
   clearInterval(sliderInterval);
 
-  // mulai dari paling kiri
-  slider.scrollLeft = 0;
-
   sliderInterval = setInterval(()=>{
-    slider.scrollLeft += 1;
 
-    // kalau sudah mentok kanan → balik lagi
-    if(slider.scrollLeft + slider.clientWidth >= slider.scrollWidth){
-      slider.scrollLeft = 0;
+    const cardWidth = slider.clientWidth;
+    slider.scrollBy({
+      left: cardWidth,
+      behavior: "smooth"
+    });
+
+    // kalau sudah terakhir → balik ke awal
+    if(slider.scrollLeft + slider.clientWidth >= slider.scrollWidth - 5){
+      setTimeout(()=>{
+        slider.scrollTo({left:0, behavior:"smooth"});
+      },800);
     }
 
-  },20);
-
-  // pause saat disentuh
-  slider.addEventListener("touchstart",()=>clearInterval(sliderInterval));
-
-  slider.addEventListener("touchend",()=>{
-    sliderInterval=setInterval(()=>{
-      slider.scrollLeft+=1;
-      if(slider.scrollLeft + slider.clientWidth >= slider.scrollWidth){
-        slider.scrollLeft=0;
-      }
-    },20);
-  });
+  },5000);
 }
-}
+
 
 /* LOGIN */
 
@@ -317,6 +430,43 @@ function beliProduk(id){
 
 loadMembers();
 loadProducts();
+
+
+  /* ===== SCHEDULE ===== */
+
+async function loadSchedule(){
+
+ const res = await fetch(API+"?action=schedule");
+ const days = await res.json();
+
+ const box=document.getElementById("scheduleBox");
+ box.innerHTML="";
+
+ const namaHari=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+
+ days.forEach((d,i)=>{
+
+  let isi="Tidak ada";
+
+  if(d.max>0){
+    isi=`Mabar Club<br>
+    ${d.jam}<br>
+    ${d.max} org<br>
+    100k / member<br>
+    <b>Member 75k</b>`;
+  }
+
+  box.innerHTML+=`
+  <div class="dayBox">
+    <div class="date">${d.tanggal}</div>
+    <div class="dayName">${namaHari[i]}</div>
+    <div class="dayContent">${isi}</div>
+  </div>`;
+ });
+
+}
+
+loadSchedule();
 
 </script>
 </body>
