@@ -123,10 +123,12 @@ min-height:260px;
 #memberSlider::-webkit-scrollbar{display:none;}
 
 .member-card{
-flex:0 0 100%;
+flex:0 0 80%;
+margin:0 10%;
 scroll-snap-align:center;
 text-align:center;
 }
+
 
 .member-card img{
 width:170px;
@@ -280,20 +282,68 @@ el.addEventListener("touchend",()=>setTimeout(()=>{stop=false;loop();},1200),{pa
 }
 
 /* MEMBERS */
+/* ================= MEMBERS ================= */
+
+let memberAuto = null;
+
 async function loadMembers(){
-const res=await fetch(API+"?action=members");
-const data=await res.json();
-const slider=document.getElementById("memberSlider");
-slider.innerHTML="";
-data.forEach(m=>{
-slider.innerHTML+=`
-<div class="member-card">
-<img src="images/members/${m.username.toLowerCase().trim()}.png?v=7" onerror="this.src='images/members/default.png'">
-<h3>${m.name}</h3>
-<p>${m.bio}</p>
-</div>`;
-});
-autoScroll(slider,0.35);
+
+  try{
+
+    const res = await fetch(API+"?action=members");
+    const data = await res.json();
+
+    const slider = document.getElementById("memberSlider");
+    slider.innerHTML = "";
+
+    // isi member
+    data.forEach(m=>{
+      slider.innerHTML += `
+      <div class="member-card">
+        <img src="images/members/${m.username.toLowerCase().trim()}.png?v=9"
+        onerror="this.src='images/members/default.png'">
+        <h3>${m.name}</h3>
+        <p>${m.bio}</p>
+      </div>`;
+    });
+
+    // DUPLIKAT (ini rahasia biar infinite)
+    slider.innerHTML += slider.innerHTML;
+
+    startMemberAuto();
+
+    // pause saat disentuh
+    slider.addEventListener("touchstart", stopMemberAuto, {passive:true});
+    slider.addEventListener("touchend", ()=>setTimeout(startMemberAuto,1500), {passive:true});
+
+  }catch(e){
+    console.log("member load error", e);
+  }
+}
+
+function startMemberAuto(){
+
+  const slider = document.getElementById("memberSlider");
+  if(memberAuto) return;
+
+  memberAuto = requestAnimationFrame(function loop(){
+
+    slider.scrollLeft += 0.35;
+
+    // kalau sudah setengah (karena kita duplikat)
+    if(slider.scrollLeft >= slider.scrollWidth/2){
+      slider.scrollLeft = 0;
+    }
+
+    memberAuto = requestAnimationFrame(loop);
+  });
+}
+
+function stopMemberAuto(){
+  if(memberAuto){
+    cancelAnimationFrame(memberAuto);
+    memberAuto = null;
+  }
 }
 
 /* PRODUCTS */
