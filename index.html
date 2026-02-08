@@ -165,8 +165,9 @@ let index=0;
 
 async function loadMembers(){
  try{
-  const res=await fetch(API+"?action=members");
-  members=await res.json();
+  const res = await fetch(API+"?action=members");
+  const text = await res.text();
+  members = JSON.parse(text);
   if(!members.length) return;
   tampilMember();
   setInterval(tampilMember,5000);
@@ -187,8 +188,9 @@ function tampilMember(){
 let sliderInterval;
 
 async function loadProducts(){
- const res=await fetch(API+"?action=products");
- const products=await res.json();
+const res = await fetch(API+"?action=products");
+const text = await res.text();
+const products = JSON.parse(text);
  const slider=document.getElementById("productSlider");
  slider.innerHTML="";
 
@@ -222,8 +224,9 @@ function closeLogin(){document.getElementById("loginBox").style.display="none";}
 async function loginMember(){
  const username=encodeURIComponent(document.getElementById("loginUser").value);
  const pin=encodeURIComponent(document.getElementById("loginPin").value);
- const res=await fetch(API+`?action=login&username=${username}&pin=${pin}`);
- const data=await res.json();
+ const res = await fetch(API+`?action=login&username=${username}&pin=${pin}`);
+const text = await res.text();
+const data = JSON.parse(text);
  if(data.status=="ok"){
   localStorage.setItem("giltUser",username);
   alert("Login berhasil!");
