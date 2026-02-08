@@ -19,7 +19,7 @@ position:fixed;
 top:0;
 left:0;
 right:0;
-height:110px;
+height:95px;
 background:white;
 display:flex;
 align-items:center;
@@ -29,7 +29,7 @@ box-shadow:0 2px 10px rgba(0,0,0,0.08);
 z-index:999;
 }
 
-.logo{ height:96px; }
+.logo{ height:70px; }
 
 .menu a{
 margin-left:12px;
@@ -39,8 +39,9 @@ font-weight:600;
 font-size:14px;
 }
 
+/* GENERAL */
 section{
-padding-top:120px;
+padding-top:110px;
 display:flex;
 align-items:center;
 justify-content:center;
@@ -49,11 +50,15 @@ flex-direction:column;
 }
 
 /* HERO */
-.hero{ height:33vh; }
+.hero{
+height:33vh;
+padding:20px;
+}
 
+/* STORE */
 .store{
-height:66vh;
 background:#fff;
+padding-bottom:30px;
 }
 
 .slider{
@@ -61,6 +66,7 @@ display:flex;
 overflow-x:auto;
 gap:15px;
 padding:20px;
+scroll-behavior:smooth;
 }
 
 .card{
@@ -75,7 +81,8 @@ box-shadow:0 4px 10px rgba(0,0,0,0.1);
 .card img{
 width:160px;
 height:160px;
-object-fit:cover;
+object-fit:contain;
+background:white;
 border-radius:12px;
 margin-bottom:8px;
 }
@@ -89,9 +96,10 @@ padding:40px 20px;
 
 .member img{
 width:160px;
-height:160px;
+height:200px;
 border-radius:20px;
-object-fit:cover;
+object-fit:contain;
+background:white;
 margin-bottom:15px;
 }
 
@@ -116,7 +124,7 @@ text-decoration:none;
     <input id="loginUser" placeholder="Username" style="width:90%;padding:10px;margin:6px;border-radius:8px;border:1px solid #ccc">
     <input id="loginPin" type="password" placeholder="PIN" style="width:90%;padding:10px;margin:6px;border-radius:8px;border:1px solid #ccc">
     <br><br>
-    <button onclick="loginMember()" style="background:#2E5D3A;color:white;padding:10px 18px;border:none;border-radius:10px">Login</button>
+    <button onclick="doLogin()" style="background:#2E5D3A;color:white;padding:10px 18px;border:none;border-radius:10px">Login</button>
     <br><br>
     <a href="#" onclick="closeLogin()">Tutup</a>
     <p id="loginMsg" style="color:red"></p>
@@ -141,7 +149,7 @@ text-decoration:none;
 
 <!-- STORE -->
 <section class="store">
-<h2>GILT Store</h2>
+<h2>Product on Sale (Diskon Gede)</h2>
 <div class="slider" id="productSlider"></div>
 </section>
 
@@ -156,26 +164,23 @@ text-decoration:none;
 
 <script>
 
-const API = "https://script.google.com/macros/s/AKfycbxotHCtZmg_ovBM_ZCkS-M2TLWIa9-GzPv0CBNt5iu0NXejQIQ9gfElBtCBafZPrjKkeg/exec";
+const API="https://script.google.com/macros/s/AKfycbxotHCtZmg_ovBM_ZCkS-M2TLWIa9-GzPv0CBNt5iu0NXejQIQ9gfElBtCBafZPrjKkeg/exec";
 
-/* MEMBER */
+/* MEMBERS */
 
 let members=[];
 let index=0;
 
 async function loadMembers(){
- try{
-  const res = await fetch(API+"?action=members");
-  const text = await res.text();
-  members = JSON.parse(text);
-  if(!members.length) return;
-  tampilMember();
-  setInterval(tampilMember,5000);
- }catch(e){console.log(e);}
+ const res=await fetch(API+"?action=members");
+ const text=await res.text();
+ members=JSON.parse(text);
+ tampilMember();
+ setInterval(tampilMember,5000);
 }
 
 function tampilMember(){
- if(!members.length) return;
+ if(!members.length)return;
  const m=members[index];
  document.getElementById("memberFoto").src="images/members/"+m.username+".png";
  document.getElementById("memberNama").innerText=m.name;
@@ -188,32 +193,48 @@ function tampilMember(){
 let sliderInterval;
 
 async function loadProducts(){
-const res = await fetch(API+"?action=products");
-const text = await res.text();
-const products = JSON.parse(text);
+ const res=await fetch(API+"?action=products");
+ const text=await res.text();
+ const products=JSON.parse(text);
+
  const slider=document.getElementById("productSlider");
  slider.innerHTML="";
 
  products.forEach(p=>{
   const foto="images/club_product/"+p.id+".png";
-  let status=p.qty<=0?"<div style='color:red'>Habis</div>":
-              p.qty<=3?"<div style='color:orange'>Sisa "+p.qty+"</div>":
-              "<div style='color:green'>Tersedia</div>";
+  const qty=Number(p.qty);
+
+  let status="";
+  if(qty<=0) status="<div style='color:red'>Habis</div>";
+  else if(qty<=3) status="<div style='color:orange'>Sisa "+qty+"</div>";
+  else status="<div style='color:green'>Tersedia</div>";
+
+  let hargaHTML="";
+  if(Number(p.disc)>0){
+    hargaHTML=`<div style="text-decoration:line-through">Rp ${p.price}</div>
+               <div style="color:red;font-weight:bold">Rp ${p.dprice}</div>
+               <div style="background:#2E5D3A;color:white;border-radius:8px;padding:3px 8px;display:inline-block">-${p.disc}%</div>`;
+  }else{
+    hargaHTML=`<div style="font-weight:bold">Rp ${p.price}</div>`;
+  }
 
   slider.innerHTML+=`
-  <div class="card" onclick="window.open('${foto}','_blank')">
+  <div class="card">
     <img src="${foto}">
     <div><b>${p.name}</b></div>
     <div style="font-size:12px">${p.desc}</div>
-    <div style="text-decoration:line-through">Rp ${p.price}</div>
-    <div style="color:red;font-weight:bold">Rp ${p.dprice}</div>
-    <div style="background:#2E5D3A;color:white;border-radius:8px;padding:3px 8px;display:inline-block">-${p.disc}%</div>
+    ${hargaHTML}
     ${status}
+    <br>
+    <button onclick="beliProduk('${p.id}')" style="background:#2E5D3A;color:white;border:none;padding:8px 14px;border-radius:10px;margin-top:8px">Beli</button>
   </div>`;
  });
 
  clearInterval(sliderInterval);
- sliderInterval=setInterval(()=>{slider.scrollLeft+=230;},800);
+ sliderInterval=setInterval(()=>{slider.scrollLeft+=1;},20);
+
+ slider.addEventListener("touchstart",()=>clearInterval(sliderInterval));
+ slider.addEventListener("touchend",()=>sliderInterval=setInterval(()=>{slider.scrollLeft+=1;},20));
 }
 
 /* LOGIN */
@@ -221,25 +242,35 @@ const products = JSON.parse(text);
 function openLogin(){document.getElementById("loginBox").style.display="flex";}
 function closeLogin(){document.getElementById("loginBox").style.display="none";}
 
-async function loginMember(){
- const username=encodeURIComponent(document.getElementById("loginUser").value);
- const pin=encodeURIComponent(document.getElementById("loginPin").value);
- const res = await fetch(API+`?action=login&username=${username}&pin=${pin}`);
-const text = await res.text();
-const data = JSON.parse(text);
- if(data.status=="ok"){
+async function doLogin(){
+ const username=encodeURIComponent(document.getElementById("loginUser").value.trim());
+ const pin=encodeURIComponent(document.getElementById("loginPin").value.trim());
+
+ const res=await fetch(API+`?action=login&username=${username}&pin=${pin}`);
+ const text=await res.text();
+ const data=JSON.parse(text);
+
+ if(data.status==="ok"){
   localStorage.setItem("giltUser",username);
-  alert("Login berhasil!");
   closeLogin();
+  alert("Login berhasil!\nSilahkan isi saldo minimal untuk melanjutkan transaksi.");
  }else{
   document.getElementById("loginMsg").innerText="Username / PIN salah";
  }
+}
+
+function beliProduk(id){
+ if(!localStorage.getItem("giltUser")){
+   alert("Login member dulu ya");
+   openLogin();
+   return;
+ }
+ alert("Pembelian akan terhubung ke G-Wallet (tahap berikutnya)");
 }
 
 loadMembers();
 loadProducts();
 
 </script>
-
 </body>
 </html>
