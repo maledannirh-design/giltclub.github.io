@@ -52,6 +52,18 @@ font-weight:600;
 white-space:nowrap;
 }
 
+.header{
+overflow:hidden;
+}
+
+.menu{
+flex:1;
+overflow-x:auto;
+}
+
+.menu::-webkit-scrollbar{
+display:none;
+}
 
 /* GENERAL */
 section{
@@ -252,7 +264,7 @@ margin-top:12px;
 
 <script>
 
-const API="https://script.google.com/macros/s/AKfycbxuLBeWEkM9QpEf682hCEZLVGeRGz_hzHTxYgfwitAIrrMOezfPFRBgnGGA64lI4NoqMw/exec";
+const API="https://script.google.com/macros/s/AKfycbxGGBmyUcOcUmp1_3B8hUAmHb_pPJQeiiYj1UQdR6MhCKKUyXkTA1j3V9-OOq3kaboh4g/exec";
 
 
 /* MEMBERS */
@@ -271,7 +283,7 @@ async function loadMembers(){
 function tampilMember(){
  if(!members.length)return;
  const m=members[index];
- document.getElementById("memberFoto").src="images/members/"+m.username+".png";
+ document.getElementById("memberFoto").src="images/members/"+m.username.toLowerCase().trim()+".png";
  document.getElementById("memberNama").innerText=m.name;
  document.getElementById("memberDesk").innerText=m.bio;
  index=(index+1)%members.length;
@@ -341,27 +353,53 @@ images.forEach(img=>{
 if(loaded === images.length){
   startSlider();
 }
+setTimeout(startSlider,800);
 
 function startSlider(){
 
-  clearInterval(sliderInterval);
+  if(sliderInterval) return; // penting
 
-  sliderInterval = setInterval(()=>{
+  let animating=false;
 
-    // geser pelan, bukan lompat 1 kartu
-    slider.scrollLeft += 1;
+  let animating = false;
 
-    // kalau sudah paling kanan → balik
+function startSlider(){
+
+  if(animating) return;
+  animating = true;
+
+  function loop(){
+
+    if(!animating) return;
+
+    const slider = document.getElementById("productSlider");
+
+    if(!slider) return;
+
+    slider.scrollLeft += 0.4;
+
     if(slider.scrollLeft + slider.clientWidth >= slider.scrollWidth){
       slider.scrollLeft = 0;
     }
 
-  },20);
-}
-slider.addEventListener("touchstart",()=>clearInterval(sliderInterval));
-slider.addEventListener("touchend",()=>startSlider());
+    requestAnimationFrame(loop);
+  }
 
+  requestAnimationFrame(loop);
 }
+
+function stopSlider(){
+  animating = false;
+}
+setTimeout(()=>{
+  const slider = document.getElementById("productSlider");
+
+  slider.addEventListener("touchstart", stopSlider);
+  slider.addEventListener("touchend", ()=>{
+    setTimeout(startSlider,800);
+  });
+},500);
+
 
 /* LOGIN */
 
@@ -373,11 +411,18 @@ async function doLogin(){
  const pin=encodeURIComponent(document.getElementById("loginPin").value.trim());
 
  const res=await fetch(API+`?action=login&username=${username}&pin=${pin}`);
- const text=await res.text();
- const data=JSON.parse(text);
+let data;
+try{
+  const text=await res.text();
+  data=JSON.parse(text);
+}catch(e){
+  document.getElementById("loginMsg").innerText="Server sibuk, coba lagi 5 detik";
+  return;
+}
+
 
  if(data.status==="ok"){
-  localStorage.setItem("giltUser",username);
+  localStorage.setItem("giltUser",decodeURIComponent(username));
   closeLogin();
   alert("Login berhasil!\nSilahkan isi saldo minimal untuk melanjutkan transaksi.");
  }else{
@@ -395,59 +440,104 @@ function beliProduk(id){
 }
 
 /* ===== SCHEDULE ===== */
+let scheduleData = {};
+let offsetDays = 0;
 
 async function loadSchedule(){
+  const res = await fetch(API+"?action=schedule");
+  scheduleData = await res.json();
+  renderCalendar();
+}
+function getJakartaToday(){
+  const now = new Date();
+  const jakarta = new Date(
+    now.toLocaleString("en-US",{timeZone:"Asia/Makassar"})
+  );
+  return jakarta;
+}
 
- const res = await fetch(API+"?action=schedule");
- const data = await res.json();
+function renderCalendar(){
 
- const strip = document.getElementById("calendarStrip");
- const info = document.getElementById("scheduleInfo");
+  const strip = document.getElementById("calendarStrip");
+  strip.innerHTML = "";
 
- strip.innerHTML="";
+  const today = getJakartaToday();
 
- const hariIndo = {
-  Sunday:"Minggu",
-  Monday:"Senin",
-  Tuesday:"Selasa",
-  Wednesday:"Rabu",
-  Thursday:"Kamis",
-  Friday:"Jumat",
-  Saturday:"Sabtu"
- };
+  for(let i=-3;i<=3;i++){
 
- data.forEach((d,i)=>{
+    const d = new Date(today);
+    d.setDate(today.getDate() + i + offsetDays);
 
-   const tanggal = new Date(d.date);
 
-   const box = document.createElement("div");
-   box.className="day-box";
+    const key =
+    d.getFullYear() + "-" +
+    String(d.getMonth()+1).padStart(2,"0") + "-" +
+    String(d.getDate()).padStart(2,"0");
 
-   box.innerHTML=`
-     <div class="day-name">${hariIndo[d.day]}</div>
-     <div class="day-date">${tanggal.getDate()}</div>
-   `;
 
-   box.onclick=()=>{
-     document.querySelectorAll(".day-box").forEach(b=>b.classList.remove("active"));
-     box.classList.add("active");
+    const box = document.createElement("div");
+    box.className="day-box";
 
-     info.innerHTML=`
-       <h3>${d.title}</h3>
-       <div>${d.player}</div>
-       <div>Rp${d.public.toLocaleString()}/member</div>
-       <b>Member: Rp${d.member.toLocaleString()}</b><br>
-       <button class="join-btn">JOIN</button>
-     `;
-   };
+    const hari = d.toLocaleDateString("id-ID",{weekday:"long"});
+    const tanggal = d.getDate();
 
-   strip.appendChild(box);
+    // default isi
+    let isi = `
+      <div class="day-name">${hari}</div>
+      <div class="day-date">${tanggal}</div>
+    `;
 
-   if(i===0) box.click();
+    // kalau ada jadwal
+    if(scheduleData[key]){
 
- });
+      const ev = scheduleData[key];
+
+      isi += `
+        <div style="font-size:11px;margin-top:4px">${ev.title}</div>
+        <div style="font-size:11px">${ev.player}</div>
+        <div style="font-size:11px">Rp${ev.public.toLocaleString()}</div>
+        <div style="font-size:12px;font-weight:bold">M:${ev.member.toLocaleString()}</div>
+        <button class="join-btn" onclick="joinSchedule('${key}')">JOIN</button>
+      `;
+
+      box.classList.add("active");
+
+    }else{
+      box.style.opacity="0.35";
+    }
+
+    box.innerHTML = isi;
+    strip.appendChild(box);
+  }
+  setTimeout(()=>{
+  const boxes = document.querySelectorAll(".day-box");
+  if(boxes[3]){
+    boxes[3].scrollIntoView({inline:"center",behavior:"instant"});
+  }
+},50);
 
 }
+
+function nextWeek(){
+  offsetDays += 7;
+  renderCalendar();
+}
+
+function prevWeek(){
+  offsetDays -= 7;
+  renderCalendar();
+}
+function joinSchedule(date){
+
+ if(!localStorage.getItem("giltUser")){
+   alert("Login member dulu ya");
+   openLogin();
+   return;
+ }
+
+ alert("Nanti ini akan langsung booking ke G-Wallet");
+}
+
 window.addEventListener("DOMContentLoaded", ()=>{
   loadMembers();
   loadProducts();
