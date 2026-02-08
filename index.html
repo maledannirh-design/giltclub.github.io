@@ -230,11 +230,57 @@ async function loadProducts(){
   </div>`;
  });
 
- clearInterval(sliderInterval);
- sliderInterval=setInterval(()=>{slider.scrollLeft+=1;},20);
+/* ===== TUNGGU GAMBAR SELESAI LOAD ===== */
 
- slider.addEventListener("touchstart",()=>clearInterval(sliderInterval));
- slider.addEventListener("touchend",()=>sliderInterval=setInterval(()=>{slider.scrollLeft+=1;},20));
+const images = slider.querySelectorAll("img");
+let loaded = 0;
+
+images.forEach(img=>{
+  if(img.complete){
+    loaded++;
+  }else{
+    img.onload = ()=>{
+      loaded++;
+      if(loaded === images.length){
+        startSlider();
+      }
+    }
+  }
+});
+
+// kalau semua sudah cache
+if(loaded === images.length){
+  startSlider();
+}
+
+function startSlider(){
+
+  clearInterval(sliderInterval);
+
+  // mulai dari paling kiri
+  slider.scrollLeft = 0;
+
+  sliderInterval = setInterval(()=>{
+    slider.scrollLeft += 1;
+
+    // kalau sudah mentok kanan → balik lagi
+    if(slider.scrollLeft + slider.clientWidth >= slider.scrollWidth){
+      slider.scrollLeft = 0;
+    }
+
+  },20);
+
+  // pause saat disentuh
+  slider.addEventListener("touchstart",()=>clearInterval(sliderInterval));
+
+  slider.addEventListener("touchend",()=>{
+    sliderInterval=setInterval(()=>{
+      slider.scrollLeft+=1;
+      if(slider.scrollLeft + slider.clientWidth >= slider.scrollWidth){
+        slider.scrollLeft=0;
+      }
+    },20);
+  });
 }
 
 /* LOGIN */
