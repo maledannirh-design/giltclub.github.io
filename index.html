@@ -126,85 +126,63 @@ margin-top:10px;
 display:inline-block;
 text-decoration:none;
 }
-
-  /* SCHEDULE */
+/* CALENDAR */
 .schedule{
-margin-top:15px;
-width:100%;
+background:#F2E8D5;
+padding:20px 10px 10px;
 }
 
-.calendar{
+.calendar-strip{
 display:flex;
-justify-content:space-between;
-gap:6px;
+overflow-x:auto;
+gap:12px;
 padding:10px;
 }
 
-.day{
+.day-box{
+min-width:70px;
+height:95px;
 background:white;
-padding:8px;
-border-radius:10px;
-font-size:12px;
-width:100%;
+border-radius:14px;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+box-shadow:0 4px 10px rgba(0,0,0,0.08);
+cursor:pointer;
 }
 
-.today{
+.day-box.active{
 background:#2E5D3A;
 color:white;
+}
+
+.day-name{
+font-size:12px;
 font-weight:bold;
 }
 
-.mabarBox{
-background:white;
-margin:12px;
-padding:15px;
-border-radius:14px;
-box-shadow:0 4px 12px rgba(0,0,0,0.1);
+.day-date{
+font-size:18px;
+font-weight:bold;
+margin-top:4px;
 }
 
-.joinBtn{
-margin-top:10px;
+.schedule-info{
+margin-top:15px;
+background:white;
+border-radius:18px;
+padding:18px;
+box-shadow:0 6px 18px rgba(0,0,0,0.08);
+}
+
+.join-btn{
 background:#2E5D3A;
 color:white;
 border:none;
 padding:12px 20px;
 border-radius:12px;
-font-weight:bold;
-}
-.schedule{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:10px;
-padding:15px;
-}
-
-.dayBox{
-background:white;
-border-radius:14px;
-padding:10px;
-position:relative;
-box-shadow:0 3px 10px rgba(0,0,0,0.1);
-text-align:left;
-}
-
-.date{
-position:absolute;
-top:8px;
-right:10px;
-background:#2E5D3A;
-color:white;
-padding:4px 8px;
-border-radius:8px;
-font-size:12px;
-}
-
-.dayName{
-font-weight:bold;
-margin-bottom:6px;
-}
-
-.dayContent{
-font-size:12px;
+margin-top:12px;
 }
 
 </style>
@@ -240,33 +218,17 @@ font-size:12px;
 <section class="hero">
 <h1>WELCOME TO GILT CLUB</h1>
 <p>Tennis Sport & Social Community</p>
-  <div class="schedule" id="scheduleBox"></div>
-  <div class="schedule">
-
-  <div class="calendar">
-    <div class="day">MON<br><small>3</small></div>
-    <div class="day">TUE<br><small>4</small></div>
-    <div class="day today">WED<br><small>5</small></div>
-    <div class="day">THU<br><small>6</small></div>
-    <div class="day">FRI<br><small>7</small></div>
-    <div class="day">SAT<br><small>8</small></div>
-    <div class="day">SUN<br><small>9</small></div>
-  </div>
-
-  <div class="mabarBox">
-    <b>Jadwal Mabar</b><br>
-    10 - 12 Orang<br>
-    Rp100.000 / member<br>
-    <span style="color:#2E5D3A;font-weight:bold">Member: Rp75.000</span>
-
-    <br><br>
-    <button class="joinBtn">JOIN</button>
-  </div>
-
-</div>
-
 </section>
+  
+<!-- SCHEDULE -->
+<section class="schedule">
+  <div id="calendarStrip" class="calendar-strip"></div>
 
+  <div id="scheduleInfo" class="schedule-info">
+    <h3>Pilih tanggal bermain</h3>
+  </div>
+</section>
+  
 <!-- STORE -->
 <section class="store">
 <h2>Product on Sale (Diskon Gede)</h2>
@@ -431,42 +393,63 @@ function beliProduk(id){
 loadMembers();
 loadProducts();
 
-
-  /* ===== SCHEDULE ===== */
+/* ===== SCHEDULE ===== */
 
 async function loadSchedule(){
 
  const res = await fetch(API+"?action=schedule");
- const days = await res.json();
+ const data = await res.json();
 
- const box=document.getElementById("scheduleBox");
- box.innerHTML="";
+ const strip = document.getElementById("calendarStrip");
+ const info = document.getElementById("scheduleInfo");
 
- const namaHari=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+ strip.innerHTML="";
 
- days.forEach((d,i)=>{
+ const hariIndo = {
+  Sunday:"Minggu",
+  Monday:"Senin",
+  Tuesday:"Selasa",
+  Wednesday:"Rabu",
+  Thursday:"Kamis",
+  Friday:"Jumat",
+  Saturday:"Sabtu"
+ };
 
-  let isi="Tidak ada";
+ data.forEach((d,i)=>{
 
-  if(d.max>0){
-    isi=`Mabar Club<br>
-    ${d.jam}<br>
-    ${d.max} org<br>
-    100k / member<br>
-    <b>Member 75k</b>`;
-  }
+   const tanggal = new Date(d.date);
 
-  box.innerHTML+=`
-  <div class="dayBox">
-    <div class="date">${d.tanggal}</div>
-    <div class="dayName">${namaHari[i]}</div>
-    <div class="dayContent">${isi}</div>
-  </div>`;
+   const box = document.createElement("div");
+   box.className="day-box";
+
+   box.innerHTML=`
+     <div class="day-name">${hariIndo[d.day]}</div>
+     <div class="day-date">${tanggal.getDate()}</div>
+   `;
+
+   box.onclick=()=>{
+     document.querySelectorAll(".day-box").forEach(b=>b.classList.remove("active"));
+     box.classList.add("active");
+
+     info.innerHTML=`
+       <h3>${d.title}</h3>
+       <div>${d.player}</div>
+       <div>Rp${d.public.toLocaleString()}/member</div>
+       <b>Member: Rp${d.member.toLocaleString()}</b><br>
+       <button class="join-btn">JOIN</button>
+     `;
+   };
+
+   strip.appendChild(box);
+
+   if(i===0) box.click();
+
  });
 
 }
 
 loadSchedule();
+
 
 </script>
 </body>
