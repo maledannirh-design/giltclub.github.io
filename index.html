@@ -385,8 +385,8 @@ let harga=Number(p.disc)>0?
 slider.innerHTML+=`
 <div class="card">
 <img src="${foto}?v=5" onerror="this.src='images/members/default.png'">
-<div><b>${p.name}</b></div>
-<div style="font-size:12px">${p.desc}</div>
+<div class="pname">${p.name}</div>
+<div class="pdesc">${p.desc}</div>
 ${harga}
 ${status}
 <br>
