@@ -463,7 +463,7 @@ const data=await res.json();
 const slider=document.getElementById("productSlider");
 slider.innerHTML="";
 data.forEach(p=>{
-const foto="images/club_product/"+p.id+".png";
+const foto="images/club_product/"+p.id+".jpg";
 const qty=Number(p.qty);
 let status=qty<=0?"<div style='color:red'>Habis</div>":qty<=3?`<div style='color:orange'>Sisa ${qty}</div>`:"<div style='color:green'>Tersedia</div>";
 let harga=Number(p.disc)>0?
@@ -473,7 +473,7 @@ let harga=Number(p.disc)>0?
 :`<div style="font-weight:bold">Rp ${p.price}</div>`;
 slider.innerHTML+=`
 <div class="card">
-<img src="${foto}?v=5" onerror="this.src='images/members/default.png'">
+<img src="${foto}?v=5" onerror="this.src='images/members/default.jpg'">
 <div class="pname">${p.name}</div>
 <div class="pdesc">${p.desc}</div>
 ${harga}
@@ -501,8 +501,8 @@ async function loadMembers(){
   members.forEach(m=>{
     track.innerHTML += `
       <div class="member-card">
-        <img src="images/members/${m.username.toLowerCase().trim()}.png?v=15"
-        onerror="this.src='images/members/default.png'">
+        <img src="images/members/${m.username.toLowerCase().trim()}.jpg?v=16"
+        onerror="this.src='images/members/default.jpg'">
         <h3>${m.name}</h3>
         <p>${m.bio}</p>
       </div>`;
