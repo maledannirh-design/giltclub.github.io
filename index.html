@@ -77,19 +77,15 @@ padding-bottom:30px;
 }
 
 .slider{
-display:flex;
-overflow-x:auto;
-scroll-snap-type:x mandatory;
--webkit-overflow-scrolling:touch;
-padding:20px 12px;
-overscroll-behavior-x:contain;
+padding:16px 12px;
+gap:0;
 }
-.slider::-webkit-scrollbar{display:none;}
+  
 
 .card{
-flex:0 0 78%;
-max-width:78%;
-margin:0 10px;
+flex:0 0 46%;
+max-width:46%;
+margin:0 6px;
 padding:18px 14px;
 background:#F2E8D5;
 border-radius:18px;
@@ -106,26 +102,25 @@ margin:auto;
 }
 
 /* MEMBER */
-.member{
-background:#E5A9A9;
-color:white;
-padding:40px 20px;
-}
-
 #memberSlider{
-display:flex;
-gap:18px;
-padding:10px 16px;
+width:100%;
 overflow:hidden;
 position:relative;
+padding:10px 0 20px 0;
+}
+
+#memberTrack{
+display:flex;
+gap:18px;
+padding:0 18px;
+will-change:transform;
 }
 
 .member-card{
-flex:0 0 72%;
-min-width:72%;
-margin-right:6px;
+flex:0 0 68%;
+min-width:68%;
+background:transparent;
 text-align:center;
-transition:transform .35s ease;
 }
 
 .member-card img{
@@ -135,21 +130,6 @@ object-fit:cover;
 border-radius:20px;
 }
 
-
-.member-card{
-flex:0 0 80%;
-margin:0 10%;
-scroll-snap-align:center;
-text-align:center;
-}
-
-
-.member-card img{
-width:170px;
-height:210px;
-object-fit:cover;
-border-radius:20px;
-}
 
 /* CALENDAR */
 .schedule{
@@ -223,6 +203,34 @@ background:#2E5D3A;
 color:white;
 font-size:12px;
 }
+
+  /* FORCE MOBILE LAYOUT */
+
+@media screen and (min-width: 700px){
+
+  body{
+    display:flex;
+    justify-content:center;
+    background:#2c2c2c;
+  }
+
+  body > *{
+    max-width:430px;
+    width:100%;
+    background:#F2E8D5;
+    box-shadow:0 0 35px rgba(0,0,0,.35);
+  }
+
+  .header{
+    left:50%;
+    transform:translateX(-50%);
+    max-width:430px;
+  }
+}
+  html, body{
+touch-action:pan-y;
+  }
+  
 </style>
 </head>
 
@@ -271,7 +279,10 @@ font-size:12px;
 
 <section class="member">
 <h2>Meet Our Member</h2>
-<div id="memberSlider"></div>
+<div id="memberSlider">
+   <div id="memberTrack"></div>
+</div>
+
 </section>
 
 <footer>
@@ -294,62 +305,6 @@ loop();
 el.addEventListener("touchstart",()=>stop=true,{passive:true});
 el.addEventListener("touchend",()=>setTimeout(()=>{stop=false;loop();},1200),{passive:true});
 }
-/* ================= MEMBERS ================= */
-
-let memberIndex = 0;
-let memberTimer = null;
-
-async function loadMembers(){
-
-  try{
-
-    const res = await fetch(API+"?action=members");
-    const members = await res.json();
-
-    const slider = document.getElementById("memberSlider");
-    slider.innerHTML="";
-
-    members.forEach(m=>{
-      slider.innerHTML += `
-        <div class="member-card">
-          <img src="images/members/${m.username.toLowerCase().trim()}.png?v=11"
-          onerror="this.src='images/members/default.png'">
-          <h3>${m.name}</h3>
-          <p>${m.bio}</p>
-        </div>`;
-    });
-
-    startMemberSlide();
-
-  }catch(e){
-    console.log("member error",e);
-  }
-}
-
-function startMemberSlide(){
-
-  const slider = document.getElementById("memberSlider");
-  const cards = slider.children;
-
-  if(cards.length===0) return;
-
-  function move(){
-
-    memberIndex++;
-
-    if(memberIndex >= cards.length){
-      memberIndex = 0;
-    }
-
-    const shift = memberIndex * (cards[0].offsetWidth + 18);
-
-    slider.style.transform = `translateX(-${shift}px)`;
-
-  }
-
-  memberTimer = setInterval(move, 3200);
-}
-
 
 /* PRODUCTS */
 async function loadProducts(){
@@ -379,7 +334,56 @@ ${status}
 });
 autoScroll(slider,0.45);
 }
+/* ================= MEMBERS ================= */
 
+let memberPos = 0;
+let memberSpeed = 0.35;
+let memberRAF;
+
+async function loadMembers(){
+
+  const res = await fetch(API+"?action=members");
+  const members = await res.json();
+
+  const track = document.getElementById("memberTrack");
+  track.innerHTML="";
+
+  members.forEach(m=>{
+    track.innerHTML += `
+      <div class="member-card">
+        <img src="images/members/${m.username.toLowerCase().trim()}.png?v=15"
+        onerror="this.src='images/members/default.png'">
+        <h3>${m.name}</h3>
+        <p>${m.bio}</p>
+      </div>`;
+  });
+
+  // DUPLICATE for infinite loop
+  track.innerHTML += track.innerHTML;
+
+  startMemberAutoSlide();
+}
+
+function startMemberAutoSlide(){
+
+  const track = document.getElementById("memberTrack");
+
+  function animate(){
+
+    memberPos += memberSpeed;
+
+    if(memberPos >= track.scrollWidth/2){
+      memberPos = 0;
+    }
+
+    track.style.transform = `translateX(-${memberPos}px)`;
+
+    memberRAF = requestAnimationFrame(animate);
+  }
+
+  animate();
+  }
+   
 /* LOGIN */
 function openLogin(){loginBox.style.display="flex";}
 function closeLogin(){loginBox.style.display="none";}
