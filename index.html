@@ -1,9 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Gilt Club</title>
+
+<script>
+(function(){
+
+  const host = window.location.hostname;
+
+  const isMobile =
+    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i
+    .test(navigator.userAgent);
+
+  /* =========================
+     DESKTOP → PAKAI DOMAIN UTAMA
+     ========================= */
+  if(!isMobile && host === "m.giltclub.my.id"){
+    window.location.replace("https://giltclub.my.id");
+    return;
+  }
+
+  /* =========================
+     MOBILE → PAKAI SUBDOMAIN m
+     ========================= */
+  if(isMobile && host === "giltclub.my.id"){
+    window.location.replace("https://m.giltclub.my.id");
+    return;
+  }
+
+})();
+</script>
 
 <style>
 body{
@@ -15,14 +43,19 @@ body{
   background:#0f172a;
   color:white;
   font-family:Arial,Helvetica,sans-serif;
+  text-align:center;
+}
+.box{
+  opacity:.8;
 }
 </style>
 
 </head>
+
 <body>
-<div>
+<div class="box">
   <h2>Gilt Club</h2>
-  <p>Loading application...</p>
+  <p>Preparing application...</p>
 </div>
 </body>
 </html>
