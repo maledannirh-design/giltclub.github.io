@@ -1,49 +1,31 @@
 <!DOCTYPE html>
-
-<html lang="en">
+<html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gilt Club</title>
+<title>GILT Club</title>
 
+<!-- ================= MOBILE REDIRECT ================= -->
 <script>
-/*
-GILT CLUB DOMAIN ROUTER
-Main domain  : giltclub.my.id   (desktop website)
-Mobile domain: m.giltclub.my.id (mobile web app)
-
-Fungsi:
-HP buka utama  → diarahkan ke m
-Laptop buka m  → balik ke utama
-Anti infinite loop
-*/
-
 (function(){
 
-  const host = location.hostname.toLowerCase();
+  var host = location.hostname;
 
-  const MAIN = "giltclub.my.id";
-  const MOBILE = "m.giltclub.my.id";
+  // deteksi device
+  var isMobile = /android|iphone|ipad|ipod|blackberry|windows phone/i
+      .test(navigator.userAgent.toLowerCase());
 
-  const ua = navigator.userAgent || navigator.vendor || window.opera;
-
-  const isMobile =
-    /android|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(ua);
-
-  // --- jika HP buka domain utama → pindah ke m ---
-  if(isMobile && host === MAIN){
-    location.replace("https://" + MOBILE);
-    return;
-  }
-
-  // --- jika laptop buka m → balik ke utama ---
-  if(!isMobile && host === MOBILE){
-    location.replace("https://" + MAIN);
-    return;
+  // kalau buka domain utama pakai HP → pindah ke m.
+  if(host === "giltclub.my.id"){
+      if(isMobile){
+          location.replace("https://m.giltclub.my.id");
+          return;
+      }
   }
 
 })();
 </script>
+<!-- =================================================== -->
 
 <style>
 body{
@@ -55,18 +37,29 @@ body{
   background:#0f172a;
   color:white;
   font-family:Arial,Helvetica,sans-serif;
+}
+
+.container{
   text-align:center;
 }
-small{opacity:.6}
-</style>
 
+h1{
+  font-size:34px;
+  margin-bottom:10px;
+}
+
+p{
+  opacity:0.7;
+}
+</style>
 </head>
 
 <body>
-<div>
-  <h2>Gilt Club</h2>
-  <p>Preparing application...</p>
-  <small>If this page stays here, please refresh once.</small>
+
+<div class="container">
+  <h1>GILT Club</h1>
+  <p>Desktop Web is under preparation...</p>
 </div>
+
 </body>
 </html>
