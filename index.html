@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -6,27 +7,38 @@
 <title>Gilt Club</title>
 
 <script>
+/*
+GILT CLUB DOMAIN ROUTER
+Main domain  : giltclub.my.id   (desktop website)
+Mobile domain: m.giltclub.my.id (mobile web app)
+
+Fungsi:
+HP buka utama  → diarahkan ke m
+Laptop buka m  → balik ke utama
+Anti infinite loop
+*/
+
 (function(){
 
-  const host = window.location.hostname;
+  const host = location.hostname.toLowerCase();
+
+  const MAIN = "giltclub.my.id";
+  const MOBILE = "m.giltclub.my.id";
+
+  const ua = navigator.userAgent || navigator.vendor || window.opera;
 
   const isMobile =
-    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i
-    .test(navigator.userAgent);
+    /android|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(ua);
 
-  /* =========================
-     DESKTOP → PAKAI DOMAIN UTAMA
-     ========================= */
-  if(!isMobile && host === "m.giltclub.my.id"){
-    window.location.replace("https://giltclub.my.id");
+  // --- jika HP buka domain utama → pindah ke m ---
+  if(isMobile && host === MAIN){
+    location.replace("https://" + MOBILE);
     return;
   }
 
-  /* =========================
-     MOBILE → PAKAI SUBDOMAIN m
-     ========================= */
-  if(isMobile && host === "giltclub.my.id"){
-    window.location.replace("https://m.giltclub.my.id");
+  // --- jika laptop buka m → balik ke utama ---
+  if(!isMobile && host === MOBILE){
+    location.replace("https://" + MAIN);
     return;
   }
 
@@ -45,17 +57,16 @@ body{
   font-family:Arial,Helvetica,sans-serif;
   text-align:center;
 }
-.box{
-  opacity:.8;
-}
+small{opacity:.6}
 </style>
 
 </head>
 
 <body>
-<div class="box">
+<div>
   <h2>Gilt Club</h2>
   <p>Preparing application...</p>
+  <small>If this page stays here, please refresh once.</small>
 </div>
 </body>
 </html>
