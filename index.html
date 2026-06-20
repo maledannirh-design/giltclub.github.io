@@ -1,65 +1,496 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GILT Club</title>
 
-<!-- ================= MOBILE REDIRECT ================= -->
-<script>
-(function(){
-
-  var host = location.hostname;
-
-  // deteksi device
-  var isMobile = /android|iphone|ipad|ipod|blackberry|windows phone/i
-      .test(navigator.userAgent.toLowerCase());
-
-  // kalau buka domain utama pakai HP → pindah ke m.
-  if(host === "giltclub.my.id"){
-      if(isMobile){
-          location.replace("https://m.giltclub.my.id");
-          return;
-      }
-  }
-
-})();
-</script>
-<!-- =================================================== -->
+<title>GMTC | GILT ME Tennis Club</title>
 
 <style>
-body{
+
+*{
   margin:0;
-  height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background:#0f172a;
-  color:white;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  background:#000;
+  color:#fff;
   font-family:Arial,Helvetica,sans-serif;
 }
 
-.container{
+/* ==========================
+   HEADER
+========================== */
+
+header{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  z-index:999;
+  padding:25px 60px;
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  background:linear-gradient(
+    to bottom,
+    rgba(0,0,0,.7),
+    rgba(0,0,0,0)
+  );
+}
+
+.logo img{
+  height:48px;
+}
+
+nav{
+  display:flex;
+  gap:35px;
+}
+
+nav a{
+  color:#fff;
+  text-decoration:none;
+  font-size:14px;
+  letter-spacing:1px;
+}
+
+.login-btn{
+  border:1px solid #fff;
+  padding:10px 18px;
+  color:#fff;
+  text-decoration:none;
+  font-size:13px;
+}
+
+/* ==========================
+   HERO VIDEO
+========================== */
+
+.hero{
+  position:relative;
+  height:100vh;
+  overflow:hidden;
+}
+
+.hero video{
+  position:absolute;
+  top:0;
+  left:0;
+
+  width:100%;
+  height:100%;
+
+  object-fit:cover;
+}
+
+.hero-overlay{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,.35);
+}
+
+.hero-content{
+  position:absolute;
+  inset:0;
+
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+
+  text-align:center;
+  z-index:10;
+}
+
+.hero h1{
+  font-size:72px;
+  line-height:1.1;
+  letter-spacing:2px;
+}
+
+.hero p{
+  margin-top:20px;
+  font-size:18px;
+  color:#ddd;
+}
+
+.hero a{
+  margin-top:35px;
+
+  background:#fff;
+  color:#000;
+
+  padding:14px 26px;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+/* ==========================
+   SECTION
+========================== */
+
+section{
+  padding:100px 8%;
+}
+
+.section-title{
+  text-align:center;
+  font-size:38px;
+  margin-bottom:25px;
+}
+
+.section-sub{
+  text-align:center;
+  max-width:800px;
+  margin:auto;
+  color:#bbb;
+  line-height:1.8;
+}
+
+/* ==========================
+   SPONSOR
+========================== */
+
+.sponsor-wrap{
+  overflow:hidden;
+  margin-top:40px;
+}
+
+.sponsor-track{
+  display:flex;
+  gap:100px;
+  width:max-content;
+  animation:scroll 25s linear infinite;
+}
+
+.sponsor-track img{
+  height:70px;
+  filter:brightness(0) invert(1);
+  opacity:.9;
+}
+
+@keyframes scroll{
+  from{
+    transform:translateX(0);
+  }
+  to{
+    transform:translateX(-50%);
+  }
+}
+
+/* ==========================
+   STATS
+========================== */
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:30px;
+  margin-top:60px;
+}
+
+.stat-box{
+  border:1px solid #222;
+  padding:50px;
   text-align:center;
 }
 
-h1{
-  font-size:34px;
-  margin-bottom:10px;
+.stat-box h3{
+  font-size:54px;
+  margin-bottom:15px;
 }
 
-p{
-  opacity:0.7;
+.stat-box p{
+  color:#bbb;
 }
+
+/* ==========================
+   PROGRAMS
+========================== */
+
+.programs{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:25px;
+  margin-top:50px;
+}
+
+.card{
+  border:1px solid #222;
+  padding:40px;
+}
+
+.card h3{
+  margin-bottom:15px;
+}
+
+/* ==========================
+   APP
+========================== */
+
+.app-section{
+  text-align:center;
+}
+
+.app-section a{
+  display:inline-block;
+  margin-top:25px;
+  background:#fff;
+  color:#000;
+  padding:14px 25px;
+  text-decoration:none;
+}
+
+/* ==========================
+   FOOTER
+========================== */
+
+footer{
+  border-top:1px solid #222;
+  padding:50px;
+  text-align:center;
+  color:#888;
+}
+
+/* ==========================
+   MOBILE
+========================== */
+
+@media(max-width:900px){
+
+  header{
+    padding:20px;
+  }
+
+  nav{
+    display:none;
+  }
+
+  .hero h1{
+    font-size:42px;
+  }
+
+  .stats{
+    grid-template-columns:1fr;
+  }
+
+  .programs{
+    grid-template-columns:1fr;
+  }
+
+}
+
 </style>
 </head>
-
 <body>
 
-<div class="container">
-  <h1>GILT Club</h1>
-  <p>Desktop Web is under preparation...</p>
-</div>
+<!-- HEADER -->
+
+<header>
+
+  <div class="logo">
+    <img src="assets/logo-gmtc.png">
+  </div>
+
+  <nav>
+    <a href="#about">ABOUT</a>
+    <a href="#programs">PROGRAMS</a>
+    <a href="#community">COMMUNITY</a>
+    <a href="#contact">CONTACT</a>
+  </nav>
+
+  <a class="login-btn"
+     href="https://m.giltclub.my.id">
+     LOGIN MEMBER
+  </a>
+
+</header>
+
+<!-- HERO -->
+
+<section class="hero">
+
+  <video autoplay muted loop playsinline>
+    <source src="assets/gmtc-hero.mp4" type="video/mp4">
+  </video>
+
+  <div class="hero-overlay"></div>
+
+  <div class="hero-content">
+
+    <h1>
+      POSITIVE.<br>
+      LIFESTYLE.<br>
+      ACCESS.<br>
+      YIELD.
+    </h1>
+
+    <p>
+      Fun Tennis Club & Improvement Community
+    </p>
+
+    <a href="#about">
+      DISCOVER GMTC
+    </a>
+
+  </div>
+
+</section>
+
+<!-- SPONSOR -->
+
+<section>
+
+  <h2 class="section-title">
+    Sponsorship By
+  </h2>
+
+  <div class="sponsor-wrap">
+
+    <div class="sponsor-track">
+
+      <img src="images/hokiko.png">
+      <img src="images/bank-artha-graha-logo.png">
+
+      <img src="images/hokiko.png">
+      <img src="images/bank-artha-graha-logo.png">
+
+      <img src="images/hokiko.png">
+      <img src="images/bank-artha-graha-logo.png">
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ABOUT -->
+
+<section id="about">
+
+  <h2 class="section-title">
+    About GMTC
+  </h2>
+
+  <p class="section-sub">
+    Founded in 2025, GMTC is a fun tennis club and
+    improvement community that brings people together
+    through tennis, healthy lifestyle, networking and
+    meaningful experiences.
+  </p>
+
+</section>
+
+<!-- STATS -->
+
+<section id="community">
+
+  <h2 class="section-title">
+    Activity Summary
+  </h2>
+
+  <div class="stats">
+
+    <div class="stat-box">
+      <h3>132</h3>
+      <p>Sessions Hosted</p>
+    </div>
+
+    <div class="stat-box">
+      <h3>928</h3>
+      <p>Player Attendances</p>
+    </div>
+
+    <div class="stat-box">
+      <h3>369</h3>
+      <p>Court Hours Played</p>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- PROGRAMS -->
+
+<section id="programs">
+
+  <h2 class="section-title">
+    Programs
+  </h2>
+
+  <div class="programs">
+
+    <div class="card">
+      <h3>Play Session</h3>
+      <p>Community gameplay sessions.</p>
+    </div>
+
+    <div class="card">
+      <h3>Drill Session</h3>
+      <p>Structured improvement sessions.</p>
+    </div>
+
+    <div class="card">
+      <h3>Tennis Meet Up</h3>
+      <p>Social and networking activities.</p>
+    </div>
+
+    <div class="card">
+      <h3>Mini Tournament</h3>
+      <p>Friendly competitive events.</p>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- APP -->
+
+<section class="app-section">
+
+  <h2 class="section-title">
+    GMTC Mobile Platform
+  </h2>
+
+  <p class="section-sub">
+    Booking, Wallet, Attendance Tracking,
+    Community Management and more.
+  </p>
+
+  <a href="https://m.giltclub.my.id">
+    OPEN MEMBER APP
+  </a>
+
+</section>
+
+<!-- FOOTER -->
+
+<footer id="contact">
+
+  <h3>GMTC</h3>
+
+  <br>
+
+  GILT ME Tennis Club
+
+  <br><br>
+
+  Balikpapan, Indonesia
+
+  <br><br>
+
+  © 2026 GMTC
+
+</footer>
 
 </body>
 </html>
