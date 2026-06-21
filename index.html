@@ -932,7 +932,31 @@ async function trackWebsiteVisit(){
 }
 
 trackWebsiteVisit();
+async function loadWebsiteStats(){
 
+   const statsRef =
+      doc(db,"websiteStats","Summary");
+
+   const snap = await getDoc(statsRef);
+
+   if(!snap.exists()) return;
+
+   const data = snap.data();
+
+   document.getElementById("weeklyVisits").innerText =
+      data.totalVisits || 0;
+
+   document.getElementById("uniqueVisitors").innerText =
+      data.uniqueVisitors || 0;
+
+   document.getElementById("pageViews").innerText =
+      data.pageViews || 0;
+
+   document.getElementById("sponsorClicks").innerText =
+      data.sponsorClicks || 0;
+}
+
+loadWebsiteStats();
 </script>
 </body>
 </html>
