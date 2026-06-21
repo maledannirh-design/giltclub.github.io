@@ -874,6 +874,65 @@ function prevProduct(){
 setInterval(nextProduct,5000);
 
 </script>
-  
+<script type="module">
+
+import {
+ doc,
+ getDoc,
+ setDoc,
+ updateDoc,
+ increment,
+ serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
+
+import { db } from "./firebase-config.js";
+// ganti jika inisialisasi Firebase Anda berbeda
+
+async function trackWebsiteVisit(){
+
+ let visitorId = localStorage.getItem("gmtcVisitorId");
+
+ if(!visitorId){
+    visitorId = crypto.randomUUID();
+    localStorage.setItem("gmtcVisitorId", visitorId);
+ }
+
+ const visitorRef = doc(db,"websiteVisitors",visitorId);
+ const visitorSnap = await getDoc(visitorRef);
+
+ const statsRef = doc(db,"websiteStats","Summary");
+
+ if(!visitorSnap.exists()){
+
+    await setDoc(visitorRef,{
+      firstVisit: serverTimestamp(),
+      lastVisit: serverTimestamp(),
+      visitCount:1
+    });
+
+    await updateDoc(statsRef,{
+      totalVisits: increment(1),
+      uniqueVisitors: increment(1),
+      pageViews: increment(1)
+    });
+
+ }else{
+
+    await updateDoc(visitorRef,{
+      lastVisit: serverTimestamp(),
+      visitCount: increment(1)
+    });
+
+    await updateDoc(statsRef,{
+      totalVisits: increment(1),
+      pageViews: increment(1)
+    });
+ }
+
+}
+
+trackWebsiteVisit();
+
+</script>
 </body>
 </html>
