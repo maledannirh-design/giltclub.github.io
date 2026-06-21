@@ -320,16 +320,42 @@ section{
 }
 
 .partner-logo{
-  height:50px;
-  margin:25px auto;
-  display:block;
+
+  position:absolute;
+
+  top:20px;
+  left:20px;
+
+  height:60px;
+  max-width:120px;
+
   object-fit:contain;
+
+  z-index:20;
 }
 
 .product-title{
   font-size:22px;
   margin-bottom:20px;
 }
+
+  .product-description{
+
+  color:#999;
+
+  font-size:14px;
+
+  line-height:1.8;
+
+  margin:20px 0 25px;
+
+  max-width:350px;
+
+  margin-left:auto;
+  margin-right:auto;
+
+}
+  
 
 .old-price{
   color:#666;
@@ -551,6 +577,13 @@ footer{
       id="productTitle">
       Visor Hat 1st Edition - VVIP Black
   </h3>
+  <p class="product-description"
+   id="productDescription">
+
+  Elegant premium visor designed
+   exclusively for GMTC VVIP members.
+
+</p>
 
   <div class="old-price"
        id="oldPrice">
@@ -743,6 +776,10 @@ const products = [
  image:"products/visorhat1.jpg",
  logo:"images/hokiko.png",
  title:"Visor Hat 1st Edition - VVIP Black",
+
+ description:
+ "Elegant dan premium visor yang didesign khusus secara ekslusif khusus untuk GMTC VVIP member.",
+
  oldPrice:"Rp85,000",
  newPrice:"Rp65,000",
  discount:"-24%",
@@ -753,6 +790,10 @@ const products = [
  image:"products/malejersey.png",
  logo:"images/bank-artha-graha-logo.png",
  title:"1st Edition Club Jersey - Male",
+
+ description:
+ "Performance-inspired jersey crafted for comfort and lifestyle.",
+
  oldPrice:"Rp275,000",
  newPrice:"Rp235,000",
  discount:"-15%",
@@ -763,6 +804,10 @@ const products = [
  image:"products/femalejersey.png",
  logo:"assets/logo-gmtc.png",
  title:"1st Edition Club Jersey - Female",
+
+ description:
+ "Elegant and comfortable lifestyle jersey for active female members.",
+
  oldPrice:"Rp275,000",
  newPrice:"Rp235,000",
  discount:"-15%",
@@ -771,7 +816,7 @@ const products = [
 
 ];
 
-let currentProduct = 0;
+  let currentProduct = 0;
 
 function updateProduct(){
 
