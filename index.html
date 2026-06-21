@@ -274,15 +274,40 @@ section{
 }
 
 .discount-badge{
+
   position:absolute;
-  top:20px;
-  right:20px;
-  background:#fff;
-  color:#000;
-  padding:8px 14px;
-  font-size:12px;
-  font-weight:bold;
-  border-radius:30px;
+  top:15px;
+  right:15px;
+
+  width:80px;
+  height:80px;
+
+  background:#d50000;
+
+  color:#fff;
+
+  border-radius:12px;
+
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+
+  transform:rotate(10deg);
+
+  box-shadow:0 10px 30px rgba(213,0,0,.4);
+
+  z-index:20;
+}
+
+.discount-badge span{
+  font-size:24px;
+  font-weight:800;
+}
+
+.discount-badge small{
+  font-size:11px;
+  letter-spacing:1px;
 }
 
 .product-photo{
@@ -507,41 +532,51 @@ footer{
 
     <div class="product-card">
 
-      <div class="discount-badge">
-        SAVE 24%
-      </div>
-
-      <img class="product-photo"
-           src="products/visorhat1.jpg">
-
-      <img class="partner-logo"
-           src="images/hokiko.png">
-
-      <h3 class="product-title">
-        Visor Hat 1st Edition - VVIP Black
-      </h3>
-
-      <div class="old-price">
-        Rp85,000
-      </div>
-
-      <div class="new-price">
-        Rp65,000
-      </div>
-
-      <a href="#"
-         class="preorder-btn">
-         PRE-ORDER
-      </a>
-
-    </div>
-
-    <div class="carousel-nav">
-      <button>&larr;</button>
-      <button>&rarr;</button>
-    </div>
-
+  <div class="discount-badge">
+      <span id="discountValue">-24%</span>
+      <small>OFF</small>
   </div>
+
+  <img class="product-photo"
+       id="productImage"
+       src="products/visorhat1.jpg">
+
+  <img class="partner-logo"
+       id="partnerLogo"
+       src="images/hokiko.png">
+
+  <h3 class="product-title"
+      id="productTitle">
+      Visor Hat 1st Edition - VVIP Black
+  </h3>
+
+  <div class="old-price"
+       id="oldPrice">
+       Rp85,000
+  </div>
+
+  <div class="new-price"
+       id="newPrice">
+       Rp65,000
+  </div>
+
+  <a href="#"
+     class="preorder-btn"
+     id="productLink">
+     PRE-ORDER
+  </a>
+
+</div>
+
+<div class="carousel-nav">
+  <button onclick="prevProduct()">
+    &larr;
+  </button>
+
+  <button onclick="nextProduct()">
+    &rarr;
+  </button>
+</div>
 
 </section>
 
@@ -697,6 +732,84 @@ footer{
   © 2026 GMTC
 
 </footer>
+  
+<script>
 
+const products = [
+
+{
+ image:"products/visorhat1.jpg",
+ logo:"images/hokiko.png",
+ title:"Visor Hat 1st Edition - VVIP Black",
+ oldPrice:"Rp85,000",
+ newPrice:"Rp65,000",
+ discount:"-24%",
+ link:"#"
+},
+
+{
+ image:"products/malejersey.jpg",
+ logo:"images/bank-artha-graha-logo.png",
+ title:"1st Edition Club Jersey - Male",
+ oldPrice:"Rp275,000",
+ newPrice:"Rp235,000",
+ discount:"-15%",
+ link:"#"
+},
+
+{
+ image:"products/femalejersey.jpg",
+ logo:"assets/logo-gmtc.png",
+ title:"1st Edition Club Jersey - Female",
+ oldPrice:"Rp275,000",
+ newPrice:"Rp235,000",
+ discount:"-15%",
+ link:"#"
+}
+
+];
+
+let currentProduct = 0;
+
+function updateProduct(){
+
+ const p = products[currentProduct];
+
+ document.getElementById("productImage").src = p.image;
+ document.getElementById("partnerLogo").src = p.logo;
+ document.getElementById("productTitle").innerText = p.title;
+ document.getElementById("oldPrice").innerText = p.oldPrice;
+ document.getElementById("newPrice").innerText = p.newPrice;
+ document.getElementById("discountValue").innerText = p.discount;
+ document.getElementById("productLink").href = p.link;
+
+}
+
+function nextProduct(){
+
+ currentProduct++;
+
+ if(currentProduct >= products.length)
+   currentProduct = 0;
+
+ updateProduct();
+
+}
+
+function prevProduct(){
+
+ currentProduct--;
+
+ if(currentProduct < 0)
+   currentProduct = products.length - 1;
+
+ updateProduct();
+
+}
+
+setInterval(nextProduct,5000);
+
+</script>
+  
 </body>
 </html>
