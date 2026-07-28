@@ -134,6 +134,112 @@ nav a{
   font-weight:bold;
 }
 
+/*=========================
+ EXPERIENCE
+=========================*/
+
+.experience{
+
+padding:110px 8%;
+background:#080808;
+
+}
+
+.experience-grid{
+
+margin-top:60px;
+
+display:grid;
+
+grid-template-columns:repeat(2,1fr);
+
+gap:35px;
+
+}
+
+.experience-card{
+
+display:block;
+
+background:#111;
+
+border:1px solid #222;
+
+border-radius:18px;
+
+overflow:hidden;
+
+text-decoration:none;
+
+color:white;
+
+transition:.35s;
+
+}
+
+.experience-card:hover{
+
+transform:translateY(-8px);
+
+border-color:#caa24c;
+
+}
+
+.experience-card img{
+
+width:100%;
+
+height:280px;
+
+object-fit:cover;
+
+display:block;
+
+}
+
+.experience-content{
+
+padding:30px;
+
+}
+
+.experience-content h3{
+
+font-size:30px;
+
+margin-bottom:15px;
+
+}
+
+.experience-content p{
+
+color:#aaa;
+
+line-height:1.8;
+
+margin-bottom:25px;
+
+}
+
+.experience-content span{
+
+color:#caa24c;
+
+font-weight:bold;
+
+letter-spacing:1px;
+
+}
+
+@media(max-width:900px){
+
+.experience-grid{
+
+grid-template-columns:1fr;
+
+}
+
+}
 /* ==========================
    SECTION
 ========================== */
@@ -530,6 +636,71 @@ gtag('config', 'G-EPM3YNG89N');
     </a>
 
   </div>
+
+</section>
+
+<!-- EXPERIENCE -->
+
+<section class="experience">
+
+<h2 class="section-title">
+Choose Your Experience
+</h2>
+
+<p class="section-sub">
+Find the tennis session that suits your level and
+start your journey with GMTC.
+</p>
+
+<div class="experience-grid">
+
+<a href="fun-match.html" class="experience-card">
+
+<img src="images/fun-match-cover.jpg">
+
+<div class="experience-content">
+
+<h3>🎾 Fun Match</h3>
+
+<p>
+
+Weekly community match for players of all skill levels.
+Enjoy social tennis, networking and fun competition.
+
+</p>
+
+<span>
+LEARN MORE →
+</span>
+
+</div>
+
+</a>
+
+<a href="drill-session.html" class="experience-card">
+
+<img src="images/drill-session-cover.jpg">
+
+<div class="experience-content">
+
+<h3>🎯 Drill Session</h3>
+
+<p>
+
+Structured training designed to improve your
+technique, footwork, consistency and confidence.
+
+</p>
+
+<span>
+LEARN MORE →
+</span>
+
+</div>
+
+</a>
+
+</div>
 
 </section>
 
