@@ -1102,86 +1102,204 @@ setInterval(nextProduct,5000);
 <script type="module">
 
 import {
- doc,
- getDoc,
- setDoc,
- updateDoc,
- increment,
- serverTimestamp
+  doc,
+  getDoc,
+  setDoc,
+  updateDoc,
+  increment,
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 import { db } from "./firebase-config.js";
-// ganti jika inisialisasi Firebase Anda berbeda
+
+
+// =========================
+// WEBSITE VISIT TRACKING
+// =========================
 
 async function trackWebsiteVisit(){
 
- let visitorId = localStorage.getItem("gmtcVisitorId");
+  let visitorId = localStorage.getItem("gmtcVisitorId");
 
- if(!visitorId){
+  if(!visitorId){
+
     visitorId = crypto.randomUUID();
-    localStorage.setItem("gmtcVisitorId", visitorId);
- }
 
- const visitorRef = doc(db,"websiteVisitors",visitorId);
- const visitorSnap = await getDoc(visitorRef);
+    localStorage.setItem(
+      "gmtcVisitorId",
+      visitorId
+    );
 
- const statsRef = doc(db,"websiteStats","Summary");
+  }
 
- if(!visitorSnap.exists()){
+  const visitorRef =
+    doc(db, "websiteVisitors", visitorId);
 
-    await setDoc(visitorRef,{
-      firstVisit: serverTimestamp(),
-      lastVisit: serverTimestamp(),
-      visitCount:1
+  const visitorSnap =
+    await getDoc(visitorRef);
+
+  const statsRef =
+    doc(db, "websiteStats", "Summary");
+
+
+  if(!visitorSnap.exists()){
+
+    await setDoc(visitorRef, {
+
+      firstVisit:
+        serverTimestamp(),
+
+      lastVisit:
+        serverTimestamp(),
+
+      visitCount: 1
+
     });
 
-    await updateDoc(statsRef,{
-      totalVisits: increment(1),
-      uniqueVisitors: increment(1),
-      pageViews: increment(1)
+
+    await updateDoc(statsRef, {
+
+      totalVisits:
+        increment(1),
+
+      uniqueVisitors:
+        increment(1),
+
+      pageViews:
+        increment(1)
+
     });
 
- }else{
+  }else{
 
-    await updateDoc(visitorRef,{
-      lastVisit: serverTimestamp(),
-      visitCount: increment(1)
+    await updateDoc(visitorRef, {
+
+      lastVisit:
+        serverTimestamp(),
+
+      visitCount:
+        increment(1)
+
     });
 
-    await updateDoc(statsRef,{
-      totalVisits: increment(1),
-      pageViews: increment(1)
+
+    await updateDoc(statsRef, {
+
+      totalVisits:
+        increment(1),
+
+      pageViews:
+        increment(1)
+
     });
- }
+
+  }
 
 }
 
-trackWebsiteVisit();
+
+// =========================
+// SPONSOR CLICK TRACKING
+// =========================
+
+async function trackSponsorClick(){
+
+  const statsRef =
+    doc(db, "websiteStats", "Summary");
+
+
+  await updateDoc(statsRef, {
+
+    sponsorClicks:
+      increment(1)
+
+  });
+
+}
+
+
+// =========================
+// LOAD WEBSITE STATS
+// =========================
+
 async function loadWebsiteStats(){
 
-   const statsRef =
-      doc(db,"websiteStats","Summary");
+  const statsRef =
+    doc(db, "websiteStats", "Summary");
 
-   const snap = await getDoc(statsRef);
 
-   if(!snap.exists()) return;
+  const snap =
+    await getDoc(statsRef);
 
-   const data = snap.data();
 
-   document.getElementById("weeklyVisits").innerText =
-      data.totalVisits || 0;
+  if(!snap.exists()) return;
 
-   document.getElementById("uniqueVisitors").innerText =
-      data.uniqueVisitors || 0;
 
-   document.getElementById("pageViews").innerText =
-      data.pageViews || 0;
+  const data =
+    snap.data();
 
-   document.getElementById("sponsorClicks").innerText =
-      data.sponsorClicks || 0;
+
+  document.getElementById(
+    "weeklyVisits"
+  ).innerText =
+    data.totalVisits || 0;
+
+
+  document.getElementById(
+    "uniqueVisitors"
+  ).innerText =
+    data.uniqueVisitors || 0;
+
+
+  document.getElementById(
+    "pageViews"
+  ).innerText =
+    data.pageViews || 0;
+
+
+  document.getElementById(
+    "sponsorClicks"
+  ).innerText =
+    data.sponsorClicks || 0;
+
 }
 
+
+// =========================
+// START VISIT TRACKING
+// =========================
+
+trackWebsiteVisit();
+
+
+// =========================
+// LOAD CURRENT STATS
+// =========================
+
 loadWebsiteStats();
+
+
+// =========================
+// SPONSOR PRODUCT CLICK
+// =========================
+
+const productLink =
+  document.getElementById("productLink");
+
+
+if(productLink){
+
+  productLink.addEventListener(
+    "click",
+    function(){
+
+      trackSponsorClick();
+
+    }
+  );
+
+}
+
 </script>
 </body>
 </html>
