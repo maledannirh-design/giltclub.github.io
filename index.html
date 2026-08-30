@@ -301,6 +301,392 @@ section{
 }
 
 /* ==========================
+   OUR PARTNERS
+========================== */
+
+.partners-section{
+  background:#050505;
+  padding:80px 5% 90px;
+  overflow:hidden;
+}
+
+.partners-section .section-title{
+  margin-bottom:10px;
+}
+
+.partners-section .section-sub{
+  margin-bottom:35px;
+}
+
+/* PARTNER CARD */
+
+.partner-carousel{
+  max-width:1100px;
+  margin:0 auto;
+}
+
+.partner-card{
+  display:flex;
+  width:100%;
+
+  background:#090909;
+  border:1px solid #444;
+  border-radius:18px;
+
+  overflow:hidden;
+
+  min-height:390px;
+}
+
+/* IMAGE */
+
+.partner-image-wrap{
+  width:50%;
+  min-height:390px;
+  overflow:hidden;
+}
+
+.partner-image{
+  width:100%;
+  height:100%;
+
+  object-fit:cover;
+  object-position:center;
+
+  display:block;
+}
+
+/* CONTENT */
+
+.partner-content{
+  width:50%;
+  padding:42px 48px;
+
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+.partner-label{
+  color:#d5aa3d;
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:1.5px;
+
+  margin-bottom:12px;
+}
+
+.partner-content h3{
+  color:#fff;
+  font-size:30px;
+  line-height:1.2;
+
+  margin:0 0 14px;
+}
+
+.partner-description{
+  color:#bdbdbd;
+  font-size:15px;
+  line-height:1.6;
+
+  margin-bottom:22px;
+}
+
+/* OFFER BOX */
+
+.partner-offer{
+  display:flex;
+
+  border:1px solid #303030;
+  border-radius:12px;
+
+  overflow:hidden;
+
+  margin-bottom:20px;
+}
+
+.partner-offer-main{
+  width:58%;
+  padding:18px 20px;
+}
+
+.partner-offer-main strong{
+  display:block;
+
+  color:#fff;
+  font-size:25px;
+
+  margin-bottom:5px;
+}
+
+.partner-offer-main span{
+  color:#aaa;
+  font-size:13px;
+  line-height:1.4;
+}
+
+.partner-offer-code{
+  width:42%;
+
+  padding:18px 15px;
+
+  border-left:1px solid #303030;
+
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+.partner-offer-code small{
+  color:#aaa;
+  font-size:12px;
+  margin-bottom:7px;
+}
+
+.partner-offer-code strong{
+  color:#d5aa3d;
+
+  border:1px solid #d5aa3d;
+  border-radius:7px;
+
+  padding:8px 10px;
+
+  font-size:15px;
+  text-align:center;
+}
+
+/* BUTTON */
+
+.partner-btn{
+  display:inline-block;
+
+  width:max-content;
+
+  background:#d5aa3d;
+  color:#050505;
+
+  padding:13px 24px;
+
+  border-radius:6px;
+
+  font-size:13px;
+  font-weight:700;
+
+  text-decoration:none;
+
+  transition:.25s;
+}
+
+.partner-btn:hover{
+  transform:translateY(-2px);
+  opacity:.9;
+}
+
+.partner-url{
+  margin-top:12px;
+
+  color:#aaa;
+  font-size:13px;
+
+  text-decoration:none;
+}
+
+.partner-url:hover{
+  color:#d5aa3d;
+}
+
+/* ==========================
+   HOW TO BOOK
+========================== */
+
+.booking-guide{
+  max-width:1100px;
+  margin:0 auto;
+
+  padding-top:45px;
+}
+
+.booking-guide-title{
+  text-align:center;
+
+  color:#fff;
+
+  font-size:25px;
+  font-weight:700;
+
+  margin-bottom:35px;
+}
+
+.booking-guide-title::after{
+  content:"";
+
+  display:block;
+
+  width:45px;
+  height:2px;
+
+  background:#d5aa3d;
+
+  margin:12px auto 0;
+}
+
+.booking-steps{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+
+  gap:15px;
+}
+
+.booking-step{
+  flex:1;
+
+  text-align:center;
+
+  position:relative;
+}
+
+.booking-step:not(:last-child)::after{
+  content:"→";
+
+  position:absolute;
+
+  top:35px;
+  right:-13px;
+
+  color:#d5aa3d;
+  font-size:24px;
+}
+
+.step-number{
+  width:38px;
+  height:38px;
+
+  margin:0 auto 10px;
+
+  border-radius:50%;
+
+  background:#d5aa3d;
+  color:#000;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-weight:700;
+}
+
+.step-icon{
+  width:90px;
+  height:90px;
+
+  margin:0 auto 12px;
+
+  border:1px solid #333;
+  border-radius:14px;
+
+  background:#0b0b0b;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-size:34px;
+}
+
+.booking-step h4{
+  color:#fff;
+
+  font-size:14px;
+
+  margin:0 0 7px;
+}
+
+.booking-step p{
+  color:#aaa;
+
+  font-size:12px;
+  line-height:1.5;
+
+  margin:0;
+}
+
+.booking-step .voucher-text{
+  color:#d5aa3d;
+  font-weight:700;
+}
+
+/* MOBILE */
+
+@media(max-width:800px){
+
+  .partners-section{
+    padding:60px 18px 70px;
+  }
+
+  .partner-card{
+    display:block;
+  }
+
+  .partner-image-wrap{
+    width:100%;
+    height:260px;
+    min-height:260px;
+  }
+
+  .partner-content{
+    width:100%;
+    padding:30px 25px;
+  }
+
+  .partner-content h3{
+    font-size:25px;
+  }
+
+  .partner-offer{
+    display:block;
+  }
+
+  .partner-offer-main,
+  .partner-offer-code{
+    width:100%;
+    box-sizing:border-box;
+  }
+
+  .partner-offer-code{
+    border-left:0;
+    border-top:1px solid #303030;
+  }
+
+  .partner-btn{
+    width:100%;
+    box-sizing:border-box;
+    text-align:center;
+  }
+
+  .booking-steps{
+    display:block;
+  }
+
+  .booking-step{
+    margin-bottom:35px;
+  }
+
+  .booking-step:not(:last-child)::after{
+    content:"↓";
+
+    top:auto;
+    right:auto;
+    bottom:-30px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+  }
+
+}
+  
+/* ==========================
    STATS
 ========================== */
 
@@ -763,7 +1149,277 @@ LEARN MORE →
   </div>
 
 </section>
+<!-- OUR PARTNERS -->
 
+<section class="partners-section">
+
+  <h2 class="section-title">
+    OUR PARTNERS
+  </h2>
+
+  <p class="section-sub">
+    Building a stronger community through meaningful partnerships.
+  </p>
+
+
+  <!-- A PLUS PARTNER CARD -->
+
+  <div class="partner-carousel">
+
+    <div class="partner-card">
+
+
+      <!-- PHOTO -->
+
+      <div class="partner-image-wrap">
+
+        <img
+          class="partner-image"
+          src="images/aplusphoto.png"
+          alt="A Plus Pilates Balikpapan">
+
+      </div>
+
+
+      <!-- CONTENT -->
+
+      <div class="partner-content">
+
+        <div class="partner-label">
+          OFFICIAL WELLNESS PARTNER
+        </div>
+
+
+        <h3>
+          A Plus Pilates Balikpapan
+        </h3>
+
+
+        <p class="partner-description">
+
+          Move better. Feel stronger. Live healthier.
+          Exclusive wellness benefits for the GMTC community.
+
+        </p>
+
+
+        <!-- OFFER -->
+
+        <div class="partner-offer">
+
+          <div class="partner-offer-main">
+
+            <strong>
+              15% OFF
+            </strong>
+
+            <span>
+              GMTC Members &amp;<br>
+              Tournament Participants
+            </span>
+
+          </div>
+
+
+          <div class="partner-offer-code">
+
+            <small>
+              Voucher Code
+            </small>
+
+            <strong>
+              GMTCXAPLUS
+            </strong>
+
+          </div>
+
+        </div>
+
+
+        <!-- BOOK BUTTON -->
+
+        <a
+          href="https://balikpapan.apluspilates.id/"
+          class="partner-btn"
+          target="_blank"
+          rel="noopener noreferrer">
+
+          BOOK YOUR SESSION&nbsp; →
+
+        </a>
+
+
+        <!-- WEBSITE LINK -->
+
+        <a
+          href="https://balikpapan.apluspilates.id/"
+          class="partner-url"
+          target="_blank"
+          rel="noopener noreferrer">
+
+          🌐 balikpapan.apluspilates.id
+
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- HOW TO BOOK -->
+
+  <div class="booking-guide">
+
+    <div class="booking-guide-title">
+
+      HOW TO BOOK YOUR PILATES SESSION
+
+    </div>
+
+
+    <div class="booking-steps">
+
+
+      <!-- STEP 1 -->
+
+      <div class="booking-step">
+
+        <div class="step-number">
+          1
+        </div>
+
+        <div class="step-icon">
+          🌐
+        </div>
+
+        <h4>
+          VISIT WEBSITE
+        </h4>
+
+        <p>
+          Buka website<br>
+
+          <span class="voucher-text">
+            balikpapan.apluspilates.id
+          </span>
+        </p>
+
+      </div>
+
+
+      <!-- STEP 2 -->
+
+      <div class="booking-step">
+
+        <div class="step-number">
+          2
+        </div>
+
+        <div class="step-icon">
+          📅
+        </div>
+
+        <h4>
+          PILIH SESI
+        </h4>
+
+        <p>
+          Pilih jadwal &amp; sesi Pilates
+          yang tersedia
+        </p>
+
+      </div>
+
+
+      <!-- STEP 3 -->
+
+      <div class="booking-step">
+
+        <div class="step-number">
+          3
+        </div>
+
+        <div class="step-icon">
+          👤
+        </div>
+
+        <h4>
+          DAFTAR / LOGIN
+        </h4>
+
+        <p>
+          Daftar akun baru atau
+          login ke akun Anda
+        </p>
+
+      </div>
+
+
+      <!-- STEP 4 -->
+
+      <div class="booking-step">
+
+        <div class="step-number">
+          4
+        </div>
+
+        <div class="step-icon">
+          %
+        </div>
+
+        <h4>
+          MASUKKAN KODE VOUCHER
+        </h4>
+
+        <p>
+          Gunakan kode voucher
+
+          <br>
+
+          <span class="voucher-text">
+            GMTCXAPLUS
+          </span>
+
+          <br>
+
+          untuk mendapatkan
+          15% OFF
+        </p>
+
+      </div>
+
+
+      <!-- STEP 5 -->
+
+      <div class="booking-step">
+
+        <div class="step-number">
+          5
+        </div>
+
+        <div class="step-icon">
+          ✓
+        </div>
+
+        <h4>
+          KONFIRMASI &amp; BAYAR
+        </h4>
+
+        <p>
+          Selesaikan pembayaran
+          dan booking berhasil!
+        </p>
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+</section>
 <!-- TOP PICKS -->
 
 <section class="top-picks">
