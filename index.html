@@ -858,109 +858,90 @@ section{
 
 }
 /* ==========================
-   ALIEN PROS SPECIAL COUPON
+   GMTC COUPON PRICE BREAKDOWN
 ========================== */
 
-.affiliate-offer{
+.coupon-breakdown{
   display:none;
 
-  width:100%;
-  max-width:420px;
+  margin:18px auto 20px;
 
-  margin:25px auto 15px;
-
-  border:1px solid #d5aa3d;
-  border-radius:12px;
-
-  overflow:hidden;
-
-  background:#090909;
+  text-align:center;
 }
 
-.affiliate-offer-main{
-  width:58%;
-  padding:16px 18px;
+.coupon-breakdown-title{
+  color:#d5aa3d;
+
+  font-size:13px;
+  font-weight:700;
+
+  letter-spacing:.8px;
+
+  margin-bottom:5px;
 }
 
-.affiliate-offer-main strong{
-  display:block;
-
-  color:#fff;
-
-  font-size:24px;
-  line-height:1.1;
-
-  margin-bottom:6px;
-}
-
-.affiliate-offer-main span{
-  display:block;
-
+.coupon-breakdown-code{
   color:#aaa;
 
   font-size:12px;
-  line-height:1.5;
+
+  margin-bottom:12px;
 }
 
-.affiliate-offer-code{
-  width:42%;
+.coupon-breakdown-code strong{
+  color:#d5aa3d;
+}
 
-  padding:16px 14px;
-
-  border-left:1px solid #303030;
-
+.coupon-price-row{
   display:flex;
-  flex-direction:column;
+
   justify-content:center;
+  align-items:center;
+
+  gap:12px;
+
+  font-size:20px;
+  font-weight:700;
 }
 
-.affiliate-offer-code small{
+.coupon-price-before{
   color:#aaa;
-
-  font-size:11px;
-
-  margin-bottom:7px;
 }
 
-.affiliate-offer-code strong{
+.coupon-price-arrow{
+  color:#d5aa3d;
+
+  font-size:24px;
+}
+
+.coupon-price-final{
+  color:#fff;
+
+  font-size:25px;
+  font-weight:800;
+}
+
+.coupon-final-label{
   display:block;
 
   color:#d5aa3d;
 
-  border:1px solid #d5aa3d;
-  border-radius:7px;
+  font-size:10px;
+  font-weight:700;
 
-  padding:8px 8px;
+  letter-spacing:1.2px;
 
-  font-size:14px;
-
-  text-align:center;
-
-  letter-spacing:.5px;
+  margin-top:2px;
 }
 
-@media(max-width:600px){
+.coupon-shipping-note{
+  display:block;
 
-  .affiliate-offer{
-    max-width:100%;
-  }
+  color:#666;
 
-  .affiliate-offer-main{
-    padding:15px 14px;
-  }
+  font-size:10px;
 
-  .affiliate-offer-main strong{
-    font-size:21px;
-  }
-
-  .affiliate-offer-code{
-    padding:15px 10px;
-  }
-
-  .affiliate-offer-code strong{
-    font-size:13px;
-  }
-
+  margin-top:7px;
 }
 
 .old-price{
@@ -1563,32 +1544,41 @@ LEARN MORE →
         Premium designer racket grip tape by Alien Pros.
         Pack of 6 grips.
       </p>
-<div class="affiliate-offer" id="affiliateOffer">
+<div class="coupon-breakdown" id="couponBreakdown">
 
-  <div class="affiliate-offer-main">
+  <div class="coupon-breakdown-title">
+    15% OFF WITH GMTC SPECIAL COUPON
+  </div>
 
-    <strong id="affiliateDiscount">
-      15% OFF
-    </strong>
+  <div class="coupon-breakdown-code">
+    Use Code: <strong>LALAIDN16</strong>
+  </div>
 
-    <span>
-      Special Coupon for GMTC<br>
-      Tennis Community
+  <div class="coupon-price-row">
+
+    <span class="coupon-price-before"
+          id="couponPriceBefore">
+      Rp306.000
+    </span>
+
+    <span class="coupon-price-arrow">
+      →
+    </span>
+
+    <span class="coupon-price-final"
+          id="couponFinalPrice">
+      Rp260.100*
     </span>
 
   </div>
 
-  <div class="affiliate-offer-code">
+  <span class="coupon-final-label">
+    FINAL PRICE
+  </span>
 
-    <small>
-      Use Code
-    </small>
-
-    <strong id="affiliateCode">
-      LALAIDN16
-    </strong>
-
-  </div>
+  <span class="coupon-shipping-note">
+    *Excludes shipping fee
+  </span>
 
 </div>
 </div>
@@ -1599,7 +1589,7 @@ LEARN MORE →
 
       <div class="new-price"
            id="newPrice">
-        Rp308.000
+        Rp306.000
       </div>
 
       <a href="https://alien-pros.shop/products/tennis-racket-grip-tape-c-tac-6-grips?variant=35353772097687&rfsn=9312219.6b6498"
@@ -1796,11 +1786,11 @@ const products = [
  "Premium designer racket grip tape by Alien Pros. Pack of 6 grips.",
 
  oldPrice:"Rp814.000",
- newPrice:"Rp308.000",
+ newPrice:"Rp306.000",
  discount:"-62%",
 
  showCoupon:true,
- couponDiscount:"15% OFF",
+ couponRate:15,
  couponCode:"LALAIDN16",
 
  link:"https://alien-pros.shop/products/tennis-racket-grip-tape-c-tac-6-grips?variant=35353772097687&rfsn=9312219.6b6498"
@@ -1816,12 +1806,12 @@ const products = [
  "Premium designer racket grip tape by Alien Pros. Pack of 6 grips.",
 
  oldPrice:"Rp814.000",
- newPrice:"Rp289.000",
- discount:"-65%",
+newPrice:"Rp289.000",
+discount:"-65%",
 
- showCoupon:true,
- couponDiscount:"15% OFF",
- couponCode:"LALAIDN16",
+showCoupon:true,
+couponRate:15,
+couponCode:"LALAIDN16",
 
  link:"https://alien-pros.shop/products/tennis-racket-grip-tape-x-dry-plus-6-grips?variant=35353336709271&rfsn=9312219.6b6498"
 },
@@ -1876,9 +1866,11 @@ function updateProduct(){
 
   const p = products[currentProduct];
 
-  document.getElementById("productImage").src = p.image;
+  document.getElementById("productImage").src =
+    p.image;
 
-  document.getElementById("partnerLogo").src = p.logo;
+  document.getElementById("partnerLogo").src =
+    p.logo;
 
   document.getElementById("productTitle").innerText =
     p.title;
@@ -1900,32 +1892,69 @@ function updateProduct(){
 
 
   /* ==========================
-     SPECIAL COUPON
+     GMTC COUPON PRICE
   ========================== */
 
-  const affiliateOffer =
-    document.getElementById("affiliateOffer");
+  const couponBreakdown =
+    document.getElementById("couponBreakdown");
 
-  const affiliateDiscount =
-    document.getElementById("affiliateDiscount");
+  const couponPriceBefore =
+    document.getElementById("couponPriceBefore");
 
-  const affiliateCode =
-    document.getElementById("affiliateCode");
+  const couponFinalPrice =
+    document.getElementById("couponFinalPrice");
+
+  const couponBreakdownTitle =
+    document.querySelector(".coupon-breakdown-title");
+
+  const couponBreakdownCode =
+    document.querySelector(".coupon-breakdown-code strong");
 
 
   if(p.showCoupon){
 
-    affiliateOffer.style.display = "flex";
+    couponBreakdown.style.display = "block";
 
-    affiliateDiscount.innerText =
-      p.couponDiscount || "15% OFF";
 
-    affiliateCode.innerText =
+    const price =
+      parseInt(
+        p.newPrice.replace(/\D/g,""),
+        10
+      );
+
+
+    const rate =
+      p.couponRate || 15;
+
+
+    const saving =
+      Math.round(
+        price * rate / 100
+      );
+
+
+    const finalPrice =
+      price - saving;
+
+
+    couponPriceBefore.innerText =
+      "Rp" + price.toLocaleString("id-ID");
+
+    couponFinalPrice.innerText =
+      "Rp" + finalPrice.toLocaleString("id-ID") + "*";
+
+
+    couponBreakdownTitle.innerText =
+      rate + "% OFF WITH GMTC SPECIAL COUPON";
+
+
+    couponBreakdownCode.innerText =
       p.couponCode || "LALAIDN16";
+
 
   }else{
 
-    affiliateOffer.style.display = "none";
+    couponBreakdown.style.display = "none";
 
   }
 
