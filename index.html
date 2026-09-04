@@ -482,7 +482,43 @@ section{
   border-radius: 10px;
   background: #2E5D3A;
 }
+.arena-controls{
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  margin-top:10px;
+}
 
+.arena-arrow{
+  width:42px;
+  height:42px;
+
+  border:1px solid #d5d5d5;
+  border-radius:50%;
+
+  background:#fff;
+  color:#2E5D3A;
+
+  font-size:20px;
+  font-weight:bold;
+
+  cursor:pointer;
+
+  transition:.2s;
+}
+
+.arena-arrow:hover{
+  background:#E5A9A9;
+  border-color:#E5A9A9;
+}
+
+@media(max-width:600px){
+
+  .arena-controls{
+    display:none;
+  }
+
+}
 /* ==========================
    OUR PARTNERS
 ========================== */
@@ -1508,7 +1544,7 @@ LEARN MORE →
 
         <a
           href="https://balikpapan.apluspilates.id/"
-          class="partner-btn"
+          class="partner-btn sponsor-link"
           target="_blank"
           rel="noopener noreferrer">
 
@@ -1521,7 +1557,7 @@ LEARN MORE →
 
         <a
           href="https://balikpapan.apluspilates.id/"
-          class="partner-url"
+          class="partner-url sponsor-link"
           target="_blank"
           rel="noopener noreferrer">
 
@@ -2012,7 +2048,23 @@ LEARN MORE →
       </div>
 
     </div>
+<div class="arena-controls">
 
+  <button
+    type="button"
+    class="arena-arrow"
+    id="arenaPrev">
+    ←
+  </button>
+
+  <button
+    type="button"
+    class="arena-arrow"
+    id="arenaNext">
+    →
+  </button>
+
+</div>
     <div class="arena-dots">
       <span class="arena-dot active"></span>
       <span class="arena-dot"></span>
@@ -2530,12 +2582,25 @@ loadWebsiteStats();
 
 
 // =========================
-// SPONSOR PRODUCT CLICK
+// SPONSOR LINK CLICK TRACKING
 // =========================
 
+document
+  .querySelectorAll(".sponsor-link")
+  .forEach(link => {
+
+    link.addEventListener("click", function(){
+
+      trackSponsorClick();
+
+    });
+
+  });
+
+
+// PRODUCT SPONSOR LINK
 const productLink =
   document.getElementById("productLink");
-
 
 if(productLink){
 
