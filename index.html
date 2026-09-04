@@ -857,49 +857,111 @@ section{
   margin-right:auto;
 
 }
- .affiliate-offer{
-  margin:20px auto 10px;
+/* ==========================
+   ALIEN PROS SPECIAL COUPON
+========================== */
 
-  padding:15px 20px;
+.affiliate-offer{
+  display:none;
+
+  width:100%;
+  max-width:420px;
+
+  margin:25px auto 15px;
 
   border:1px solid #d5aa3d;
-  border-radius:10px;
+  border-radius:12px;
 
-  max-width:320px;
+  overflow:hidden;
 
-  text-align:center;
-
-  background:#0d0d0d;
+  background:#090909;
 }
 
-.affiliate-label{
-  color:#d5aa3d;
+.affiliate-offer-main{
+  width:58%;
+  padding:16px 18px;
+}
+
+.affiliate-offer-main strong{
+  display:block;
+
+  color:#fff;
+
+  font-size:24px;
+  line-height:1.1;
+
+  margin-bottom:6px;
+}
+
+.affiliate-offer-main span{
+  display:block;
+
+  color:#aaa;
 
   font-size:12px;
-  font-weight:700;
+  line-height:1.5;
+}
 
-  letter-spacing:1.5px;
+.affiliate-offer-code{
+  width:42%;
+
+  padding:16px 14px;
+
+  border-left:1px solid #303030;
+
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+.affiliate-offer-code small{
+  color:#aaa;
+
+  font-size:11px;
 
   margin-bottom:7px;
 }
 
-.affiliate-text{
-  color:#aaa;
+.affiliate-offer-code strong{
+  display:block;
 
-  font-size:13px;
+  color:#d5aa3d;
+
+  border:1px solid #d5aa3d;
+  border-radius:7px;
+
+  padding:8px 8px;
+
+  font-size:14px;
+
+  text-align:center;
+
+  letter-spacing:.5px;
 }
 
-.affiliate-text strong{
-  display:inline-block;
+@media(max-width:600px){
 
-  margin-left:5px;
+  .affiliate-offer{
+    max-width:100%;
+  }
 
-  color:#fff;
+  .affiliate-offer-main{
+    padding:15px 14px;
+  }
 
-  font-size:16px;
+  .affiliate-offer-main strong{
+    font-size:21px;
+  }
 
-  letter-spacing:1px;
-} 
+  .affiliate-offer-code{
+    padding:15px 10px;
+  }
+
+  .affiliate-offer-code strong{
+    font-size:13px;
+  }
+
+}
 
 .old-price{
   color:#666;
@@ -1501,17 +1563,34 @@ LEARN MORE →
         Premium designer racket grip tape by Alien Pros.
         Pack of 6 grips.
       </p>
-      <div class="affiliate-offer">
+<div class="affiliate-offer" id="affiliateOffer">
 
-  <div class="affiliate-label">
-    GMTC × ALIEN PROS
+  <div class="affiliate-offer-main">
+
+    <strong id="affiliateDiscount">
+      15% OFF
+    </strong>
+
+    <span>
+      Special Coupon for GMTC<br>
+      Tennis Community
+    </span>
+
   </div>
 
-  <div class="affiliate-text">
-    Use Code
-    <strong>LALAIDN16</strong>
+  <div class="affiliate-offer-code">
+
+    <small>
+      Use Code
+    </small>
+
+    <strong id="affiliateCode">
+      LALAIDN16
+    </strong>
+
   </div>
 
+</div>
 </div>
       <div class="old-price"
            id="oldPrice">
@@ -1710,6 +1789,7 @@ const products = [
 {
  image:"products/appinkbeat.webp",
  logo:"images/aplogo.webp",
+
  title:"[C-Tac] Designer Racket Grip Tape - Pink Beat",
 
  description:
@@ -1718,12 +1798,18 @@ const products = [
  oldPrice:"Rp814.000",
  newPrice:"Rp308.000",
  discount:"-62%",
- link:"https://alien-pros.shop/products/tennis-racket-grip-tape-c-tac-6-grips?variant=35353772097687"
+
+ showCoupon:true,
+ couponDiscount:"15% OFF",
+ couponCode:"LALAIDN16",
+
+ link:"https://alien-pros.shop/products/tennis-racket-grip-tape-c-tac-6-grips?variant=35353772097687&rfsn=9312219.6b6498"
 },
 
 {
  image:"products/apxdrywhitespace_.webp",
  logo:"images/aplogo.webp",
+
  title:"[X-Dry] Designer Racket Grip Tape - White Space",
 
  description:
@@ -1732,6 +1818,11 @@ const products = [
  oldPrice:"Rp814.000",
  newPrice:"Rp289.000",
  discount:"-65%",
+
+ showCoupon:true,
+ couponDiscount:"15% OFF",
+ couponCode:"LALAIDN16",
+
  link:"https://alien-pros.shop/products/tennis-racket-grip-tape-x-dry-plus-6-grips?variant=35353336709271&rfsn=9312219.6b6498"
 },
   
@@ -1783,17 +1874,60 @@ const products = [
 
 function updateProduct(){
 
- const p = products[currentProduct];
+  const p = products[currentProduct];
 
- document.getElementById("productImage").src = p.image;
- document.getElementById("partnerLogo").src = p.logo;
- document.getElementById("productTitle").innerText = p.title;
-document.getElementById("productDescription").innerText =
-p.description;
- document.getElementById("oldPrice").innerText = p.oldPrice;
- document.getElementById("newPrice").innerText = p.newPrice;
- document.getElementById("discountValue").innerText = p.discount;
- document.getElementById("productLink").href = p.link;
+  document.getElementById("productImage").src = p.image;
+
+  document.getElementById("partnerLogo").src = p.logo;
+
+  document.getElementById("productTitle").innerText =
+    p.title;
+
+  document.getElementById("productDescription").innerText =
+    p.description;
+
+  document.getElementById("oldPrice").innerText =
+    p.oldPrice;
+
+  document.getElementById("newPrice").innerText =
+    p.newPrice;
+
+  document.getElementById("discountValue").innerText =
+    p.discount;
+
+  document.getElementById("productLink").href =
+    p.link;
+
+
+  /* ==========================
+     SPECIAL COUPON
+  ========================== */
+
+  const affiliateOffer =
+    document.getElementById("affiliateOffer");
+
+  const affiliateDiscount =
+    document.getElementById("affiliateDiscount");
+
+  const affiliateCode =
+    document.getElementById("affiliateCode");
+
+
+  if(p.showCoupon){
+
+    affiliateOffer.style.display = "flex";
+
+    affiliateDiscount.innerText =
+      p.couponDiscount || "15% OFF";
+
+    affiliateCode.innerText =
+      p.couponCode || "LALAIDN16";
+
+  }else{
+
+    affiliateOffer.style.display = "none";
+
+  }
 
 }
 
