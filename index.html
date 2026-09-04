@@ -300,6 +300,189 @@ section{
   }
 }
 
+/* ================================
+   FUN MATCH MODAL
+================================ */
+
+.fun-match-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.fun-match-modal.active {
+  display: flex;
+}
+
+.fun-match-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,.72);
+  backdrop-filter: blur(8px);
+}
+
+.fun-match-card {
+  position: relative;
+  z-index: 2;
+  width: min(92vw, 520px);
+  max-height: 92vh;
+  overflow: hidden;
+
+  background: #F2E8D5;
+  border-radius: 24px;
+  padding: 24px 18px 20px;
+
+  box-shadow: 0 25px 80px rgba(0,0,0,.35);
+}
+
+.fun-match-close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+
+  width: 42px;
+  height: 42px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: rgba(255,255,255,.85);
+  color: #2E5D3A;
+
+  font-size: 28px;
+  line-height: 1;
+
+  cursor: pointer;
+  z-index: 5;
+}
+
+.fun-match-header {
+  text-align: center;
+  padding: 8px 35px 18px;
+}
+
+.fun-match-eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #2E5D3A;
+}
+
+.fun-match-header h2 {
+  margin: 6px 0 4px;
+  font-size: 25px;
+  color: #2E5D3A;
+}
+
+.fun-match-header p {
+  margin: 0;
+  font-size: 13px;
+  color: #666;
+}
+
+
+/* ARENA CAROUSEL */
+
+.arena-carousel {
+  display: flex;
+  gap: 14px;
+
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+
+  scrollbar-width: none;
+
+  padding: 2px 2px 8px;
+}
+
+.arena-carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.arena-card {
+  flex: 0 0 88%;
+  scroll-snap-align: center;
+
+  background: white;
+  border-radius: 18px;
+  overflow: hidden;
+
+  box-shadow: 0 8px 25px rgba(0,0,0,.12);
+}
+
+.arena-card img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  display: block;
+}
+
+.arena-info {
+  padding: 16px;
+}
+
+.arena-type {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #2E5D3A;
+}
+
+.arena-info h3 {
+  margin: 5px 0 2px;
+  font-size: 18px;
+  color: #2E5D3A;
+}
+
+.arena-info p {
+  margin: 0 0 14px;
+  font-size: 12px;
+  color: #777;
+}
+
+.arena-select-btn {
+  width: 100%;
+  min-height: 44px;
+
+  border: none;
+  border-radius: 10px;
+
+  background: #E5A9A9;
+  color: #2E5D3A;
+
+  font-weight: 700;
+  letter-spacing: .5px;
+
+  cursor: pointer;
+}
+
+
+/* DOTS */
+
+.arena-dots {
+  display: flex;
+  justify-content: center;
+  gap: 7px;
+  margin-top: 10px;
+}
+
+.arena-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #bbb;
+}
+
+.arena-dot.active {
+  width: 20px;
+  border-radius: 10px;
+  background: #2E5D3A;
+}
+
 /* ==========================
    OUR PARTNERS
 ========================== */
@@ -1770,8 +1953,176 @@ LEARN MORE →
   © 2026 GMTC
 
 </footer>
+
+<!-- FUN MATCH MODAL -->
+<div id="funMatchModal" class="fun-match-modal">
+  <div class="fun-match-overlay" id="funMatchOverlay"></div>
+
+  <div class="fun-match-card">
+
+    <button class="fun-match-close" id="closeFunMatch">
+      ×
+    </button>
+
+    <div class="fun-match-header">
+      <span class="fun-match-eyebrow">GMTC EXPERIENCE</span>
+      <h2>CHOOSE YOUR ARENA</h2>
+      <p>Swipe to explore available courts</p>
+    </div>
+
+    <div class="arena-carousel" id="arenaCarousel">
+
+      <!-- BTS -->
+      <div class="arena-card">
+        <img
+          src="images/BTS.webp"
+          alt="Balikpapan Tennis Stadium Outdoor"
+          loading="lazy"
+        >
+
+        <div class="arena-info">
+          <span class="arena-type">FUN MATCH</span>
+          <h3>BALIKPAPAN TENNIS STADIUM</h3>
+          <p>OUTDOOR</p>
+
+          <button class="arena-select-btn" data-arena="BTS">
+            CHOOSE ARENA
+          </button>
+        </div>
+      </div>
+
+      <!-- KJS -->
+      <div class="arena-card">
+        <img
+          src="images/KJS.webp"
+          alt="Kanudjoso Outdoor"
+          loading="lazy"
+        >
+
+        <div class="arena-info">
+          <span class="arena-type">FUN MATCH</span>
+          <h3>KANUDJOSO</h3>
+          <p>OUTDOOR</p>
+
+          <button class="arena-select-btn" data-arena="KJS">
+            CHOOSE ARENA
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="arena-dots">
+      <span class="arena-dot active"></span>
+      <span class="arena-dot"></span>
+    </div>
+
+  </div>
+</div>
   
 <script>
+
+/* ================================
+   FUN MATCH MODAL
+================================ */
+
+const funMatchModal =
+  document.getElementById("funMatchModal");
+
+const closeFunMatch =
+  document.getElementById("closeFunMatch");
+
+const funMatchOverlay =
+  document.getElementById("funMatchOverlay");
+
+
+// OPEN
+document.querySelectorAll(".experience-card").forEach(card => {
+
+  const title = card.querySelector("h3");
+
+  if (
+    title &&
+    title.innerText.trim().toUpperCase() === "FUN MATCH"
+  ) {
+
+    card.addEventListener("click", function(e) {
+
+      e.preventDefault();
+
+      funMatchModal.classList.add("active");
+
+      document.body.style.overflow = "hidden";
+
+    });
+
+  }
+
+});
+
+
+// CLOSE
+function closeFunMatchModal() {
+
+  funMatchModal.classList.remove("active");
+
+  document.body.style.overflow = "";
+
+}
+
+closeFunMatch.addEventListener(
+  "click",
+  closeFunMatchModal
+);
+
+funMatchOverlay.addEventListener(
+  "click",
+  closeFunMatchModal
+);
+
+
+// ESC KEY
+document.addEventListener("keydown", function(e) {
+
+  if (
+    e.key === "Escape" &&
+    funMatchModal.classList.contains("active")
+  ) {
+    closeFunMatchModal();
+  }
+
+});
+
+
+// ARENA SELECTION
+document
+  .querySelectorAll(".arena-select-btn")
+  .forEach(button => {
+
+    button.addEventListener("click", function() {
+
+      const arena = this.dataset.arena;
+
+      console.log("Selected arena:", arena);
+
+      /*
+        NEXT STEP:
+        Setelah arena dipilih,
+        kita akan ganti isi modal menjadi:
+
+        SELECT SESSION
+        ↓
+        Monday 19:00–23:00
+        Saturday 20:00–23:00
+
+        atau
+
+        Sunday 18:00–20:00
+      */
+
+    });
+
+  });
 
 const products = [
 
