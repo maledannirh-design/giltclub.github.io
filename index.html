@@ -2074,7 +2074,6 @@ LEARN MORE →
 </div>
   
 <script>
-
 /* ================================
    FUN MATCH MODAL
 ================================ */
@@ -2088,28 +2087,96 @@ const closeFunMatch =
 const funMatchOverlay =
   document.getElementById("funMatchOverlay");
 
+const arenaCarousel =
+  document.getElementById("arenaCarousel");
 
-// OPEN
+const arenaPrev =
+  document.getElementById("arenaPrev");
+
+const arenaNext =
+  document.getElementById("arenaNext");
+
+
+// ================================
+// OPEN FUN MATCH
+// ================================
+
 const funMatchTrigger =
   document.getElementById("funMatchTrigger");
 
 if(funMatchTrigger){
 
-  funMatchTrigger.addEventListener("click", function(e){
+  funMatchTrigger.addEventListener(
+    "click",
+    function(e){
 
-    e.preventDefault();
+      e.preventDefault();
 
-    funMatchModal.classList.add("active");
+      funMatchModal.classList.add("active");
 
-    document.body.style.overflow = "hidden";
+      document.body.style.overflow = "hidden";
 
-  });
+    }
+  );
 
 }
 
 
-// CLOSE
-function closeFunMatchModal() {
+// ================================
+// ARENA CAROUSEL CONTROLS
+// ================================
+
+if(arenaCarousel){
+
+  const arenaCards =
+    arenaCarousel.querySelectorAll(".arena-card");
+
+
+  // NEXT
+  if(arenaNext){
+
+    arenaNext.addEventListener("click", function(){
+
+      if(arenaCards.length < 2) return;
+
+      arenaCarousel.scrollTo({
+
+        left: arenaCards[1].offsetLeft,
+
+        behavior: "smooth"
+
+      });
+
+    });
+
+  }
+
+
+  // PREVIOUS
+  if(arenaPrev){
+
+    arenaPrev.addEventListener("click", function(){
+
+      arenaCarousel.scrollTo({
+
+        left: 0,
+
+        behavior: "smooth"
+
+      });
+
+    });
+
+  }
+
+}
+
+
+// ================================
+// CLOSE FUN MATCH
+// ================================
+
+function closeFunMatchModal(){
 
   funMatchModal.classList.remove("active");
 
@@ -2117,57 +2184,90 @@ function closeFunMatchModal() {
 
 }
 
-closeFunMatch.addEventListener(
-  "click",
-  closeFunMatchModal
-);
 
-funMatchOverlay.addEventListener(
-  "click",
-  closeFunMatchModal
-);
+if(closeFunMatch){
+
+  closeFunMatch.addEventListener(
+    "click",
+    closeFunMatchModal
+  );
+
+}
 
 
+if(funMatchOverlay){
+
+  funMatchOverlay.addEventListener(
+    "click",
+    closeFunMatchModal
+  );
+
+}
+
+
+// ================================
 // ESC KEY
-document.addEventListener("keydown", function(e) {
+// ================================
 
-  if (
-    e.key === "Escape" &&
-    funMatchModal.classList.contains("active")
-  ) {
-    closeFunMatchModal();
+document.addEventListener(
+  "keydown",
+  function(e){
+
+    if(
+
+      e.key === "Escape" &&
+
+      funMatchModal &&
+      funMatchModal.classList.contains("active")
+
+    ){
+
+      closeFunMatchModal();
+
+    }
+
   }
+);
 
-});
 
-
+// ================================
 // ARENA SELECTION
+// ================================
+
 document
   .querySelectorAll(".arena-select-btn")
   .forEach(button => {
 
-    button.addEventListener("click", function() {
+    button.addEventListener(
+      "click",
+      function(){
 
-      const arena = this.dataset.arena;
+        const arena =
+          this.dataset.arena;
 
-      console.log("Selected arena:", arena);
+        console.log(
+          "Selected arena:",
+          arena
+        );
 
-      /*
-        NEXT STEP:
-        Setelah arena dipilih,
-        kita akan ganti isi modal menjadi:
+        /*
+          NEXT STEP
 
-        SELECT SESSION
-        ↓
-        Monday 19:00–23:00
-        Saturday 20:00–23:00
+          Setelah arena dipilih,
+          modal akan berubah menjadi:
 
-        atau
+          SELECT SESSION
 
-        Sunday 18:00–20:00
-      */
+          BTS:
+          Monday 19:00–23:00
+          Saturday 20:00–23:00
 
-    });
+          KJS:
+          Sunday 18:00–20:00
+        */
+
+      }
+    );
 
   });
 
