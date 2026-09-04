@@ -1338,7 +1338,7 @@ start your journey with GMTC.
 
 <div class="experience-grid">
 
-<a href="fun-match.html" class="experience-card">
+<a href="#" class="experience-card" id="funMatchTrigger">
 
 <img src="images/fun-match-cover.webp">
 
@@ -1817,7 +1817,8 @@ LEARN MORE →
     of Alien Pros, connecting our community with selected tennis
     products and exclusive partner offers.
   </p>
-
+</section>
+  
 <!-- STATS -->
 
 <section id="community">
@@ -2037,28 +2038,22 @@ const funMatchOverlay =
 
 
 // OPEN
-document.querySelectorAll(".experience-card").forEach(card => {
+const funMatchTrigger =
+  document.getElementById("funMatchTrigger");
 
-  const title = card.querySelector("h3");
+if(funMatchTrigger){
 
-  if (
-    title &&
-    title.innerText.trim().toUpperCase() === "FUN MATCH"
-  ) {
+  funMatchTrigger.addEventListener("click", function(e){
 
-    card.addEventListener("click", function(e) {
+    e.preventDefault();
 
-      e.preventDefault();
+    funMatchModal.classList.add("active");
 
-      funMatchModal.classList.add("active");
+    document.body.style.overflow = "hidden";
 
-      document.body.style.overflow = "hidden";
+  });
 
-    });
-
-  }
-
-});
+}
 
 
 // CLOSE
