@@ -519,6 +519,413 @@ section{
   }
 
 }
+
+/* =========================================================
+   FUN MATCH BOOKING FLOW
+   ARENA → SESSION → SEATS → CHECKOUT → LIMITED OFFER
+========================================================= */
+
+.fun-match-step{
+  display:none;
+}
+
+.fun-match-step.active{
+  display:block;
+}
+
+
+/* =========================
+   BACK BUTTON
+========================= */
+
+.booking-back{
+  border:none;
+  background:transparent;
+  color:#2E5D3A;
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:1px;
+  cursor:pointer;
+  padding:5px 0;
+  margin-bottom:5px;
+}
+
+
+/* =========================
+   SESSION LIST
+========================= */
+
+.session-list{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  margin-top:5px;
+}
+
+.session-card{
+  width:100%;
+  border:1px solid #ddd;
+  background:#fff;
+  border-radius:15px;
+  padding:17px;
+  text-align:left;
+  cursor:pointer;
+  transition:.2s;
+  color:#2E5D3A;
+}
+
+.session-card:hover{
+  transform:translateY(-2px);
+  border-color:#2E5D3A;
+  box-shadow:0 6px 18px rgba(0,0,0,.08);
+}
+
+.session-card.selected{
+  border:2px solid #2E5D3A;
+}
+
+.session-day{
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:2px;
+  color:#777;
+}
+
+.session-time{
+  font-size:22px;
+  font-weight:800;
+  margin-top:4px;
+  color:#2E5D3A;
+}
+
+.session-status{
+  font-size:11px;
+  margin-top:7px;
+  color:#777;
+}
+
+
+/* =========================
+   SEAT SELECTION
+========================= */
+
+.seat-step{
+  text-align:center;
+}
+
+.selected-session-box{
+  background:#fff;
+  border-radius:15px;
+  padding:16px;
+  margin-bottom:20px;
+  border:1px solid #ddd;
+}
+
+.selected-session-label{
+  font-size:10px;
+  letter-spacing:1.5px;
+  color:#888;
+  font-weight:700;
+}
+
+.selected-session-name{
+  font-size:20px;
+  font-weight:800;
+  color:#2E5D3A;
+  margin-top:5px;
+}
+
+.selected-session-time{
+  font-size:13px;
+  color:#666;
+  margin-top:3px;
+}
+
+.seat-question{
+  font-size:12px;
+  letter-spacing:1.5px;
+  font-weight:700;
+  color:#555;
+  margin-bottom:15px;
+}
+
+.seat-counter{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:22px;
+  margin:10px 0 15px;
+}
+
+.seat-btn{
+  width:46px;
+  height:46px;
+  border:none;
+  border-radius:50%;
+  background:#E5A9A9;
+  color:#2E5D3A;
+  font-size:25px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.seat-number{
+  min-width:45px;
+  font-size:30px;
+  font-weight:800;
+  color:#2E5D3A;
+}
+
+.available-slots{
+  font-size:12px;
+  color:#777;
+  margin-bottom:20px;
+}
+
+.booking-primary-btn{
+  width:100%;
+  min-height:48px;
+  border:none;
+  border-radius:12px;
+  background:#2E5D3A;
+  color:#fff;
+  font-size:13px;
+  font-weight:800;
+  letter-spacing:1px;
+  cursor:pointer;
+}
+
+.booking-primary-btn:hover{
+  opacity:.92;
+}
+
+
+/* =========================
+   CHECKOUT
+========================= */
+
+.checkout-box{
+  background:#fff;
+  border-radius:18px;
+  padding:20px;
+  border:1px solid #ddd;
+}
+
+.checkout-top{
+  text-align:center;
+  margin-bottom:18px;
+}
+
+.checkout-eyebrow{
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:2px;
+  color:#888;
+}
+
+.checkout-title{
+  font-size:24px;
+  color:#2E5D3A;
+  font-weight:800;
+  margin-top:5px;
+}
+
+.checkout-session{
+  background:#F6F1E7;
+  border-radius:12px;
+  padding:13px;
+  margin-bottom:18px;
+}
+
+.checkout-session strong{
+  display:block;
+  color:#2E5D3A;
+  font-size:14px;
+}
+
+.checkout-session span{
+  display:block;
+  color:#666;
+  font-size:12px;
+  margin-top:3px;
+}
+
+.checkout-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:9px 0;
+  border-bottom:1px solid #eee;
+  font-size:13px;
+  color:#555;
+}
+
+.checkout-row strong{
+  color:#2E5D3A;
+}
+
+.checkout-total{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:15px 0 5px;
+  font-size:15px;
+  font-weight:800;
+  color:#2E5D3A;
+}
+
+.checkout-total-price{
+  font-size:24px;
+}
+
+
+/* =========================
+   LIMITED TIME OFFER
+========================= */
+
+.limited-offer{
+  margin-top:18px;
+  background:#2E5D3A;
+  color:#fff;
+  border-radius:18px;
+  padding:20px 16px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+
+.limited-offer::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,.10),
+    transparent
+  );
+  transform:translateX(-100%);
+  animation:offerShine 3s infinite;
+}
+
+@keyframes offerShine{
+  100%{
+    transform:translateX(100%);
+  }
+}
+
+.offer-eyebrow{
+  position:relative;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:2px;
+  color:#E3C565;
+}
+
+.offer-title{
+  position:relative;
+  font-size:21px;
+  font-weight:800;
+  margin-top:5px;
+}
+
+.offer-subtitle{
+  position:relative;
+  font-size:12px;
+  line-height:1.5;
+  margin-top:7px;
+  color:#eee;
+}
+
+.offer-timer-label{
+  position:relative;
+  font-size:9px;
+  letter-spacing:1.5px;
+  margin-top:15px;
+  color:#ddd;
+}
+
+.offer-timer{
+  position:relative;
+  font-size:34px;
+  font-weight:900;
+  letter-spacing:2px;
+  color:#ff3b3b;
+  margin-top:2px;
+}
+
+.offer-price{
+  position:relative;
+  margin-top:12px;
+}
+
+.offer-price-old{
+  color:#aaa;
+  text-decoration:line-through;
+  font-size:13px;
+}
+
+.offer-price-new{
+  color:#E3C565;
+  font-size:27px;
+  font-weight:900;
+  margin-top:2px;
+}
+
+.offer-saving{
+  position:relative;
+  font-size:11px;
+  color:#fff;
+  margin-top:4px;
+}
+
+.offer-accept-btn{
+  position:relative;
+  width:100%;
+  min-height:45px;
+  margin-top:15px;
+  border:none;
+  border-radius:11px;
+  background:#E5A9A9;
+  color:#2E5D3A;
+  font-weight:900;
+  letter-spacing:.5px;
+  cursor:pointer;
+}
+
+.offer-decline-btn{
+  position:relative;
+  border:none;
+  background:transparent;
+  color:#ccc;
+  font-size:11px;
+  margin-top:10px;
+  cursor:pointer;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:500px){
+
+  .fun-match-card{
+    width:94vw;
+    max-height:94vh;
+    overflow-y:auto;
+  }
+
+  .session-time{
+    font-size:20px;
+  }
+
+  .offer-timer{
+    font-size:32px;
+  }
+
+}
+
 /* ==========================
    OUR PARTNERS
 ========================== */
@@ -1991,92 +2398,555 @@ LEARN MORE →
 
 </footer>
 
-<!-- FUN MATCH MODAL -->
+<!-- =========================================================
+     FUN MATCH BOOKING MODAL
+========================================================= -->
+
 <div id="funMatchModal" class="fun-match-modal">
-  <div class="fun-match-overlay" id="funMatchOverlay"></div>
+
+  <div
+    class="fun-match-overlay"
+    id="funMatchOverlay">
+  </div>
+
 
   <div class="fun-match-card">
 
-    <button class="fun-match-close" id="closeFunMatch">
+
+    <!-- CLOSE -->
+
+    <button
+      class="fun-match-close"
+      id="closeFunMatch">
+
       ×
+
     </button>
 
-    <div class="fun-match-header">
-      <span class="fun-match-eyebrow">GMTC EXPERIENCE</span>
-      <h2>CHOOSE YOUR ARENA</h2>
-      <p>Swipe to explore available courts</p>
-    </div>
 
-    <div class="arena-carousel" id="arenaCarousel">
 
-      <!-- BTS -->
-      <div class="arena-card">
-        <img
-          src="images/BTS.webp"
-          alt="Balikpapan Tennis Stadium Outdoor"
-          loading="lazy"
-        >
+    <!-- =====================================================
+         STEP 1 — CHOOSE ARENA
+    ====================================================== -->
 
-        <div class="arena-info">
-          <span class="arena-type">FUN MATCH</span>
-          <h3>BALIKPAPAN TENNIS STADIUM</h3>
-          <p>OUTDOOR</p>
+    <div
+      class="fun-match-step active"
+      id="funStepArena">
 
-          <button class="arena-select-btn" data-arena="BTS">
-            CHOOSE ARENA
-          </button>
-        </div>
+      <div class="fun-match-header">
+
+        <span class="fun-match-eyebrow">
+          GMTC EXPERIENCE
+        </span>
+
+        <h2>
+          CHOOSE YOUR ARENA
+        </h2>
+
+        <p>
+          Swipe to explore available courts
+        </p>
+
       </div>
 
-      <!-- KJS -->
-      <div class="arena-card">
-        <img
-          src="images/KJS.webp"
-          alt="Kanudjoso Outdoor"
-          loading="lazy"
-        >
 
-        <div class="arena-info">
-          <span class="arena-type">FUN MATCH</span>
-          <h3>KANUDJOSO</h3>
-          <p>OUTDOOR</p>
+      <div
+        class="arena-carousel"
+        id="arenaCarousel">
 
-          <button class="arena-select-btn" data-arena="KJS">
-            CHOOSE ARENA
-          </button>
+
+        <!-- BTS -->
+
+        <div class="arena-card">
+
+          <img
+            src="images/BTS.webp"
+            alt="Balikpapan Tennis Stadium Outdoor"
+            loading="lazy"
+          >
+
+          <div class="arena-info">
+
+            <span class="arena-type">
+              FUN MATCH
+            </span>
+
+            <h3>
+              BALIKPAPAN TENNIS STADIUM
+            </h3>
+
+            <p>
+              OUTDOOR
+            </p>
+
+            <button
+              type="button"
+              class="arena-select-btn"
+              data-arena="BTS">
+
+              CHOOSE ARENA
+
+            </button>
+
+          </div>
+
         </div>
+
+
+
+        <!-- KJS -->
+
+        <div class="arena-card">
+
+          <img
+            src="images/KJS.webp"
+            alt="Kanudjoso Outdoor"
+            loading="lazy"
+          >
+
+          <div class="arena-info">
+
+            <span class="arena-type">
+              FUN MATCH
+            </span>
+
+            <h3>
+              KANUDJOSO
+            </h3>
+
+            <p>
+              OUTDOOR
+            </p>
+
+            <button
+              type="button"
+              class="arena-select-btn"
+              data-arena="KJS">
+
+              CHOOSE ARENA
+
+            </button>
+
+          </div>
+
+        </div>
+
+
+      </div>
+
+
+      <div class="arena-controls">
+
+        <button
+          type="button"
+          class="arena-arrow"
+          id="arenaPrev">
+
+          ←
+
+        </button>
+
+        <button
+          type="button"
+          class="arena-arrow"
+          id="arenaNext">
+
+          →
+
+        </button>
+
+      </div>
+
+
+      <div class="arena-dots">
+
+        <span class="arena-dot active"></span>
+
+        <span class="arena-dot"></span>
+
       </div>
 
     </div>
-<div class="arena-controls">
 
-  <button
-    type="button"
-    class="arena-arrow"
-    id="arenaPrev">
-    ←
-  </button>
 
-  <button
-    type="button"
-    class="arena-arrow"
-    id="arenaNext">
-    →
-  </button>
 
-</div>
-    <div class="arena-dots">
-      <span class="arena-dot active"></span>
-      <span class="arena-dot"></span>
+    <!-- =====================================================
+         STEP 2 — CHOOSE SESSION
+    ====================================================== -->
+
+    <div
+      class="fun-match-step"
+      id="funStepSession">
+
+
+      <button
+        type="button"
+        class="booking-back"
+        id="backToArena">
+
+        ← BACK
+
+      </button>
+
+
+      <div class="fun-match-header">
+
+        <span class="fun-match-eyebrow">
+          FUN MATCH
+        </span>
+
+        <h2 id="sessionArenaTitle">
+          CHOOSE SESSION
+        </h2>
+
+        <p>
+          Select an available session
+        </p>
+
+      </div>
+
+
+      <div
+        class="session-list"
+        id="sessionList">
+      </div>
+
+
     </div>
+
+
+
+    <!-- =====================================================
+         STEP 3 — HOW MANY SEATS
+    ====================================================== -->
+
+    <div
+      class="fun-match-step"
+      id="funStepSeats">
+
+
+      <button
+        type="button"
+        class="booking-back"
+        id="backToSession">
+
+        ← BACK
+
+      </button>
+
+
+      <div class="fun-match-header">
+
+        <span class="fun-match-eyebrow">
+          FUN MATCH
+        </span>
+
+        <h2>
+          HOW MANY SEATS?
+        </h2>
+
+        <p>
+          Choose the number of players
+        </p>
+
+      </div>
+
+
+      <div class="seat-step">
+
+
+        <div class="selected-session-box">
+
+          <div class="selected-session-label">
+            SELECTED SESSION
+          </div>
+
+          <div
+            class="selected-session-name"
+            id="selectedSessionName">
+          </div>
+
+          <div
+            class="selected-session-time"
+            id="selectedSessionTime">
+          </div>
+
+        </div>
+
+
+        <div class="seat-question">
+          NUMBER OF SEATS
+        </div>
+
+
+        <div class="seat-counter">
+
+          <button
+            type="button"
+            class="seat-btn"
+            id="seatMinus">
+
+            −
+
+          </button>
+
+
+          <div
+            class="seat-number"
+            id="seatNumber">
+
+            1
+
+          </div>
+
+
+          <button
+            type="button"
+            class="seat-btn"
+            id="seatPlus">
+
+            +
+
+          </button>
+
+        </div>
+
+
+        <div
+          class="available-slots"
+          id="availableSlots">
+
+          Available slots: 12
+
+        </div>
+
+
+        <button
+          type="button"
+          class="booking-primary-btn"
+          id="bookNowBtn">
+
+          BOOK NOW
+
+        </button>
+
+
+      </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         STEP 4 — CHECKOUT
+    ====================================================== -->
+
+    <div
+      class="fun-match-step"
+      id="funStepCheckout">
+
+
+      <button
+        type="button"
+        class="booking-back"
+        id="backToSeats">
+
+        ← BACK
+
+      </button>
+
+
+      <div class="checkout-box">
+
+
+        <div class="checkout-top">
+
+          <div class="checkout-eyebrow">
+            GMTC FUN MATCH
+          </div>
+
+          <div class="checkout-title">
+            CHECKOUT
+          </div>
+
+        </div>
+
+
+        <div class="checkout-session">
+
+          <strong
+            id="checkoutArena">
+          </strong>
+
+          <span
+            id="checkoutSession">
+          </span>
+
+        </div>
+
+
+        <div class="checkout-row">
+
+          <span>
+            Rate
+          </span>
+
+          <strong
+            id="checkoutRate">
+          </strong>
+
+        </div>
+
+
+        <div class="checkout-row">
+
+          <span>
+            Seats
+          </span>
+
+          <strong
+            id="checkoutSeats">
+          </strong>
+
+        </div>
+
+
+        <div class="checkout-total">
+
+          <span>
+            TOTAL
+          </span>
+
+          <span
+            class="checkout-total-price"
+            id="checkoutTotal">
+          </span>
+
+        </div>
+
+
+        <!-- LIMITED OFFER -->
+
+        <div
+          class="limited-offer"
+          id="limitedOffer">
+
+
+          <div class="offer-eyebrow">
+            LIMITED TIME OFFER
+          </div>
+
+
+          <div class="offer-title">
+            PLAY MORE. PAY LESS.
+          </div>
+
+
+          <div class="offer-subtitle">
+            Unlock a better rate before you complete
+            your booking.
+          </div>
+
+
+          <div class="offer-timer-label">
+            OFFER EXPIRES IN
+          </div>
+
+
+          <div
+            class="offer-timer"
+            id="offerTimer">
+
+            25:00
+
+          </div>
+
+
+          <div class="offer-price">
+
+            <div class="offer-price-old">
+              Visitor Rate:
+              <span id="offerVisitorTotal">
+                Rp95.000
+              </span>
+            </div>
+
+
+            <div class="offer-price-new">
+              <span id="offerMonthlyTotal">
+                Rp60.000
+              </span>
+            </div>
+
+
+          </div>
+
+
+          <div class="offer-saving">
+
+            Save
+            <strong id="offerSaving">
+              Rp35.000
+            </strong>
+            on this booking
+
+          </div>
+
+
+          <button
+            type="button"
+            class="offer-accept-btn"
+            id="acceptMonthlyOffer">
+
+            GET LIMITED MONTHLY RATE
+
+          </button>
+
+
+          <button
+            type="button"
+            class="offer-decline-btn"
+            id="declineMonthlyOffer">
+
+            Continue with Visitor Rate
+
+          </button>
+
+
+        </div>
+
+
+      </div>
+
+    </div>
+
 
   </div>
+
 </div>
   
 <script>
-/* ================================
-   FUN MATCH MODAL
-================================ */
+
+/* =========================================================
+   GMTC FUN MATCH BOOKING FLOW
+
+   ARENA
+      ↓
+   SESSION
+      ↓
+   SEATS
+      ↓
+   BOOK NOW
+      ↓
+   CHECKOUT
+      ↓
+   LIMITED TIME OFFER 25:00
+========================================================= */
+
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
 
 const funMatchModal =
   document.getElementById("funMatchModal");
@@ -2097,24 +2967,436 @@ const arenaNext =
   document.getElementById("arenaNext");
 
 
-// ================================
-// OPEN FUN MATCH
-// ================================
 
-const funMatchTrigger =
-  document.getElementById("funMatchTrigger");
+/* =========================================================
+   BOOKING STATE
+========================================================= */
 
-if(funMatchTrigger){
+let selectedArena = null;
 
-  funMatchTrigger.addEventListener(
-    "click",
-    function(e){
+let selectedSession = null;
 
-      e.preventDefault();
+let selectedSeats = 1;
 
-      funMatchModal.classList.add("active");
+let offerTimerInterval = null;
 
-      document.body.style.overflow = "hidden";
+let offerSeconds = 25 * 60;
+
+
+
+/* =========================================================
+   SESSION DATA
+========================================================= */
+
+const funMatchSessions = {
+
+  BTS: [
+
+    {
+      day:"MONDAY",
+      time:"19:00 — 23:00",
+      available:12
+    },
+
+    {
+      day:"SATURDAY",
+      time:"20:00 — 23:00",
+      available:12
+    }
+
+  ],
+
+  KJS: [
+
+    {
+      day:"SUNDAY",
+      time:"18:00 — 20:00",
+      available:12
+    }
+
+  ]
+
+};
+
+
+
+/* =========================================================
+   PRICE DATA
+
+   Visitor = normal
+   Member  = 10K discount
+   VVIP    = 20K discount
+   Monthly = 25K discount
+
+   Checkout initially uses VISITOR RATE.
+========================================================= */
+
+const funMatchRates = {
+
+  BTS: {
+
+    MONDAY: {
+
+      visitor:95000,
+      member:75000,
+      vvip:65000,
+      monthly:60000
+
+    },
+
+    SATURDAY: {
+
+      visitor:85000,
+      member:75000,
+      vvip:65000,
+      monthly:60000
+
+    }
+
+  },
+
+
+  KJS: {
+
+    SUNDAY: {
+
+      visitor:85000,
+      member:75000,
+      vvip:65000,
+      monthly:60000
+
+    }
+
+  }
+
+};
+
+
+
+/* =========================================================
+   STEP CONTROL
+========================================================= */
+
+function showFunStep(stepId){
+
+  document
+    .querySelectorAll(".fun-match-step")
+    .forEach(step => {
+
+      step.classList.remove("active");
+
+    });
+
+
+  const target =
+    document.getElementById(stepId);
+
+
+  if(target){
+
+    target.classList.add("active");
+
+  }
+
+}
+
+
+
+/* =========================================================
+   OPEN FUN MATCH
+========================================================= */
+
+document
+  .querySelectorAll(".experience-card")
+  .forEach(card => {
+
+
+    const title =
+      card.querySelector("h3");
+
+
+    if(
+      title &&
+      title.innerText
+        .replace("🎾","")
+        .trim()
+        .toUpperCase()
+        === "FUN MATCH"
+    ){
+
+
+      card.addEventListener(
+        "click",
+        function(e){
+
+          e.preventDefault();
+
+
+          resetFunMatch();
+
+
+          funMatchModal
+            .classList
+            .add("active");
+
+
+          document.body.style.overflow =
+            "hidden";
+
+        }
+      );
+
+    }
+
+  });
+
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+function resetFunMatch(){
+
+  selectedArena = null;
+
+  selectedSession = null;
+
+  selectedSeats = 1;
+
+
+  document.getElementById(
+    "seatNumber"
+  ).innerText = "1";
+
+
+  stopOfferTimer();
+
+
+  offerSeconds = 25 * 60;
+
+
+  document.getElementById(
+    "offerTimer"
+  ).innerText = "25:00";
+
+
+  showFunStep("funStepArena");
+
+}
+
+
+
+/* =========================================================
+   ARENA CAROUSEL
+========================================================= */
+
+if(arenaCarousel){
+
+  const arenaCards =
+    arenaCarousel
+      .querySelectorAll(".arena-card");
+
+
+  if(arenaNext){
+
+    arenaNext.addEventListener(
+      "click",
+      function(){
+
+        if(arenaCards.length < 2)
+          return;
+
+
+        arenaCarousel.scrollTo({
+
+          left:
+            arenaCards[1].offsetLeft,
+
+          behavior:"smooth"
+
+        });
+
+      }
+    );
+
+  }
+
+
+  if(arenaPrev){
+
+    arenaPrev.addEventListener(
+      "click",
+      function(){
+
+        arenaCarousel.scrollTo({
+
+          left:0,
+
+          behavior:"smooth"
+
+        });
+
+      }
+    );
+
+  }
+
+}
+
+
+
+/* =========================================================
+   ARENA SELECTION
+========================================================= */
+
+document
+  .querySelectorAll(".arena-select-btn")
+  .forEach(button => {
+
+
+    button.addEventListener(
+      "click",
+      function(e){
+
+        e.stopPropagation();
+
+
+        selectedArena =
+          this.dataset.arena;
+
+
+        renderSessions(
+          selectedArena
+        );
+
+
+        showFunStep(
+          "funStepSession"
+        );
+
+      }
+    );
+
+  });
+
+
+
+/* =========================================================
+   RENDER SESSION CARDS
+========================================================= */
+
+function renderSessions(arena){
+
+  const list =
+    document.getElementById(
+      "sessionList"
+    );
+
+  const title =
+    document.getElementById(
+      "sessionArenaTitle"
+    );
+
+
+  list.innerHTML = "";
+
+
+  if(arena === "BTS"){
+
+    title.innerText =
+      "BALIKPAPAN TENNIS STADIUM";
+
+  }
+
+
+  if(arena === "KJS"){
+
+    title.innerText =
+      "KANUDJOSO";
+
+  }
+
+
+  const sessions =
+    funMatchSessions[arena];
+
+
+  sessions.forEach(
+    function(session,index){
+
+      const card =
+        document.createElement(
+          "button"
+        );
+
+
+      card.type = "button";
+
+      card.className =
+        "session-card";
+
+
+      card.innerHTML = `
+
+        <div class="session-day">
+          ${session.day}
+        </div>
+
+        <div class="session-time">
+          ${session.time}
+        </div>
+
+        <div class="session-status">
+          ${session.available} slots available
+        </div>
+
+      `;
+
+
+      card.addEventListener(
+        "click",
+        function(){
+
+          selectedSession =
+            session;
+
+
+          selectedSession.rate =
+            funMatchRates
+              [arena]
+              [session.day]
+              .visitor;
+
+
+          document.getElementById(
+            "selectedSessionName"
+          ).innerText =
+            session.day;
+
+
+          document.getElementById(
+            "selectedSessionTime"
+          ).innerText =
+            session.time;
+
+
+          document.getElementById(
+            "availableSlots"
+          ).innerText =
+            "Available slots: "
+            + session.available;
+
+
+          showFunStep(
+            "funStepSeats"
+          );
+
+        }
+      );
+
+
+      list.appendChild(card);
 
     }
   );
@@ -2122,65 +3404,555 @@ if(funMatchTrigger){
 }
 
 
-// ================================
-// ARENA CAROUSEL CONTROLS
-// ================================
 
-if(arenaCarousel){
+/* =========================================================
+   BACK — SESSION
+========================================================= */
 
-  const arenaCards =
-    arenaCarousel.querySelectorAll(".arena-card");
+document
+  .getElementById("backToArena")
+  .addEventListener(
+    "click",
+    function(){
 
+      showFunStep(
+        "funStepArena"
+      );
 
-  // NEXT
-  if(arenaNext){
-
-    arenaNext.addEventListener("click", function(){
-
-      if(arenaCards.length < 2) return;
-
-      arenaCarousel.scrollTo({
-
-        left: arenaCards[1].offsetLeft,
-
-        behavior: "smooth"
-
-      });
-
-    });
-
-  }
+    }
+  );
 
 
-  // PREVIOUS
-  if(arenaPrev){
 
-    arenaPrev.addEventListener("click", function(){
+/* =========================================================
+   BACK — SEATS
+========================================================= */
 
-      arenaCarousel.scrollTo({
+document
+  .getElementById("backToSession")
+  .addEventListener(
+    "click",
+    function(){
 
-        left: 0,
+      showFunStep(
+        "funStepSession"
+      );
 
-        behavior: "smooth"
+    }
+  );
 
-      });
 
-    });
+
+/* =========================================================
+   SEAT MINUS
+========================================================= */
+
+document
+  .getElementById("seatMinus")
+  .addEventListener(
+    "click",
+    function(){
+
+      if(selectedSeats <= 1)
+        return;
+
+
+      selectedSeats--;
+
+
+      document.getElementById(
+        "seatNumber"
+      ).innerText =
+        selectedSeats;
+
+    }
+  );
+
+
+
+/* =========================================================
+   SEAT PLUS
+========================================================= */
+
+document
+  .getElementById("seatPlus")
+  .addEventListener(
+    "click",
+    function(){
+
+      if(
+        !selectedSession ||
+        selectedSeats >=
+        selectedSession.available
+      )
+        return;
+
+
+      selectedSeats++;
+
+
+      document.getElementById(
+        "seatNumber"
+      ).innerText =
+        selectedSeats;
+
+    }
+  );
+
+
+
+/* =========================================================
+   BOOK NOW → CHECKOUT
+========================================================= */
+
+document
+  .getElementById("bookNowBtn")
+  .addEventListener(
+    "click",
+    function(){
+
+      if(
+        !selectedArena ||
+        !selectedSession
+      )
+        return;
+
+
+      const rates =
+        funMatchRates
+          [selectedArena]
+          [selectedSession.day];
+
+
+      const visitorRate =
+        rates.visitor;
+
+
+      const visitorTotal =
+        visitorRate *
+        selectedSeats;
+
+
+      const monthlyRate =
+        rates.monthly;
+
+
+      const monthlyTotal =
+        monthlyRate *
+        selectedSeats;
+
+
+      const saving =
+        visitorTotal -
+        monthlyTotal;
+
+
+
+      /* ARENA */
+
+      document.getElementById(
+        "checkoutArena"
+      ).innerText =
+        selectedArena === "BTS"
+          ? "BALIKPAPAN TENNIS STADIUM"
+          : "KANUDJOSO";
+
+
+
+      /* SESSION */
+
+      document.getElementById(
+        "checkoutSession"
+      ).innerText =
+        selectedSession.day
+        + " · "
+        + selectedSession.time;
+
+
+
+      /* RATE */
+
+      document.getElementById(
+        "checkoutRate"
+      ).innerText =
+        "Rp"
+        + visitorRate
+          .toLocaleString("id-ID")
+        + " / seat";
+
+
+
+      /* SEATS */
+
+      document.getElementById(
+        "checkoutSeats"
+      ).innerText =
+        selectedSeats;
+
+
+
+      /* TOTAL */
+
+      document.getElementById(
+        "checkoutTotal"
+      ).innerText =
+        "Rp"
+        + visitorTotal
+          .toLocaleString("id-ID");
+
+
+
+      /* OFFER VISITOR */
+
+      document.getElementById(
+        "offerVisitorTotal"
+      ).innerText =
+        "Rp"
+        + visitorTotal
+          .toLocaleString("id-ID");
+
+
+
+      /* OFFER MONTHLY */
+
+      document.getElementById(
+        "offerMonthlyTotal"
+      ).innerText =
+        "Rp"
+        + monthlyTotal
+          .toLocaleString("id-ID");
+
+
+
+      /* OFFER SAVING */
+
+      document.getElementById(
+        "offerSaving"
+      ).innerText =
+        "Rp"
+        + saving
+          .toLocaleString("id-ID");
+
+
+
+      /* SHOW CHECKOUT */
+
+      showFunStep(
+        "funStepCheckout"
+      );
+
+
+
+      /* START 25 MIN TIMER */
+
+      startOfferTimer();
+
+    }
+  );
+
+
+
+/* =========================================================
+   LIMITED OFFER TIMER
+========================================================= */
+
+function startOfferTimer(){
+
+  stopOfferTimer();
+
+
+  offerSeconds =
+    25 * 60;
+
+
+  updateOfferTimer();
+
+
+  offerTimerInterval =
+    setInterval(
+      function(){
+
+        offerSeconds--;
+
+
+        if(
+          offerSeconds <= 0
+        ){
+
+          offerSeconds = 0;
+
+          updateOfferTimer();
+
+          stopOfferTimer();
+
+          disableExpiredOffer();
+
+          return;
+
+        }
+
+
+        updateOfferTimer();
+
+      },
+      1000
+    );
+
+}
+
+
+
+/* =========================================================
+   UPDATE TIMER
+========================================================= */
+
+function updateOfferTimer(){
+
+  const minutes =
+    Math.floor(
+      offerSeconds / 60
+    );
+
+
+  const seconds =
+    offerSeconds % 60;
+
+
+  document.getElementById(
+    "offerTimer"
+  ).innerText =
+
+    String(minutes)
+      .padStart(2,"0")
+
+    + ":"
+
+    + String(seconds)
+      .padStart(2,"0");
+
+}
+
+
+
+/* =========================================================
+   STOP TIMER
+========================================================= */
+
+function stopOfferTimer(){
+
+  if(
+    offerTimerInterval
+  ){
+
+    clearInterval(
+      offerTimerInterval
+    );
+
+    offerTimerInterval =
+      null;
 
   }
 
 }
 
 
-// ================================
-// CLOSE FUN MATCH
-// ================================
+
+/* =========================================================
+   EXPIRED
+========================================================= */
+
+function disableExpiredOffer(){
+
+  const button =
+    document.getElementById(
+      "acceptMonthlyOffer"
+    );
+
+
+  button.disabled = true;
+
+  button.innerText =
+    "OFFER EXPIRED";
+
+
+  button.style.opacity =
+    ".5";
+
+
+  document.getElementById(
+    "declineMonthlyOffer"
+  ).innerText =
+    "Continue with Visitor Rate";
+
+}
+
+
+
+/* =========================================================
+   ACCEPT MONTHLY OFFER
+========================================================= */
+
+document
+  .getElementById(
+    "acceptMonthlyOffer"
+  )
+  .addEventListener(
+    "click",
+    function(){
+
+      if(
+        offerSeconds <= 0
+      )
+        return;
+
+
+      stopOfferTimer();
+
+
+      const monthlyRate =
+        funMatchRates
+          [selectedArena]
+          [selectedSession.day]
+          .monthly;
+
+
+      const monthlyTotal =
+        monthlyRate *
+        selectedSeats;
+
+
+      document.getElementById(
+        "checkoutRate"
+      ).innerText =
+        "Rp"
+        + monthlyRate
+          .toLocaleString("id-ID")
+        + " / seat";
+
+
+      document.getElementById(
+        "checkoutTotal"
+      ).innerText =
+        "Rp"
+        + monthlyTotal
+          .toLocaleString("id-ID");
+
+
+      document.getElementById(
+        "limitedOffer"
+      ).innerHTML = `
+
+        <div class="offer-eyebrow">
+          MONTHLY RATE SELECTED
+        </div>
+
+        <div class="offer-title">
+          GREAT CHOICE.
+        </div>
+
+        <div class="offer-subtitle">
+          Your limited monthly rate has been selected
+          for this booking.
+        </div>
+
+        <div class="offer-price">
+
+          <div class="offer-price-new">
+            Rp${monthlyTotal.toLocaleString("id-ID")}
+          </div>
+
+        </div>
+
+        <button
+          type="button"
+          class="offer-accept-btn"
+          onclick="alert('Next step: connect payment / booking system.')">
+
+          CONTINUE TO PAYMENT
+
+        </button>
+
+      `;
+
+    }
+  );
+
+
+
+/* =========================================================
+   DECLINE OFFER
+========================================================= */
+
+document
+  .getElementById(
+    "declineMonthlyOffer"
+  )
+  .addEventListener(
+    "click",
+    function(){
+
+      stopOfferTimer();
+
+
+      document.getElementById(
+        "limitedOffer"
+      ).innerHTML = `
+
+        <div class="offer-eyebrow">
+          VISITOR RATE
+        </div>
+
+        <div class="offer-title">
+          BOOKING READY
+        </div>
+
+        <div class="offer-subtitle">
+          You are continuing with the standard
+          visitor rate.
+        </div>
+
+        <div class="offer-price">
+
+          <div class="offer-price-new">
+            ${document.getElementById(
+              "checkoutTotal"
+            ).innerText}
+          </div>
+
+        </div>
+
+        <button
+          type="button"
+          class="offer-accept-btn"
+          onclick="alert('Next step: connect payment / booking system.')">
+
+          CONTINUE TO PAYMENT
+
+        </button>
+
+      `;
+
+    }
+  );
+
+
+
+/* =========================================================
+   CLOSE MODAL
+========================================================= */
 
 function closeFunMatchModal(){
 
-  funMatchModal.classList.remove("active");
+  stopOfferTimer();
 
-  document.body.style.overflow = "";
+
+  funMatchModal
+    .classList
+    .remove("active");
+
+
+  document.body.style.overflow =
+    "";
 
 }
 
@@ -2205,21 +3977,21 @@ if(funMatchOverlay){
 }
 
 
-// ================================
-// ESC KEY
-// ================================
+
+/* =========================================================
+   ESC
+========================================================= */
 
 document.addEventListener(
   "keydown",
   function(e){
 
     if(
-
       e.key === "Escape" &&
-
       funMatchModal &&
-      funMatchModal.classList.contains("active")
-
+      funMatchModal
+        .classList
+        .contains("active")
     ){
 
       closeFunMatchModal();
@@ -2228,48 +4000,6 @@ document.addEventListener(
 
   }
 );
-
-
-// ================================
-// ARENA SELECTION
-// ================================
-
-document
-  .querySelectorAll(".arena-select-btn")
-  .forEach(button => {
-
-    button.addEventListener(
-      "click",
-      function(){
-
-        const arena =
-          this.dataset.arena;
-
-        console.log(
-          "Selected arena:",
-          arena
-        );
-
-        /*
-          NEXT STEP
-
-          Setelah arena dipilih,
-          modal akan berubah menjadi:
-
-          SELECT SESSION
-
-          BTS:
-          Monday 19:00–23:00
-          Saturday 20:00–23:00
-
-          KJS:
-          Sunday 18:00–20:00
-        */
-
-      }
-    );
-
-  });
 
 const products = [
 
