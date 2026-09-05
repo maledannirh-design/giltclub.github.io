@@ -925,7 +925,114 @@ section{
   }
 
 }
+/* =========================================================
+   MEMBERSHIP RATE CARD
+========================================================= */
 
+.membership-rate-card{
+  margin-top:16px;
+  background:#F6F1E7;
+  border:1px solid #d9d1c2;
+  border-radius:16px;
+  padding:17px 16px;
+}
+
+.membership-rate-eyebrow{
+  font-size:9px;
+  font-weight:800;
+  letter-spacing:1.8px;
+  color:#777;
+}
+
+.membership-rate-title{
+  font-size:18px;
+  font-weight:900;
+  color:#2E5D3A;
+  margin-top:4px;
+}
+
+.membership-rate-detail{
+  font-size:11px;
+  color:#777;
+  margin-top:3px;
+}
+
+.membership-rate-price{
+  font-size:25px;
+  font-weight:900;
+  color:#2E5D3A;
+  margin-top:10px;
+}
+
+.membership-rate-saving{
+  font-size:11px;
+  color:#2E5D3A;
+  margin-top:2px;
+}
+
+.membership-rate-btn{
+  width:100%;
+  min-height:43px;
+  margin-top:13px;
+  border:none;
+  border-radius:10px;
+  background:#E5A9A9;
+  color:#2E5D3A;
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:.7px;
+  cursor:pointer;
+}
+
+.membership-rate-btn:hover{
+  opacity:.9;
+}
+
+
+/* =========================================================
+   VISITOR TOTAL LABEL
+========================================================= */
+
+.visitor-total-box{
+  margin-top:15px;
+  padding:14px 0 2px;
+  border-top:1px solid #eee;
+}
+
+.visitor-total-label{
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:1.2px;
+  color:#777;
+}
+
+.visitor-total-price{
+  font-size:24px;
+  font-weight:900;
+  color:#2E5D3A;
+  margin-top:2px;
+}
+
+
+/* =========================================================
+   MEMBER SELECTED STATE
+========================================================= */
+
+.membership-selected{
+  border:2px solid #2E5D3A;
+  background:#edf3ec;
+}
+
+.membership-selected
+.membership-rate-btn{
+  background:#2E5D3A;
+  color:#fff;
+}
+
+.membership-selected
+.membership-rate-saving{
+  font-weight:800;
+}
 /* ==========================
    OUR PARTNERS
 ========================== */
@@ -2785,135 +2892,197 @@ LEARN MORE →
         </div>
 
 
-        <div class="checkout-row">
+        <!-- =====================================================
+     CHECKOUT DETAILS
+====================================================== -->
 
-          <span>
-            Rate
-          </span>
+<div class="checkout-row">
 
-          <strong
-            id="checkoutRate">
-          </strong>
+  <span>
+    Rate
+  </span>
 
-        </div>
+  <strong id="checkoutRate">
+  </strong>
 
-
-        <div class="checkout-row">
-
-          <span>
-            Seats
-          </span>
-
-          <strong
-            id="checkoutSeats">
-          </strong>
-
-        </div>
+</div>
 
 
-        <div class="checkout-total">
+<div class="checkout-row">
 
-          <span>
-            TOTAL
-          </span>
+  <span>
+    Seats
+  </span>
 
-          <span
-            class="checkout-total-price"
-            id="checkoutTotal">
-          </span>
+  <strong id="checkoutSeats">
+  </strong>
 
-        </div>
+</div>
 
 
-        <!-- LIMITED OFFER -->
 
-        <div
-          class="limited-offer"
-          id="limitedOffer">
+<!-- =====================================================
+     MEMBERSHIP RATE
+====================================================== -->
 
+<div
+  class="membership-rate-card"
+  id="membershipRateCard">
 
-          <div class="offer-eyebrow">
-            LIMITED TIME OFFER
-          </div>
+  <div class="membership-rate-eyebrow">
+    MEMBERSHIP RATE
+  </div>
 
+  <div class="membership-rate-title">
+    Become a GMTC Member
+  </div>
 
-          <div class="offer-title">
-            PLAY MORE. PAY LESS.
-          </div>
+  <div
+    class="membership-rate-detail"
+    id="membershipRateDetail">
+    Rp75.000 × 2 seats
+  </div>
 
+  <div
+    class="membership-rate-price"
+    id="membershipRateTotal">
+    Rp150.000
+  </div>
 
-          <div class="offer-subtitle">
-            Unlock a better rate before you complete
-            your booking.
-          </div>
+  <div class="membership-rate-saving">
+    Save
+    <strong id="membershipSaving">
+      Rp20.000
+    </strong>
+  </div>
 
+  <button
+    type="button"
+    class="membership-rate-btn"
+    id="registerMemberBtn">
 
-          <div class="offer-timer-label">
-            OFFER EXPIRES IN
-          </div>
+    REGISTER TO MEMBER
 
+  </button>
 
-          <div
-            class="offer-timer"
-            id="offerTimer">
-
-            25:00
-
-          </div>
-
-
-          <div class="offer-price">
-
-            <div class="offer-price-old">
-              Visitor Rate:
-              <span id="offerVisitorTotal">
-                Rp95.000
-              </span>
-            </div>
-
-
-            <div class="offer-price-new">
-              <span id="offerMonthlyTotal">
-                Rp60.000
-              </span>
-            </div>
+</div>
 
 
-          </div>
+
+<!-- =====================================================
+     VISITOR TOTAL
+====================================================== -->
+
+<div class="visitor-total-box">
+
+  <div class="visitor-total-label">
+    TOTAL — VISITOR RATE
+  </div>
+
+  <div
+    class="visitor-total-price"
+    id="checkoutTotal">
+    Rp170.000
+  </div>
+
+</div>
 
 
-          <div class="offer-saving">
 
-            Save
-            <strong id="offerSaving">
-              Rp35.000
-            </strong>
-            on this booking
+<!-- =====================================================
+     LIMITED TIME OFFER
+====================================================== -->
 
-          </div>
-
-
-          <button
-            type="button"
-            class="offer-accept-btn"
-            id="acceptMonthlyOffer">
-
-            GET LIMITED MONTHLY RATE
-
-          </button>
+<div
+  class="limited-offer"
+  id="limitedOffer">
 
 
-          <button
-            type="button"
-            class="offer-decline-btn"
-            id="declineMonthlyOffer">
-
-            Continue with Visitor Rate
-
-          </button>
+  <div class="offer-eyebrow">
+    LIMITED TIME OFFER
+  </div>
 
 
-        </div>
+  <div class="offer-title">
+    PLAY MORE. PAY LESS.
+  </div>
+
+
+  <div class="offer-subtitle">
+    Unlock a better rate before you complete
+    your booking.
+  </div>
+
+
+  <div class="offer-timer-label">
+    OFFER EXPIRES IN
+  </div>
+
+
+  <div
+    class="offer-timer"
+    id="offerTimer">
+
+    25:00
+
+  </div>
+
+
+  <div class="offer-price">
+
+    <div class="offer-price-old">
+
+      Visitor Rate:
+      <span id="offerVisitorTotal">
+        Rp170.000
+      </span>
+
+    </div>
+
+
+    <div class="offer-price-new">
+
+      <span id="offerMonthlyTotal">
+        Rp120.000
+      </span>
+
+    </div>
+
+  </div>
+
+
+  <div class="offer-saving">
+
+    Save
+    <strong id="offerSaving">
+      Rp50.000
+    </strong>
+    on this booking
+
+  </div>
+
+
+  <button
+    type="button"
+    class="offer-accept-btn"
+    id="acceptMonthlyOffer">
+
+    GET LIMITED MONTHLY RATE
+
+  </button>
+
+
+  <button
+    type="button"
+    class="offer-decline-btn"
+    id="declineMonthlyOffer">
+
+    Continue with Visitor Rate
+
+  </button>
+
+
+</div>
 
 
       </div>
@@ -3500,7 +3669,6 @@ document
   );
 
 
-
 /* =========================================================
    BOOK NOW → CHECKOUT
 ========================================================= */
@@ -3524,6 +3692,10 @@ document
           [selectedSession.day];
 
 
+      /* =========================
+         VISITOR
+      ========================= */
+
       const visitorRate =
         rates.visitor;
 
@@ -3532,6 +3704,30 @@ document
         visitorRate *
         selectedSeats;
 
+
+
+      /* =========================
+         MEMBER
+      ========================= */
+
+      const memberRate =
+        rates.member;
+
+
+      const memberTotal =
+        memberRate *
+        selectedSeats;
+
+
+      const memberSaving =
+        visitorTotal -
+        memberTotal;
+
+
+
+      /* =========================
+         MONTHLY
+      ========================= */
 
       const monthlyRate =
         rates.monthly;
@@ -3542,39 +3738,48 @@ document
         selectedSeats;
 
 
-      const saving =
+      const monthlySaving =
         visitorTotal -
         monthlyTotal;
 
 
 
-      /* ARENA */
+      /* =========================
+         ARENA
+      ========================= */
 
       document.getElementById(
         "checkoutArena"
       ).innerText =
+
         selectedArena === "BTS"
           ? "BALIKPAPAN TENNIS STADIUM"
           : "KANUDJOSO";
 
 
 
-      /* SESSION */
+      /* =========================
+         SESSION
+      ========================= */
 
       document.getElementById(
         "checkoutSession"
       ).innerText =
+
         selectedSession.day
         + " · "
         + selectedSession.time;
 
 
 
-      /* RATE */
+      /* =========================
+         VISITOR RATE
+      ========================= */
 
       document.getElementById(
         "checkoutRate"
       ).innerText =
+
         "Rp"
         + visitorRate
           .toLocaleString("id-ID")
@@ -3582,7 +3787,9 @@ document
 
 
 
-      /* SEATS */
+      /* =========================
+         SEATS
+      ========================= */
 
       document.getElementById(
         "checkoutSeats"
@@ -3591,51 +3798,119 @@ document
 
 
 
-      /* TOTAL */
+      /* =========================
+         MEMBER RATE
+      ========================= */
+
+      document.getElementById(
+        "membershipRateDetail"
+      ).innerText =
+
+        "Rp"
+        + memberRate
+          .toLocaleString("id-ID")
+
+        + " × "
+
+        + selectedSeats
+
+        + " seats";
+
+
+
+      document.getElementById(
+        "membershipRateTotal"
+      ).innerText =
+
+        "Rp"
+        + memberTotal
+          .toLocaleString("id-ID");
+
+
+
+      document.getElementById(
+        "membershipSaving"
+      ).innerText =
+
+        "Rp"
+        + memberSaving
+          .toLocaleString("id-ID");
+
+
+
+      /* =========================
+         VISITOR TOTAL
+      ========================= */
 
       document.getElementById(
         "checkoutTotal"
       ).innerText =
+
         "Rp"
         + visitorTotal
           .toLocaleString("id-ID");
 
 
 
-      /* OFFER VISITOR */
+      /* =========================
+         MONTHLY OFFER
+      ========================= */
 
       document.getElementById(
         "offerVisitorTotal"
       ).innerText =
+
         "Rp"
         + visitorTotal
           .toLocaleString("id-ID");
 
 
 
-      /* OFFER MONTHLY */
-
       document.getElementById(
         "offerMonthlyTotal"
       ).innerText =
+
         "Rp"
         + monthlyTotal
           .toLocaleString("id-ID");
 
 
 
-      /* OFFER SAVING */
-
       document.getElementById(
         "offerSaving"
       ).innerText =
+
         "Rp"
-        + saving
+        + monthlySaving
           .toLocaleString("id-ID");
 
 
 
-      /* SHOW CHECKOUT */
+      /* =========================
+         RESET MEMBER STATE
+      ========================= */
+
+      const memberCard =
+        document.getElementById(
+          "membershipRateCard"
+        );
+
+
+      memberCard.classList.remove(
+        "membership-selected"
+      );
+
+
+      document.getElementById(
+        "registerMemberBtn"
+      ).innerText =
+        "REGISTER TO MEMBER";
+
+
+
+      /* =========================
+         SHOW CHECKOUT
+      ========================= */
 
       showFunStep(
         "funStepCheckout"
@@ -3643,9 +3918,46 @@ document
 
 
 
-      /* START 25 MIN TIMER */
+      /* =========================
+         START 25 MIN TIMER
+      ========================= */
 
       startOfferTimer();
+
+    }
+  );
+
+  /* =========================================================
+   REGISTER TO MEMBER
+========================================================= */
+
+document
+  .getElementById("registerMemberBtn")
+  .addEventListener(
+    "click",
+    function(){
+
+      const memberCard =
+        document.getElementById(
+          "membershipRateCard"
+        );
+
+
+      memberCard.classList.add(
+        "membership-selected"
+      );
+
+
+      this.innerText =
+        "MEMBERSHIP RATE SELECTED";
+
+
+      /*
+       * Untuk sementara belum redirect.
+       *
+       * Nanti tombol ini bisa diarahkan
+       * ke registration / membership flow GMTC.
+       */
 
     }
   );
