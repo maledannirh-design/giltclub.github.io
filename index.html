@@ -3378,19 +3378,11 @@ function resetFunMatch(){
   showFunStep("funStepArena");
 
 }
-
-
-
 /* =========================================================
    ARENA CAROUSEL
 ========================================================= */
 
 if(arenaCarousel){
-
-  const arenaCards =
-    arenaCarousel
-      .querySelectorAll(".arena-card");
-
 
   if(arenaNext){
 
@@ -3398,14 +3390,33 @@ if(arenaCarousel){
       "click",
       function(){
 
+        const arenaCards =
+          arenaCarousel.querySelectorAll(
+            ".arena-card"
+          );
+
         if(arenaCards.length < 2)
           return;
+
+
+        const current =
+          Math.round(
+            arenaCarousel.scrollLeft /
+            arenaCards[0].offsetWidth
+          );
+
+
+        const nextIndex =
+          Math.min(
+            current + 1,
+            arenaCards.length - 1
+          );
 
 
         arenaCarousel.scrollTo({
 
           left:
-            arenaCards[1].offsetLeft,
+            arenaCards[nextIndex].offsetLeft,
 
           behavior:"smooth"
 
@@ -3423,9 +3434,33 @@ if(arenaCarousel){
       "click",
       function(){
 
+        const arenaCards =
+          arenaCarousel.querySelectorAll(
+            ".arena-card"
+          );
+
+        if(arenaCards.length < 2)
+          return;
+
+
+        const current =
+          Math.round(
+            arenaCarousel.scrollLeft /
+            arenaCards[0].offsetWidth
+          );
+
+
+        const prevIndex =
+          Math.max(
+            current - 1,
+            0
+          );
+
+
         arenaCarousel.scrollTo({
 
-          left:0,
+          left:
+            arenaCards[prevIndex].offsetLeft,
 
           behavior:"smooth"
 
