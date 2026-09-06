@@ -384,6 +384,52 @@ section{
   color: #666;
 }
 
+  /* =========================
+   REFRESH SCHEDULE
+========================= */
+
+.arena-refresh-row{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+
+  margin:0 0 14px;
+}
+
+#refreshFunMatch{
+  border:1px solid #2E5D3A;
+  background:transparent;
+  color:#2E5D3A;
+
+  border-radius:20px;
+
+  padding:8px 14px;
+
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.8px;
+
+  cursor:pointer;
+
+  transition:.2s;
+}
+
+#refreshFunMatch:hover{
+  background:#2E5D3A;
+  color:#fff;
+}
+
+#refreshFunMatch:disabled{
+  opacity:.5;
+  cursor:wait;
+}
+
+#funMatchUpdated{
+  font-size:9px;
+  color:#888;
+  letter-spacing:.5px;
+}
 
 /* ARENA CAROUSEL */
 
@@ -519,7 +565,79 @@ section{
   }
 
 }
+/* =========================
+   DYNAMIC ARENA STATUS
+========================= */
 
+.arena-card.no-schedule img{
+  filter:grayscale(100%);
+  opacity:.55;
+}
+
+.arena-no-schedule{
+  padding:16px;
+  text-align:center;
+}
+
+.arena-no-schedule strong{
+  display:block;
+
+  color:#777;
+
+  font-size:12px;
+  letter-spacing:1px;
+}
+
+.arena-no-schedule span{
+  display:block;
+
+  margin-top:5px;
+
+  color:#aaa;
+
+  font-size:10px;
+}
+
+.arena-sessions{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+
+  margin-bottom:14px;
+}
+
+.arena-session{
+  padding:10px 11px;
+
+  background:#F6F1E7;
+
+  border-radius:10px;
+
+  border:1px solid #e5dfd3;
+}
+
+.arena-session-day{
+  font-size:9px;
+  font-weight:800;
+  letter-spacing:1.2px;
+  color:#777;
+}
+
+.arena-session-time{
+  margin-top:3px;
+
+  font-size:15px;
+  font-weight:800;
+
+  color:#2E5D3A;
+}
+
+.arena-session-slots{
+  margin-top:3px;
+
+  font-size:10px;
+  color:#777;
+}
 /* =========================================================
    FUN MATCH BOOKING FLOW
    ARENA → SESSION → SEATS → CHECKOUT → LIMITED OFFER
@@ -2557,89 +2675,30 @@ LEARN MORE →
       </div>
 
 
-      <div
-        class="arena-carousel"
-        id="arenaCarousel">
+     <div class="arena-refresh-row">
+
+  <button
+    type="button"
+    id="refreshFunMatch">
+
+    ↻ REFRESH SCHEDULE
+
+  </button>
+
+  <span id="funMatchUpdated">
+    CHECKING SCHEDULE...
+  </span>
+
+</div>
 
 
-        <!-- BTS -->
+<div
+  class="arena-carousel"
+  id="arenaCarousel">
 
-        <div class="arena-card">
+  <!-- ARENAS WILL BE GENERATED FROM FIREBASE -->
 
-          <img
-            src="images/BTS.webp"
-            alt="Balikpapan Tennis Stadium Outdoor"
-            loading="lazy"
-          >
-
-          <div class="arena-info">
-
-            <span class="arena-type">
-              FUN MATCH
-            </span>
-
-            <h3>
-              BALIKPAPAN TENNIS STADIUM
-            </h3>
-
-            <p>
-              OUTDOOR
-            </p>
-
-            <button
-              type="button"
-              class="arena-select-btn"
-              data-arena="BTS">
-
-              CHOOSE ARENA
-
-            </button>
-
-          </div>
-
-        </div>
-
-
-
-        <!-- KJS -->
-
-        <div class="arena-card">
-
-          <img
-            src="images/KJS.webp"
-            alt="Kanudjoso Outdoor"
-            loading="lazy"
-          >
-
-          <div class="arena-info">
-
-            <span class="arena-type">
-              FUN MATCH
-            </span>
-
-            <h3>
-              KANUDJOSO
-            </h3>
-
-            <p>
-              OUTDOOR
-            </p>
-
-            <button
-              type="button"
-              class="arena-select-btn"
-              data-arena="KJS">
-
-              CHOOSE ARENA
-
-            </button>
-
-          </div>
-
-        </div>
-
-
-      </div>
+</div>
 
 
       <div class="arena-controls">
@@ -3153,39 +3212,6 @@ let offerSeconds = 25 * 60;
 
 
 
-/* =========================================================
-   SESSION DATA
-========================================================= */
-
-const funMatchSessions = {
-
-  BTS: [
-
-    {
-      day:"MONDAY",
-      time:"19:00 — 23:00",
-      available:12
-    },
-
-    {
-      day:"SATURDAY",
-      time:"20:00 — 23:00",
-      available:12
-    }
-
-  ],
-
-  KJS: [
-
-    {
-      day:"SUNDAY",
-      time:"18:00 — 20:00",
-      available:12
-    }
-
-  ]
-
-};
 
 
 
@@ -3303,14 +3329,13 @@ document
 
           resetFunMatch();
 
+funMatchModal
+  .classList
+  .add("active");
 
-          funMatchModal
-            .classList
-            .add("active");
-
-
-          document.body.style.overflow =
-            "hidden";
+document.body.style.overflow =
+  "hidden";
+          window.loadFunMatchSchedule();
 
         }
       );
@@ -3416,162 +3441,173 @@ if(arenaCarousel){
 
 
 /* =========================================================
-   ARENA SELECTION
+   ARENA → SESSION
+   FIREBASE SCHEDULE DATA
 ========================================================= */
 
-document
-  .querySelectorAll(".arena-select-btn")
-  .forEach(button => {
+window.funMatchScheduleData = {};
+
+document.addEventListener("click", function(e){
+
+  const button =
+    e.target.closest(".arena-select-btn");
+
+  if(!button) return;
+
+  e.stopPropagation();
+
+  selectedArena =
+    button.dataset.arena;
+
+  const sessions =
+    window.funMatchScheduleData[selectedArena] || [];
+
+  renderSessionsFromFirebase(
+    selectedArena,
+    sessions
+  );
+
+  showFunStep("funStepSession");
+
+});
 
 
-    button.addEventListener(
-      "click",
-      function(e){
-
-        e.stopPropagation();
-
-
-        selectedArena =
-          this.dataset.arena;
-
-
-        renderSessions(
-          selectedArena
-        );
-
-
-        showFunStep(
-          "funStepSession"
-        );
-
-      }
-    );
-
-  });
-
-
-
-/* =========================================================
-   RENDER SESSION CARDS
-========================================================= */
-
-function renderSessions(arena){
+function renderSessionsFromFirebase(arena, sessions){
 
   const list =
-    document.getElementById(
-      "sessionList"
-    );
+    document.getElementById("sessionList");
 
   const title =
-    document.getElementById(
-      "sessionArenaTitle"
-    );
+    document.getElementById("sessionArenaTitle");
+
+  if(!list || !title) return;
+
+
+  const arenaInfo = {
+    BTS:"BALIKPAPAN TENNIS STADIUM",
+    KJS:"KANUDJOSO",
+    WIKA:"WIKA",
+    BDI:"BDI",
+    EXC:"EXCHANGE",
+    BB:"BB",
+    HOLA:"HOLA",
+    ANANTA:"ANANTA"
+  };
+
+
+  title.innerText =
+    arenaInfo[arena] || arena;
 
 
   list.innerHTML = "";
 
 
-  if(arena === "BTS"){
+  if(!sessions.length){
 
-    title.innerText =
-      "BALIKPAPAN TENNIS STADIUM";
+    list.innerHTML = `
+      <div style="
+        padding:30px 15px;
+        text-align:center;
+        color:#777;
+        background:#fff;
+        border-radius:15px;
+      ">
+        NO SESSION AVAILABLE
+      </div>
+    `;
+
+    return;
 
   }
 
 
-  if(arena === "KJS"){
+  sessions.forEach(function(session){
 
-    title.innerText =
-      "KANUDJOSO";
-
-  }
+    const slots =
+      Number(session.slots ?? 0);
 
 
-  const sessions =
-    funMatchSessions[arena];
+    const card =
+      document.createElement("button");
+
+    card.type = "button";
+
+    card.className =
+      "session-card";
 
 
-  sessions.forEach(
-    function(session,index){
+    card.innerHTML = `
 
-      const card =
-        document.createElement(
-          "button"
+      <div class="session-day">
+        ${formatScheduleDate(session.date)}
+      </div>
+
+      <div class="session-time">
+        ${session.startTime || "--:--"}
+        —
+        ${session.endTime || "--:--"}
+      </div>
+
+      <div class="session-status">
+        ${
+          slots > 0
+            ? `${slots} slots available`
+            : "FULL"
+        }
+      </div>
+
+    `;
+
+
+    card.addEventListener(
+      "click",
+      function(){
+
+        selectedSession = {
+          ...session,
+          available: slots
+        };
+
+
+        document.getElementById(
+          "selectedSessionName"
+        ).innerText =
+          arenaInfo[arena] || arena;
+
+
+        document.getElementById(
+          "selectedSessionTime"
+        ).innerText =
+
+          formatScheduleDate(session.date)
+          + " · "
+          + (session.startTime || "--:--")
+          + " — "
+          + (session.endTime || "--:--");
+
+
+        document.getElementById(
+          "availableSlots"
+        ).innerText =
+
+          slots > 0
+            ? "Available slots: " + slots
+            : "FULL";
+
+
+        showFunStep(
+          "funStepSeats"
         );
 
-
-      card.type = "button";
-
-      card.className =
-        "session-card";
+      }
+    );
 
 
-      card.innerHTML = `
+    list.appendChild(card);
 
-        <div class="session-day">
-          ${session.day}
-        </div>
-
-        <div class="session-time">
-          ${session.time}
-        </div>
-
-        <div class="session-status">
-          ${session.available} slots available
-        </div>
-
-      `;
-
-
-      card.addEventListener(
-        "click",
-        function(){
-
-          selectedSession =
-            session;
-
-
-          selectedSession.rate =
-            funMatchRates
-              [arena]
-              [session.day]
-              .visitor;
-
-
-          document.getElementById(
-            "selectedSessionName"
-          ).innerText =
-            session.day;
-
-
-          document.getElementById(
-            "selectedSessionTime"
-          ).innerText =
-            session.time;
-
-
-          document.getElementById(
-            "availableSlots"
-          ).innerText =
-            "Available slots: "
-            + session.available;
-
-
-          showFunStep(
-            "funStepSeats"
-          );
-
-        }
-      );
-
-
-      list.appendChild(card);
-
-    }
-  );
+  });
 
 }
-
 
 
 /* =========================================================
@@ -4551,11 +4587,584 @@ import {
   setDoc,
   updateDoc,
   increment,
-  serverTimestamp
+  serverTimestamp,
+  collection,
+  getDocs
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 import { db } from "./firebase-config.js";
+/* =========================================================
+   FUN MATCH — FIREBASE SCHEDULE SCREENING
+   READ ONLY
+========================================================= */
 
+const FUN_MATCH_ARENAS = {
+
+  BTS: {
+    name: "BALIKPAPAN TENNIS STADIUM",
+    type: "OUTDOOR",
+    image: "images/BTS.webp"
+  },
+
+  KJS: {
+    name: "KANUDJOSO",
+    type: "OUTDOOR",
+    image: "images/KJS.webp"
+  },
+
+  WIKA: {
+    name: "WIKA",
+    type: "OUTDOOR",
+    image: "images/WIKA.webp"
+  },
+
+  BDI: {
+    name: "BDI",
+    type: "OUTDOOR",
+    image: "images/BDI.webp"
+  },
+
+  EXC: {
+    name: "EXCHANGE",
+    type: "OUTDOOR",
+    image: "images/EXC.webp"
+  },
+
+  BB: {
+    name: "BB",
+    type: "OUTDOOR",
+    image: "images/BB.webp"
+  },
+
+  HOLA: {
+    name: "HOLA",
+    type: "OUTDOOR",
+    image: "images/HOLA.webp"
+  },
+
+  ANANTA: {
+    name: "ANANTA",
+    type: "OUTDOOR",
+    image: "images/ANANTA.webp"
+  }
+
+};
+
+
+/* =========================================================
+   FIND ARENA FROM CORE COURT
+========================================================= */
+
+function getArenaCode(court){
+
+  const value =
+    String(court || "")
+      .trim()
+      .toUpperCase();
+
+  const codes =
+    Object.keys(FUN_MATCH_ARENAS);
+
+  return codes.find(code =>
+    value.startsWith(code)
+  ) || null;
+
+}
+
+
+/* =========================================================
+   DATE FORMAT
+========================================================= */
+
+function formatScheduleDate(date){
+
+  if(!date) return "";
+
+  const d =
+    new Date(date + "T00:00:00");
+
+  return d.toLocaleDateString(
+    "en-US",
+    {
+      weekday:"long",
+      month:"short",
+      day:"numeric"
+    }
+  ).toUpperCase();
+
+}
+
+
+/* =========================================================
+   LOAD FUN MATCH SCHEDULE
+========================================================= */
+
+async function loadFunMatchSchedule(){
+
+  const carousel =
+    document.getElementById(
+      "arenaCarousel"
+    );
+
+  const refreshBtn =
+    document.getElementById(
+      "refreshFunMatch"
+    );
+
+  const updated =
+    document.getElementById(
+      "funMatchUpdated"
+    );
+
+  if(!carousel) return;
+
+
+  if(refreshBtn){
+
+    refreshBtn.disabled = true;
+
+    refreshBtn.innerText =
+      "↻ CHECKING...";
+
+  }
+
+
+  updated.innerText =
+    "CHECKING SCHEDULE...";
+
+
+  try{
+
+    const snapshot =
+      await getDocs(
+        collection(db,"schedules")
+      );
+
+
+    const today =
+      new Date();
+
+    today.setHours(0,0,0,0);
+
+
+    const oneMonthLater =
+      new Date(today);
+
+    oneMonthLater.setMonth(
+      oneMonthLater.getMonth() + 1
+    );
+
+
+    const grouped = {};
+
+
+    /* =========================
+       SCREEN FIREBASE
+    ========================= */
+
+    snapshot.forEach(docSnap => {
+
+      const s = {
+        id:docSnap.id,
+        ...docSnap.data()
+      };
+
+
+      /* ONLY MABAR */
+
+      if(
+        String(s.sessionType || "")
+          .trim()
+          .toLowerCase()
+          !== "mabar"
+      ){
+        return;
+      }
+
+
+      /* DATE REQUIRED */
+
+      if(!s.date) return;
+
+
+      const sessionDate =
+        new Date(
+          s.date + "T00:00:00"
+        );
+
+
+      /* 1 MONTH WINDOW */
+
+      if(
+        sessionDate < today ||
+        sessionDate > oneMonthLater
+      ){
+        return;
+      }
+
+
+      /* COURT → ARENA */
+
+      const arenaCode =
+        getArenaCode(s.court);
+
+      if(!arenaCode) return;
+
+
+      if(!grouped[arenaCode]){
+
+        grouped[arenaCode] = [];
+
+      }
+
+
+      grouped[arenaCode].push(s);
+
+    });
+
+
+    /* =========================
+       SORT EACH ARENA
+       DATE FIRST
+       TIME SECOND
+    ========================= */
+
+    Object.keys(grouped).forEach(code => {
+
+      grouped[code].sort((a,b) => {
+
+        const dateCompare =
+          (a.date || "")
+            .localeCompare(
+              b.date || ""
+            );
+
+        if(dateCompare !== 0){
+
+          return dateCompare;
+
+        }
+
+        return (
+          a.startTime || ""
+        ).localeCompare(
+          b.startTime || ""
+        );
+
+      });
+
+    });
+
+
+    /* =========================
+       ARENA ORDER
+       AVAILABLE FIRST
+       EARLIEST DATE FIRST
+    ========================= */
+
+    const arenaCodes =
+      Object.keys(FUN_MATCH_ARENAS)
+        .sort((a,b) => {
+
+          const aHas =
+            grouped[a]?.length > 0;
+
+          const bHas =
+            grouped[b]?.length > 0;
+
+
+          if(aHas && !bHas) return -1;
+
+          if(!aHas && bHas) return 1;
+
+
+          if(!aHas && !bHas) return 0;
+
+
+          return grouped[a][0].date
+            .localeCompare(
+              grouped[b][0].date
+            );
+
+        });
+
+window.funMatchScheduleData = grouped;
+
+    /* =========================
+       RENDER 8 ARENAS
+    ========================= */
+
+    carousel.innerHTML =
+      arenaCodes.map(code => {
+
+        const arena =
+          FUN_MATCH_ARENAS[code];
+
+        const sessions =
+          grouped[code] || [];
+
+
+        /* =====================
+           NO SCHEDULE
+        ===================== */
+
+        if(!sessions.length){
+
+          return `
+
+            <div class="arena-card no-schedule">
+
+              <img
+                src="${arena.image}"
+                alt="${arena.name}"
+                loading="lazy"
+              >
+
+              <div class="arena-info">
+
+                <span class="arena-type">
+                  FUN MATCH
+                </span>
+
+                <h3>
+                  ${arena.name}
+                </h3>
+
+                <p>
+                  ${arena.type}
+                </p>
+
+                <div class="arena-no-schedule">
+
+                  <strong>
+                    NO SCHEDULE
+                  </strong>
+
+                  <span>
+                    AT THE MOMENT
+                  </span>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          `;
+
+        }
+
+
+        /* =====================
+           SCHEDULE AVAILABLE
+        ===================== */
+
+        return `
+
+          <div class="arena-card">
+
+            <img
+              src="${arena.image}"
+              alt="${arena.name}"
+              loading="lazy"
+            >
+
+            <div class="arena-info">
+
+              <span class="arena-type">
+                FUN MATCH
+              </span>
+
+              <h3>
+                ${arena.name}
+              </h3>
+
+              <p>
+                ${arena.type}
+              </p>
+
+
+              <div class="arena-sessions">
+
+                ${sessions.map(session => {
+
+                  const slots =
+                    Number(
+                      session.slots ?? 0
+                    );
+
+
+                  return `
+
+                    <div class="arena-session">
+
+                      <div class="arena-session-day">
+
+                        ${formatScheduleDate(
+                          session.date
+                        )}
+
+                      </div>
+
+                      <div class="arena-session-time">
+
+                        ${session.startTime || "--:--"}
+                        —
+                        ${session.endTime || "--:--"}
+
+                      </div>
+
+                      <div class="arena-session-slots">
+
+                        ${
+                          slots > 0
+                            ? `${slots} SLOTS AVAILABLE`
+                            : "FULL"
+                        }
+
+                      </div>
+
+                    </div>
+
+                  `;
+
+                }).join("")}
+
+              </div>
+
+
+              <button
+                type="button"
+                class="arena-select-btn"
+                data-arena="${code}">
+
+                CHOOSE ARENA
+
+              </button>
+
+            </div>
+
+          </div>
+
+        `;
+
+      }).join("");
+
+
+    /* =========================
+       RE-BIND ARENA BUTTONS
+    ========================= */
+
+    carousel
+      .querySelectorAll(
+        ".arena-select-btn"
+      )
+      .forEach(button => {
+
+        button.addEventListener(
+          "click",
+          function(e){
+
+            e.stopPropagation();
+
+            selectedArena =
+              this.dataset.arena;
+
+            console.log(
+              "Selected arena:",
+              selectedArena
+            );
+
+            /*
+             NEXT STEP:
+             session selection
+            */
+
+          }
+        );
+
+      });
+
+
+    /* =========================
+       STATUS
+    ========================= */
+
+    updated.innerText =
+      "UPDATED JUST NOW";
+
+
+  }catch(error){
+
+    console.error(
+      "Fun Match schedule error:",
+      error
+    );
+
+
+    carousel.innerHTML = `
+
+      <div style="
+        width:100%;
+        padding:40px 20px;
+        text-align:center;
+        color:#777;
+      ">
+
+        <strong>
+          UNABLE TO LOAD SCHEDULE
+        </strong>
+
+        <p style="
+          margin-top:7px;
+          font-size:11px;
+        ">
+          Please try again.
+        </p>
+
+      </div>
+
+    `;
+
+
+    updated.innerText =
+      "UPDATE FAILED";
+
+  }
+
+
+  if(refreshBtn){
+
+    refreshBtn.disabled = false;
+
+    refreshBtn.innerText =
+      "↻ REFRESH SCHEDULE";
+
+  }
+
+}
+
+
+/* =========================================================
+   REFRESH BUTTON
+========================================================= */
+
+document.addEventListener(
+  "click",
+  function(e){
+
+    if(
+      e.target.closest(
+        "#refreshFunMatch"
+      )
+    ){
+
+      loadFunMatchSchedule();
+
+    }
+
+  }
+);
 
 // =========================
 // WEBSITE VISIT TRACKING
@@ -4756,6 +5365,9 @@ if(productLink){
   );
 
 }
+
+  // akhir module script
+window.loadFunMatchSchedule = loadFunMatchSchedule;
 
 </script>
 </body>
