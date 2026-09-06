@@ -3438,7 +3438,66 @@ if(arenaCarousel){
 
 }
 
+/* =========================================================
+   ARENA CAROUSEL — DESKTOP MOUSE DRAG
+========================================================= */
 
+if(arenaCarousel){
+
+  let isDragging = false;
+  let startX = 0;
+  let startScrollLeft = 0;
+
+
+  arenaCarousel.addEventListener("mousedown", function(e){
+
+    isDragging = true;
+
+    startX = e.pageX;
+    startScrollLeft = arenaCarousel.scrollLeft;
+
+    arenaCarousel.classList.add("dragging");
+
+  });
+
+
+  arenaCarousel.addEventListener("mousemove", function(e){
+
+    if(!isDragging) return;
+
+    e.preventDefault();
+
+    const walk =
+      e.pageX - startX;
+
+    arenaCarousel.scrollLeft =
+      startScrollLeft - walk;
+
+  });
+
+
+  function stopArenaDrag(){
+
+    isDragging = false;
+
+    arenaCarousel.classList.remove(
+      "dragging"
+    );
+
+  }
+
+
+  arenaCarousel.addEventListener(
+    "mouseup",
+    stopArenaDrag
+  );
+
+  arenaCarousel.addEventListener(
+    "mouseleave",
+    stopArenaDrag
+  );
+
+}
 
 /* =========================================================
    ARENA → SESSION
