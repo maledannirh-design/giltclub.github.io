@@ -3590,292 +3590,316 @@ if(arenaCarousel){
 
 }
 
+
+  
 /* =========================================================
    ARENA → SESSION
    FIREBASE SCHEDULE DATA
 ========================================================= */
 
 window.funMatchScheduleData = {};
-
 /* =========================================================
-   SESSION SELECTION + BOOKING SEATS
+   FUN MATCH — SESSION SELECT + BOOKING SEATS
 ========================================================= */
 
-document.addEventListener(
-  "click",
-  function(e){
+document.addEventListener("click", function(e){
 
-    const sessionCard =
-      e.target.closest(
-        ".arena-session"
-      );
+  /* =====================================================
+     SESSION CARD
+  ===================================================== */
 
-    const arenaButton =
-      e.target.closest(
-        ".arena-select-btn"
-      );
+  const sessionCard =
+    e.target.closest(".arena-session");
 
+  if(sessionCard){
 
-    /* =====================================================
-       1. USER SELECTS SESSION
-    ===================================================== */
+    e.preventDefault();
+    e.stopPropagation();
 
-    if(sessionCard){
+    const arena =
+      sessionCard.dataset.arena;
 
-      e.preventDefault();
-      e.stopPropagation();
+    const sessionIndex =
+      Number(sessionCard.dataset.sessionIndex);
 
+    const sessions =
+      window.funMatchScheduleData?.[arena] || [];
 
-      const arena =
-        sessionCard.dataset.arena;
+    const session =
+      sessions[sessionIndex];
 
+    if(!session){
+      console.error("Session not found:", arena, sessionIndex);
+      return;
+    }
 
-      const sessionIndex =
-        Number(
-          sessionCard.dataset.sessionIndex
-        );
+    const slots =
+      Number(session.slots ?? 0);
 
+    if(slots <= 0){
 
-      const sessions =
-        window.funMatchScheduleData?.[arena] || [];
-
-
-      const session =
-        sessions[sessionIndex];
-
-
-      if(!session)
-        return;
-
-
-      const slots =
-        Number(
-          session.slots ?? 0
-        );
-
-
-      if(slots <= 0){
-
-        alert(
-          "This session is already full."
-        );
-
-        return;
-
-      }
-
-
-      /* SAVE */
-
-      selectedArena =
-        arena;
-
-
-      selectedSession = {
-        ...session,
-        available: slots
-      };
-
-
-      /* REMOVE PREVIOUS SELECTION */
-
-      document
-        .querySelectorAll(
-          ".arena-session.selected"
-        )
-        .forEach(card => {
-
-          card.classList.remove(
-            "selected"
-          );
-
-        });
-
-
-      /* SELECT CURRENT */
-
-      sessionCard.classList.add(
-        "selected"
-      );
-
-
-      /* RESET ALL ARENA BUTTONS */
-
-      document
-        .querySelectorAll(
-          ".arena-select-btn"
-        )
-        .forEach(button => {
-
-          button.innerText =
-            "CHOOSE ARENA";
-
-        });
-
-
-      /* CHANGE CURRENT ARENA BUTTON */
-
-      const arenaCard =
-        sessionCard.closest(
-          ".arena-card"
-        );
-
-
-      const bookingButton =
-        arenaCard?.querySelector(
-          ".arena-select-btn"
-        );
-
-
-      if(bookingButton){
-
-        bookingButton.innerText =
-          "BOOKING SEATS";
-
-      }
-
+      alert("This session is already full.");
 
       return;
 
     }
 
+    /* SAVE SELECTED SESSION */
 
-    /* =====================================================
-       2. USER CONFIRMS SELECTED SESSION
-    ===================================================== */
+    selectedArena = arena;
 
-    if(arenaButton){
+    selectedSession = {
+      ...session,
+      available: slots
+    };
 
-      e.preventDefault();
-      e.stopPropagation();
+    /* REMOVE OLD SELECTION */
 
+    document
+      .querySelectorAll(".arena-session.selected")
+      .forEach(card => {
 
-      const arena =
-        arenaButton.dataset.arena;
+        card.classList.remove("selected");
 
+      });
 
-      if(
-        !selectedSession ||
-        selectedArena !== arena
-      ){
+    /* SELECT THIS SESSION */
 
-        alert(
-          "Please select a session first."
-        );
+    sessionCard.classList.add("selected");
 
-        return;
+    /* RESET ALL ARENA BUTTONS */
 
-      }
+    document
+      .querySelectorAll(".arena-select-btn")
+      .forEach(button => {
 
+        button.innerText =
+          "CHOOSE ARENA";
 
-      const slots =
-        Number(
-          selectedSession.available ?? 0
-        );
+      });
 
+    /* CHANGE CURRENT ARENA BUTTON */
 
-      if(slots <= 0){
+    const arenaCard =
+      sessionCard.closest(".arena-card");
 
-        alert(
-          "This session is already full."
-        );
+    const bookingButton =
+      arenaCard?.querySelector(".arena-select-btn");
 
-        return;
+    if(bookingButton){
 
-      }
+      bookingButton.innerText =
+        "BOOKING SEATS";
 
-
-      /* RESET SEATS */
-
-      selectedSeats = 1;
-
-
-      document.getElementById(
-        "seatNumber"
-      ).innerText = "1";
-
-
-      document.getElementById(
-        "availableSlots"
-      ).innerText =
-        "Available slots: " + slots;
-
-
-      /* SELECTED SESSION INFO */
-
-      const arenaInfo = {
-
-        BTS:
-          "BALIKPAPAN TENNIS STADIUM",
-
-        INDOORBTS:
-          "BTS INDOOR",
-
-        KJS:
-          "KANUDJOSO",
-
-        WIKA:
-          "WIKA",
-
-        BDI:
-          "BDI",
-
-        EXC:
-          "EXCHANGE",
-
-        BB:
-          "BB",
-
-        HOLA:
-          "HOLA",
-
-        ANANTA:
-          "ANANTA"
-
-      };
-
-
-      document.getElementById(
-        "selectedSessionName"
-      ).innerText =
-        arenaInfo[arena] || arena;
-
-
-      document.getElementById(
-        "selectedSessionTime"
-      ).innerText =
-
-        formatScheduleDate(
-          selectedSession.date
-        )
-
-        + " · "
-
-        + (
-          selectedSession.startTime ||
-          "--:--"
-        )
-
-        + " — "
-
-        + (
-          selectedSession.endTime ||
-          "--:--"
-        );
-
-
-      /* GO DIRECTLY TO STEP 3 */
-
-      showFunStep(
-        "funStepSeats"
-      );
+      bookingButton.disabled =
+        false;
 
     }
 
+    console.log(
+      "GMTC selected session:",
+      selectedArena,
+      selectedSession
+    );
+
+    return;
   }
-);
 
 
+  /* =====================================================
+     BOOKING SEATS
+  ===================================================== */
+
+  const bookingButton =
+    e.target.closest(".arena-select-btn");
+
+  if(!bookingButton)
+    return;
+
+  e.preventDefault();
+  e.stopPropagation();
+
+  console.log(
+    "GMTC BOOKING SEATS CLICK",
+    bookingButton.dataset.arena,
+    selectedSession
+  );
+
+
+  /* MUST SELECT SESSION FIRST */
+
+  if(!selectedSession){
+
+    alert(
+      "Please select a session first."
+    );
+
+    return;
+
+  }
+
+
+  const buttonArena =
+    bookingButton.dataset.arena;
+
+
+  /* SAFETY CHECK */
+
+  if(
+    !selectedArena ||
+    selectedArena !== buttonArena
+  ){
+
+    alert(
+      "Please select a session first."
+    );
+
+    return;
+
+  }
+
+
+  const slots =
+    Number(
+      selectedSession.available ??
+      selectedSession.slots ??
+      0
+    );
+
+
+  if(slots <= 0){
+
+    alert(
+      "This session is already full."
+    );
+
+    return;
+
+  }
+
+
+  /* =====================================================
+     RESET SEATS
+  ===================================================== */
+
+  selectedSeats = 1;
+
+
+  const seatNumber =
+    document.getElementById("seatNumber");
+
+  if(seatNumber){
+
+    seatNumber.innerText =
+      "1";
+
+  }
+
+
+  const availableSlots =
+    document.getElementById("availableSlots");
+
+  if(availableSlots){
+
+    availableSlots.innerText =
+      "Available slots: " + slots;
+
+  }
+
+
+  /* =====================================================
+     ARENA NAME
+  ===================================================== */
+
+  const arenaInfo = {
+
+    BTS:
+      "BALIKPAPAN TENNIS STADIUM",
+
+    INDOORBTS:
+      "BTS INDOOR",
+
+    KJS:
+      "KANUDJOSO",
+
+    WIKA:
+      "WIKA",
+
+    BDI:
+      "BDI",
+
+    EXC:
+      "EXCHANGE",
+
+    BB:
+      "BB",
+
+    HOLA:
+      "HOLA",
+
+    ANANTA:
+      "ANANTA"
+
+  };
+
+
+  const selectedSessionName =
+    document.getElementById(
+      "selectedSessionName"
+    );
+
+  if(selectedSessionName){
+
+    selectedSessionName.innerText =
+      arenaInfo[selectedArena] ||
+      selectedArena;
+
+  }
+
+
+  /* =====================================================
+     SESSION DATE + TIME
+  ===================================================== */
+
+  const selectedSessionTime =
+    document.getElementById(
+      "selectedSessionTime"
+    );
+
+  if(selectedSessionTime){
+
+    selectedSessionTime.innerText =
+
+      formatScheduleDate(
+        selectedSession.date
+      )
+
+      + " · "
+
+      + (
+        selectedSession.startTime ||
+        "--:--"
+      )
+
+      + " — "
+
+      + (
+        selectedSession.endTime ||
+        "--:--"
+      );
+
+  }
+
+
+  /* =====================================================
+     GO TO HOW MANY SEATS
+  ===================================================== */
+
+  showFunStep(
+    "funStepSeats"
+  );
+
+});
 function renderSessionsFromFirebase(arena, sessions){
 
   const list =
@@ -4014,282 +4038,7 @@ function renderSessionsFromFirebase(arena, sessions){
 }
 window.renderSessionsFromFirebase =
   renderSessionsFromFirebase;
-/* =========================================================
-   SESSION SELECTION
-   SELECT SESSION FIRST
-   THEN BOOKING SEATS
-========================================================= */
 
-document.addEventListener(
-  "click",
-  function(e){
-
-    const sessionCard =
-      e.target.closest(
-        ".arena-session"
-      );
-
-
-    if(!sessionCard)
-      return;
-
-
-    e.preventDefault();
-    e.stopPropagation();
-
-
-    const arena =
-      sessionCard.dataset.arena;
-
-
-    const sessionIndex =
-      Number(
-        sessionCard.dataset.sessionIndex
-      );
-
-
-    const sessions =
-      window.funMatchScheduleData?.[arena] || [];
-
-
-    const session =
-      sessions[sessionIndex];
-
-
-    if(!session)
-      return;
-
-
-    const slots =
-      Number(
-        session.slots ?? 0
-      );
-
-
-    if(slots <= 0){
-
-      alert(
-        "This session is already full."
-      );
-
-      return;
-
-    }
-
-
-    /* =========================
-       SAVE SELECTION
-    ========================= */
-
-    selectedArena =
-      arena;
-
-
-    selectedSession = {
-
-      ...session,
-
-      available: slots
-
-    };
-
-
-    /* =========================
-       VISUAL SELECTED
-    ========================= */
-
-    const arenaCard =
-      sessionCard.closest(
-        ".arena-card"
-      );
-
-
-    if(arenaCard){
-
-      arenaCard
-        .querySelectorAll(
-          ".arena-session"
-        )
-        .forEach(card => {
-
-          card.classList.remove(
-            "selected"
-          );
-
-        });
-
-
-      sessionCard.classList.add(
-        "selected"
-      );
-
-
-      /* =========================
-         CHANGE BUTTON
-      ========================= */
-
-      const bookingButton =
-        arenaCard.querySelector(
-          ".arena-select-btn"
-        );
-
-
-      if(bookingButton){
-
-        bookingButton.innerText =
-          "BOOKING SEATS";
-
-        bookingButton.disabled =
-          false;
-
-      }
-
-    }
-
-  }
-);
-
-/* =========================================================
-   BOOKING SEATS BUTTON
-========================================================= */
-
-document.addEventListener(
-  "click",
-  function(e){
-
-    const button =
-      e.target.closest(
-        ".arena-select-btn"
-      );
-
-    if(!button)
-      return;
-
-    e.preventDefault();
-    e.stopPropagation();
-
-
-    /* MUST HAVE SELECTED SESSION */
-
-    if(!selectedSession){
-
-      alert(
-        "Please select a session first."
-      );
-
-      return;
-
-    }
-
-
-    const slots =
-      Number(
-        selectedSession.available ??
-        selectedSession.slots ??
-        0
-      );
-
-
-    if(slots <= 0){
-
-      alert(
-        "This session is already full."
-      );
-
-      return;
-
-    }
-
-
-    /* RESET SEATS */
-
-    selectedSeats = 1;
-
-
-    document.getElementById(
-      "seatNumber"
-    ).innerText = "1";
-
-
-    document.getElementById(
-      "availableSlots"
-    ).innerText =
-      "Available slots: " + slots;
-
-
-    /* SELECTED ARENA */
-
-    const arenaInfo = {
-
-      BTS:
-        "BALIKPAPAN TENNIS STADIUM",
-
-      INDOORBTS:
-        "BTS INDOOR",
-
-      KJS:
-        "KANUDJOSO",
-
-      WIKA:
-        "WIKA",
-
-      BDI:
-        "BDI",
-
-      EXC:
-        "EXCHANGE",
-
-      BB:
-        "BB",
-
-      HOLA:
-        "HOLA",
-
-      ANANTA:
-        "ANANTA"
-
-    };
-
-
-    document.getElementById(
-      "selectedSessionName"
-    ).innerText =
-      arenaInfo[selectedArena] ||
-      selectedArena;
-
-
-    document.getElementById(
-      "selectedSessionTime"
-    ).innerText =
-
-      formatScheduleDate(
-        selectedSession.date
-      )
-
-      + " · "
-
-      + (
-        selectedSession.startTime ||
-        "--:--"
-      )
-
-      + " — "
-
-      + (
-        selectedSession.endTime ||
-        "--:--"
-      );
-
-
-    /* GO TO SEATS */
-
-    showFunStep(
-      "funStepSeats"
-    );
-
-  }
-);
-  
 /* =========================================================
    BACK — SESSION
 ========================================================= */
