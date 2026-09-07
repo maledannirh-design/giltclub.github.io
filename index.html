@@ -603,7 +603,31 @@ section{
   flex-direction:column;
   gap:8px;
 
+  max-height:170px;
+  overflow-y:auto;
+
   margin-bottom:14px;
+
+  padding-right:4px;
+
+  scrollbar-width:thin;
+  scrollbar-color:#aaa transparent;
+
+  touch-action:pan-y;
+  overscroll-behavior:contain;
+}
+
+.arena-sessions::-webkit-scrollbar{
+  width:5px;
+}
+
+.arena-sessions::-webkit-scrollbar-track{
+  background:transparent;
+}
+
+.arena-sessions::-webkit-scrollbar-thumb{
+  background:#aaa;
+  border-radius:10px;
 }
 
 .arena-session{
@@ -3541,29 +3565,65 @@ if(arenaCarousel){
 
 window.funMatchScheduleData = {};
 
-document.addEventListener("click", function(e){
+/* =========================================================
+   ARENA / SCHEDULE → SESSION
+========================================================= */
 
-  const button =
-    e.target.closest(".arena-select-btn");
+document.addEventListener(
+  "click",
+  function(e){
 
-  if(!button) return;
+    const button =
+      e.target.closest(
+        ".arena-select-btn"
+      );
 
-  e.stopPropagation();
+    const schedule =
+      e.target.closest(
+        ".arena-session"
+      );
 
-  selectedArena =
-    button.dataset.arena;
 
-  const sessions =
-    window.funMatchScheduleData[selectedArena] || [];
+    if(!button && !schedule)
+      return;
 
-  renderSessionsFromFirebase(
-    selectedArena,
-    sessions
-  );
 
-  showFunStep("funStepSession");
+    e.preventDefault();
+    e.stopPropagation();
 
-});
+
+    const arena =
+      button?.dataset.arena ||
+      schedule?.dataset.arena;
+
+
+    if(!arena)
+      return;
+
+
+    selectedArena = arena;
+
+
+    const sessions =
+      window.funMatchScheduleData?.[arena] || [];
+
+
+    if(!sessions.length)
+      return;
+
+
+    renderSessionsFromFirebase(
+      arena,
+      sessions
+    );
+
+
+    showFunStep(
+      "funStepSession"
+    );
+
+  }
+);
 
 
 function renderSessionsFromFirebase(arena, sessions){
@@ -5151,56 +5211,6 @@ window.funMatchScheduleData = grouped;
         `;
 
       }).join("");
-
-/* =========================
-   ARENA / SESSION CLICK
-========================= */
-
-carousel
-  .querySelectorAll(
-    ".arena-select-btn, .arena-session"
-  )
-  .forEach(element => {
-
-    element.addEventListener(
-      "click",
-      function(e){
-
-        e.stopPropagation();
-
-        const arena =
-          this.dataset.arena ||
-          this.closest(".arena-card")
-            ?.querySelector(".arena-select-btn")
-            ?.dataset.arena;
-
-        if(!arena) return;
-
-        selectedArena = arena;
-
-
-        const sessions =
-          window.funMatchScheduleData?.[arena] || [];
-
-
-        if(!sessions.length)
-          return;
-
-
-        window.renderSessionsFromFirebase(
-          arena,
-          sessions
-        );
-
-
-        showFunStep(
-          "funStepSession"
-        );
-
-      }
-    );
-
-  });
 
 
     /* =========================
