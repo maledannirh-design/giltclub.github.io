@@ -638,9 +638,9 @@ section{
   border-radius:10px;
 
   border:1px solid #e5dfd3;
-}
-.arena-session{
+
   cursor:pointer;
+
   transition:.2s;
 }
 
@@ -652,6 +652,11 @@ section{
   border:2px solid #2E5D3A;
   background:#edf3ec;
 }
+.arena-session{
+  cursor:pointer;
+  transition:.2s;
+}
+
 .arena-session-day{
   font-size:9px;
   font-weight:800;
@@ -3547,61 +3552,279 @@ if(arenaCarousel){
 window.funMatchScheduleData = {};
 
 /* =========================================================
-   ARENA / SCHEDULE → SESSION
+   SESSION SELECTION + BOOKING SEATS
 ========================================================= */
 
 document.addEventListener(
   "click",
   function(e){
 
-    const button =
-      e.target.closest(
-        ".arena-select-btn"
-      );
-
-    const schedule =
+    const sessionCard =
       e.target.closest(
         ".arena-session"
       );
 
+    const arenaButton =
+      e.target.closest(
+        ".arena-select-btn"
+      );
 
-    if(!button && !schedule)
+
+    /* =====================================================
+       1. USER SELECTS SESSION
+    ===================================================== */
+
+    if(sessionCard){
+
+      e.preventDefault();
+      e.stopPropagation();
+
+
+      const arena =
+        sessionCard.dataset.arena;
+
+
+      const sessionIndex =
+        Number(
+          sessionCard.dataset.sessionIndex
+        );
+
+
+      const sessions =
+        window.funMatchScheduleData?.[arena] || [];
+
+
+      const session =
+        sessions[sessionIndex];
+
+
+      if(!session)
+        return;
+
+
+      const slots =
+        Number(
+          session.slots ?? 0
+        );
+
+
+      if(slots <= 0){
+
+        alert(
+          "This session is already full."
+        );
+
+        return;
+
+      }
+
+
+      /* SAVE */
+
+      selectedArena =
+        arena;
+
+
+      selectedSession = {
+        ...session,
+        available: slots
+      };
+
+
+      /* REMOVE PREVIOUS SELECTION */
+
+      document
+        .querySelectorAll(
+          ".arena-session.selected"
+        )
+        .forEach(card => {
+
+          card.classList.remove(
+            "selected"
+          );
+
+        });
+
+
+      /* SELECT CURRENT */
+
+      sessionCard.classList.add(
+        "selected"
+      );
+
+
+      /* RESET ALL ARENA BUTTONS */
+
+      document
+        .querySelectorAll(
+          ".arena-select-btn"
+        )
+        .forEach(button => {
+
+          button.innerText =
+            "CHOOSE ARENA";
+
+        });
+
+
+      /* CHANGE CURRENT ARENA BUTTON */
+
+      const arenaCard =
+        sessionCard.closest(
+          ".arena-card"
+        );
+
+
+      const bookingButton =
+        arenaCard?.querySelector(
+          ".arena-select-btn"
+        );
+
+
+      if(bookingButton){
+
+        bookingButton.innerText =
+          "BOOKING SEATS";
+
+      }
+
+
       return;
 
-
-    e.preventDefault();
-    e.stopPropagation();
+    }
 
 
-    const arena =
-      button?.dataset.arena ||
-      schedule?.dataset.arena;
+    /* =====================================================
+       2. USER CONFIRMS SELECTED SESSION
+    ===================================================== */
+
+    if(arenaButton){
+
+      e.preventDefault();
+      e.stopPropagation();
 
 
-    if(!arena)
-      return;
+      const arena =
+        arenaButton.dataset.arena;
 
 
-    selectedArena = arena;
+      if(
+        !selectedSession ||
+        selectedArena !== arena
+      ){
+
+        alert(
+          "Please select a session first."
+        );
+
+        return;
+
+      }
 
 
-    const sessions =
-      window.funMatchScheduleData?.[arena] || [];
+      const slots =
+        Number(
+          selectedSession.available ?? 0
+        );
 
 
-    if(!sessions.length)
-      return;
+      if(slots <= 0){
+
+        alert(
+          "This session is already full."
+        );
+
+        return;
+
+      }
 
 
-    renderSessionsFromFirebase(
-      arena,
-      sessions
-    );
+      /* RESET SEATS */
+
+      selectedSeats = 1;
 
 
-    showFunStep(
-      "funStepSession"
-    );
+      document.getElementById(
+        "seatNumber"
+      ).innerText = "1";
+
+
+      document.getElementById(
+        "availableSlots"
+      ).innerText =
+        "Available slots: " + slots;
+
+
+      /* SELECTED SESSION INFO */
+
+      const arenaInfo = {
+
+        BTS:
+          "BALIKPAPAN TENNIS STADIUM",
+
+        INDOORBTS:
+          "BTS INDOOR",
+
+        KJS:
+          "KANUDJOSO",
+
+        WIKA:
+          "WIKA",
+
+        BDI:
+          "BDI",
+
+        EXC:
+          "EXCHANGE",
+
+        BB:
+          "BB",
+
+        HOLA:
+          "HOLA",
+
+        ANANTA:
+          "ANANTA"
+
+      };
+
+
+      document.getElementById(
+        "selectedSessionName"
+      ).innerText =
+        arenaInfo[arena] || arena;
+
+
+      document.getElementById(
+        "selectedSessionTime"
+      ).innerText =
+
+        formatScheduleDate(
+          selectedSession.date
+        )
+
+        + " · "
+
+        + (
+          selectedSession.startTime ||
+          "--:--"
+        )
+
+        + " — "
+
+        + (
+          selectedSession.endTime ||
+          "--:--"
+        );
+
+
+      /* GO DIRECTLY TO STEP 3 */
+
+      showFunStep(
+        "funStepSeats"
+      );
+
+    }
 
   }
 );
@@ -5415,7 +5638,7 @@ window.funMatchScheduleData = grouped;
 
               <div class="arena-sessions">
 
-                ${sessions.map(session => {
+                $sessions.map((session, sessionIndex) => {
 
                   const slots =
                     Number(
@@ -5428,6 +5651,7 @@ window.funMatchScheduleData = grouped;
                     <div
   class="arena-session"
   data-arena="${code}"
+  data-session-index="${sessionIndex}"
 >
 
                       <div class="arena-session-day">
