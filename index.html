@@ -1155,7 +1155,51 @@ section{
   opacity:.9;
 }
 
+/* =========================================================
+   VVIP SPECIAL RATE
+========================================================= */
 
+.vvip-rate-card{
+  background:#0b0b0b;
+  border:1px solid #b8953d;
+  color:#fff;
+}
+
+.vvip-rate-card
+.membership-rate-eyebrow{
+  color:#d5aa3d;
+}
+
+.vvip-rate-card
+.membership-rate-title{
+  color:#d5aa3d;
+}
+
+.vvip-rate-card
+.membership-rate-detail{
+  color:#bbb;
+}
+
+.vvip-rate-card
+.membership-rate-price{
+  color:#d5aa3d;
+}
+
+.vvip-rate-card
+.membership-rate-saving{
+  color:#ddd;
+}
+
+.vvip-rate-card
+.membership-rate-btn{
+  background:#d5aa3d;
+  color:#050505;
+}
+
+.vvip-rate-card
+.membership-rate-btn:hover{
+  opacity:.9;
+}
 /* =========================================================
    VISITOR TOTAL LABEL
 ========================================================= */
@@ -3057,11 +3101,10 @@ LEARN MORE →
     Rp150.000
   </div>
 
-  <div class="membership-rate-saving">
-    Save
-    <strong id="membershipSaving">
-      Rp20.000
-    </strong>
+  <div
+    class="membership-rate-saving"
+    id="membershipSaving">
+    Get Rp20.000 discount on this session
   </div>
 
   <button
@@ -3095,7 +3138,63 @@ LEARN MORE →
 
 </div>
 
+<!-- =====================================================
+     VVIP SPECIAL RATE
+====================================================== -->
 
+<div
+  class="membership-rate-card vvip-rate-card"
+  id="vvipRateCard">
+
+  <div class="membership-rate-eyebrow">
+    SPECIAL RATE
+  </div>
+
+  <div class="membership-rate-title">
+    Become Our VVIP Member
+  </div>
+
+  <div
+    class="membership-rate-detail"
+    id="vvipRateDetail">
+    Get a special discount on this session.
+  </div>
+
+  <div
+    class="membership-rate-price"
+    id="vvipRateTotal">
+    Rp0
+  </div>
+
+  <div
+    class="membership-rate-saving">
+
+    Reserve your place in our exclusive circle.
+
+  </div>
+
+  <div
+    style="
+      margin-top:8px;
+      font-size:10px;
+      line-height:1.5;
+      color:#777;
+    ">
+
+    Only 2 VVIP memberships available.
+
+  </div>
+
+  <button
+    type="button"
+    class="membership-rate-btn"
+    id="contactVVIPBtn">
+
+    TALK TO VVIP CONCIERGE
+
+  </button>
+
+</div>
 
 <!-- =====================================================
      LIMITED TIME OFFER
@@ -3259,6 +3358,12 @@ let offerTimerInterval = null;
 
 let offerSeconds = 25 * 60;
 
+  /* =========================================================
+   GMTC ADMIN WHATSAPP
+========================================================= */
+
+const GMTC_ADMIN_WA =
+  "6282253704720";
 
 /* =========================================================
    OPEN FUN MATCH — SAFE
@@ -4214,19 +4319,19 @@ document
 
 
       /* =====================================================
-         CASHBACK FROM FIREBASE
-      ===================================================== */
+   CASHBACK FROM FIREBASE
+===================================================== */
 
-      const cashbackMember =
-        Number(
-          selectedSession.cashbackMember10000 || 0
-        );
+const cashbackMember =
+  Number(
+    selectedSession.cashbackMember ?? 0
+  );
 
 
-      const cashbackVVIP =
-        Number(
-          selectedSession.cashbackVVIP60000 || 0
-        );
+const cashbackVVIP =
+  Number(
+    selectedSession.cashbackVVIP ?? 0
+  );
 
 
       /*
@@ -4619,7 +4724,29 @@ document
     }
   );
 
+/* =========================================================
+   VVIP CONCIERGE → WHATSAPP
+========================================================= */
 
+document
+  .getElementById("contactVVIPBtn")
+  .addEventListener(
+    "click",
+    function(){
+
+      const message =
+        "Hello GMTC VVIP Concierge, I'd like to know more about the VVIP membership and the special rate for my selected session.";
+
+      window.open(
+        "https://wa.me/"
+        + GMTC_ADMIN_WA
+        + "?text="
+        + encodeURIComponent(message),
+        "_blank"
+      );
+
+    }
+  );
 /* =========================================================
    LIMITED OFFER TIMER
 ========================================================= */
