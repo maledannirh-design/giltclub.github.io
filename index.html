@@ -3858,38 +3858,46 @@ document.addEventListener("click", function(e){
 
 
   /* =====================================================
-     SESSION DATE + TIME
-  ===================================================== */
+   SESSION DATE + TIME
+===================================================== */
 
-  const selectedSessionTime =
-    document.getElementById(
-      "selectedSessionTime"
+const selectedSessionTime =
+  document.getElementById(
+    "selectedSessionTime"
+  );
+
+if(selectedSessionTime){
+
+  const sessionDate = new Date(
+    selectedSession.date + "T00:00:00"
+  );
+
+  const formattedSessionDate =
+    sessionDate.toLocaleDateString("en-US", {
+      weekday: "long",
+      month: "short",
+      day: "numeric"
+    }).toUpperCase();
+
+  selectedSessionTime.innerText =
+
+    formattedSessionDate
+
+    + " · "
+
+    + (
+      selectedSession.startTime ||
+      "--:--"
+    )
+
+    + " — "
+
+    + (
+      selectedSession.endTime ||
+      "--:--"
     );
 
-  if(selectedSessionTime){
-
-    selectedSessionTime.innerText =
-
-      formatScheduleDate(
-        selectedSession.date
-      )
-
-      + " · "
-
-      + (
-        selectedSession.startTime ||
-        "--:--"
-      )
-
-      + " — "
-
-      + (
-        selectedSession.endTime ||
-        "--:--"
-      );
-
-  }
-
+}
 
   /* =====================================================
      GO TO HOW MANY SEATS
@@ -3900,6 +3908,7 @@ document.addEventListener("click", function(e){
   );
 
 });
+  
 function renderSessionsFromFirebase(arena, sessions){
 
   const list =
