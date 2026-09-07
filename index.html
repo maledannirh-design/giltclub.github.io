@@ -4162,27 +4162,16 @@ document.addEventListener(
         ".arena-select-btn"
       );
 
-
     if(!button)
       return;
-
 
     e.preventDefault();
     e.stopPropagation();
 
 
-    const arena =
-      button.dataset.arena;
+    /* MUST HAVE SELECTED SESSION */
 
-
-    /* =========================
-       REQUIRE SESSION SELECTION
-    ========================= */
-
-    if(
-      !selectedSession ||
-      selectedArena !== arena
-    ){
+    if(!selectedSession){
 
       alert(
         "Please select a session first."
@@ -4195,7 +4184,9 @@ document.addEventListener(
 
     const slots =
       Number(
-        selectedSession.available ?? 0
+        selectedSession.available ??
+        selectedSession.slots ??
+        0
       );
 
 
@@ -4210,9 +4201,7 @@ document.addEventListener(
     }
 
 
-    /* =========================
-       RESET SEATS
-    ========================= */
+    /* RESET SEATS */
 
     selectedSeats = 1;
 
@@ -4228,9 +4217,7 @@ document.addEventListener(
       "Available slots: " + slots;
 
 
-    /* =========================
-       SHOW SELECTED SESSION
-    ========================= */
+    /* SELECTED ARENA */
 
     const arenaInfo = {
 
@@ -4267,7 +4254,8 @@ document.addEventListener(
     document.getElementById(
       "selectedSessionName"
     ).innerText =
-      arenaInfo[arena] || arena;
+      arenaInfo[selectedArena] ||
+      selectedArena;
 
 
     document.getElementById(
@@ -4293,9 +4281,7 @@ document.addEventListener(
       );
 
 
-    /* =========================
-       GO TO SEAT SELECTION
-    ========================= */
+    /* GO TO SEATS */
 
     showFunStep(
       "funStepSeats"
