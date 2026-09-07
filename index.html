@@ -3702,7 +3702,8 @@ function renderSessionsFromFirebase(arena, sessions){
   });
 
 }
-
+window.renderSessionsFromFirebase =
+  renderSessionsFromFirebase;
 
 /* =========================================================
    BACK — SESSION
@@ -5094,7 +5095,10 @@ window.funMatchScheduleData = grouped;
 
                   return `
 
-                    <div class="arena-session">
+                    <div
+  class="arena-session"
+  data-arena="${code}"
+>
 
                       <div class="arena-session-day">
 
@@ -5148,33 +5152,46 @@ window.funMatchScheduleData = grouped;
 
       }).join("");
 
-
-    /* =========================
-   RE-BIND ARENA BUTTONS
+/* =========================
+   ARENA / SESSION CLICK
 ========================= */
 
 carousel
   .querySelectorAll(
-    ".arena-select-btn"
+    ".arena-select-btn, .arena-session"
   )
-  .forEach(button => {
+  .forEach(element => {
 
-    button.addEventListener(
+    element.addEventListener(
       "click",
       function(e){
 
         e.stopPropagation();
 
-        selectedArena =
-          this.dataset.arena;
+        const arena =
+          this.dataset.arena ||
+          this.closest(".arena-card")
+            ?.querySelector(".arena-select-btn")
+            ?.dataset.arena;
+
+        if(!arena) return;
+
+        selectedArena = arena;
+
 
         const sessions =
-          window.funMatchScheduleData?.[selectedArena] || [];
+          window.funMatchScheduleData?.[arena] || [];
 
-        renderSessionsFromFirebase(
-          selectedArena,
+
+        if(!sessions.length)
+          return;
+
+
+        window.renderSessionsFromFirebase(
+          arena,
           sessions
         );
+
 
         showFunStep(
           "funStepSession"
