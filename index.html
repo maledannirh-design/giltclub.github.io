@@ -679,6 +679,14 @@ section{
   font-size:10px;
   color:#777;
 }
+
+
+.arena-session-price{
+  margin-top:4px;
+  font-size:10px;
+  font-weight:700;
+  color:#2E5D3A;
+}
 /* =========================================================
    FUN MATCH BOOKING FLOW
    ARENA → SESSION → SEATS → CHECKOUT → LIMITED OFFER
@@ -3252,61 +3260,6 @@ let offerTimerInterval = null;
 let offerSeconds = 25 * 60;
 
 
-
-
-
-
-/* =========================================================
-   PRICE DATA
-
-   Visitor = normal
-   Member  = 10K discount
-   VVIP    = 20K discount
-   Monthly = 25K discount
-
-   Checkout initially uses VISITOR RATE.
-========================================================= */
-
-const funMatchRates = {
-
-  BTS: {
-
-    MONDAY: {
-
-      visitor:95000,
-      member:75000,
-      vvip:65000,
-      monthly:60000
-
-    },
-
-    SATURDAY: {
-
-      visitor:85000,
-      member:75000,
-      vvip:65000,
-      monthly:60000
-
-    }
-
-  },
-
-
-  KJS: {
-
-    SUNDAY: {
-
-      visitor:85000,
-      member:75000,
-      vvip:65000,
-      monthly:60000
-
-    }
-
-  }
-
-};
-
 /* =========================================================
    OPEN FUN MATCH — SAFE
 ========================================================= */
@@ -4145,6 +4098,7 @@ document
 
 /* =========================================================
    BOOK NOW → CHECKOUT
+   PRICE SOURCE = FIREBASE SCHEDULE
 ========================================================= */
 
 document
@@ -4156,114 +4110,267 @@ document
       if(
         !selectedArena ||
         !selectedSession
-      )
+      ){
+
+        alert(
+          "Please select a session first."
+        );
+
         return;
 
-
-      const rates =
-        funMatchRates
-          [selectedArena]
-          [selectedSession.day];
+      }
 
 
-      /* =========================
-         VISITOR
-      ========================= */
+      /* =====================================================
+         SESSION PRICE FROM FIREBASE
+      ===================================================== */
 
-      const visitorRate =
-        rates.visitor;
+      const pricePerHour =
+        Number(
+          selectedSession.pricePerHour || 0
+        );
+
+
+      if(pricePerHour <= 0){
+
+        alert(
+          "Session price is not available."
+        );
+
+        console.error(
+          "Missing pricePerHour:",
+          selectedSession
+        );
+
+        return;
+
+      }
+
+
+      /* =====================================================
+         CALCULATE SESSION DURATION
+         SAME LOGIC AS CORE
+      ===================================================== */
+
+      const [startH, startM] =
+        (selectedSession.startTime || "00:00")
+          .split(":")
+          .map(Number);
+
+
+      const [endH, endM] =
+        (selectedSession.endTime || "00:00")
+          .split(":")
+          .map(Number);
+
+
+      const startMinutes =
+        startH * 60 + startM;
+
+
+      const endMinutes =
+        endH * 60 + endM;
+
+
+      const totalMinutes =
+        endMinutes - startMinutes;
+
+
+      if(totalMinutes <= 0){
+
+        alert(
+          "Session duration is not valid."
+        );
+
+        console.error(
+          "Invalid session duration:",
+          selectedSession
+        );
+
+        return;
+
+      }
+
+
+      const billedHours =
+        Math.ceil(
+          totalMinutes / 60
+        );
+
+
+      /* =====================================================
+         VISITOR TOTAL
+      ===================================================== */
+
+      const visitorSessionTotal =
+        pricePerHour *
+        billedHours;
 
 
       const visitorTotal =
-        visitorRate *
+        visitorSessionTotal *
         selectedSeats;
 
 
 
-      /* =========================
-         MEMBER
-      ========================= */
+      /* =====================================================
+         CASHBACK FROM FIREBASE
+      ===================================================== */
 
-      const memberRate =
-        rates.member;
+      const cashbackMember =
+        Number(
+          selectedSession.cashbackMember10000 || 0
+        );
+
+
+      const cashbackVVIP =
+        Number(
+          selectedSession.cashbackVVIP60000 || 0
+        );
+
+
+      /*
+       * Cashback is treated as a discount
+       * for this booking, not multiplied by seats.
+       */
 
 
       const memberTotal =
-        memberRate *
-        selectedSeats;
+        Math.max(
+          0,
+          visitorTotal -
+          cashbackMember
+        );
+
+
+      const vvipTotal =
+        Math.max(
+          0,
+          visitorTotal -
+          cashbackVVIP
+        );
 
 
       const memberSaving =
-        visitorTotal -
-        memberTotal;
+        Math.min(
+          cashbackMember,
+          visitorTotal
+        );
+
+
+      const vvipSaving =
+        Math.min(
+          cashbackVVIP,
+          visitorTotal
+        );
 
 
 
-      /* =========================
-         MONTHLY
-      ========================= */
-
-      const monthlyRate =
-        rates.monthly;
-
-
-      const monthlyTotal =
-        monthlyRate *
-        selectedSeats;
-
-
-      const monthlySaving =
-        visitorTotal -
-        monthlyTotal;
-
-
-
-      /* =========================
+      /* =====================================================
          ARENA
-      ========================= */
+      ===================================================== */
+
+      const arenaInfo = {
+
+        BTS:
+          "BALIKPAPAN TENNIS STADIUM",
+
+        INDOORBTS:
+          "BTS INDOOR",
+
+        KJS:
+          "KANUDJOSO",
+
+        WIKA:
+          "WIKA",
+
+        BDI:
+          "BDI",
+
+        EXC:
+          "EXCHANGE",
+
+        BB:
+          "BB",
+
+        HOLA:
+          "HOLA",
+
+        ANANTA:
+          "ANANTA"
+
+      };
+
 
       document.getElementById(
         "checkoutArena"
       ).innerText =
 
-        selectedArena === "BTS"
-          ? "BALIKPAPAN TENNIS STADIUM"
-          : "KANUDJOSO";
+        arenaInfo[selectedArena] ||
+        selectedArena;
 
 
 
-      /* =========================
+      /* =====================================================
          SESSION
-      ========================= */
+      ===================================================== */
+
+      const sessionDate =
+        new Date(
+          selectedSession.date +
+          "T00:00:00"
+        );
+
+
+      const formattedSessionDate =
+        sessionDate
+          .toLocaleDateString(
+            "en-US",
+            {
+              weekday:"long",
+              month:"short",
+              day:"numeric"
+            }
+          )
+          .toUpperCase();
+
 
       document.getElementById(
         "checkoutSession"
       ).innerText =
 
-        selectedSession.day
+        formattedSessionDate
         + " · "
-        + selectedSession.time;
+        + (
+          selectedSession.startTime ||
+          "--:--"
+        )
+        + " — "
+        + (
+          selectedSession.endTime ||
+          "--:--"
+        );
 
 
 
-      /* =========================
-         VISITOR RATE
-      ========================= */
+      /* =====================================================
+         RATE / JAM
+      ===================================================== */
 
       document.getElementById(
         "checkoutRate"
       ).innerText =
 
         "Rp"
-        + visitorRate
+        + pricePerHour
           .toLocaleString("id-ID")
-        + " / seat";
+        + " / jam";
 
 
 
-      /* =========================
+      /* =====================================================
          SEATS
-      ========================= */
+      ===================================================== */
 
       document.getElementById(
         "checkoutSeats"
@@ -4272,24 +4379,18 @@ document
 
 
 
-      /* =========================
-         MEMBER RATE
-      ========================= */
+      /* =====================================================
+         MEMBER OFFER
+      ===================================================== */
 
       document.getElementById(
         "membershipRateDetail"
       ).innerText =
 
-        "Rp"
-        + memberRate
+        "Save Rp"
+        + cashbackMember
           .toLocaleString("id-ID")
-
-        + " × "
-
-        + selectedSeats
-
-        + " seats";
-
+        + " this session";
 
 
       document.getElementById(
@@ -4299,7 +4400,6 @@ document
         "Rp"
         + memberTotal
           .toLocaleString("id-ID");
-
 
 
       document.getElementById(
@@ -4312,9 +4412,9 @@ document
 
 
 
-      /* =========================
+      /* =====================================================
          VISITOR TOTAL
-      ========================= */
+      ===================================================== */
 
       document.getElementById(
         "checkoutTotal"
@@ -4326,9 +4426,17 @@ document
 
 
 
-      /* =========================
+      /* =====================================================
          MONTHLY OFFER
-      ========================= */
+      ===================================================== */
+
+      const monthly8Total =
+        480000;
+
+
+      const monthly12Total =
+        660000;
+
 
       document.getElementById(
         "offerVisitorTotal"
@@ -4339,15 +4447,13 @@ document
           .toLocaleString("id-ID");
 
 
-
       document.getElementById(
         "offerMonthlyTotal"
       ).innerText =
 
         "Rp"
-        + monthlyTotal
+        + monthly8Total
           .toLocaleString("id-ID");
-
 
 
       document.getElementById(
@@ -4355,14 +4461,18 @@ document
       ).innerText =
 
         "Rp"
-        + monthlySaving
+        + Math.max(
+          0,
+          visitorTotal -
+          monthly8Total
+        )
           .toLocaleString("id-ID");
 
 
 
-      /* =========================
+      /* =====================================================
          RESET MEMBER STATE
-      ========================= */
+      ===================================================== */
 
       const memberCard =
         document.getElementById(
@@ -4378,31 +4488,60 @@ document
       document.getElementById(
         "registerMemberBtn"
       ).innerText =
-        "REGISTER TO MEMBER";
+        "BECOME A MEMBER";
 
 
 
-      /* =========================
+      /* =====================================================
+         SAVE CHECKOUT STATE
+      ===================================================== */
+
+      selectedSession.checkout = {
+
+        pricePerHour,
+
+        billedHours,
+
+        visitorTotal,
+
+        cashbackMember,
+
+        cashbackVVIP,
+
+        memberTotal,
+
+        vvipTotal,
+
+        monthly8Total,
+
+        monthly12Total
+
+      };
+
+
+      console.log(
+        "GMTC CHECKOUT:",
+        selectedSession.checkout
+      );
+
+
+
+      /* =====================================================
          SHOW CHECKOUT
-      ========================= */
+      ===================================================== */
 
       showFunStep(
         "funStepCheckout"
       );
 
 
-
-      /* =========================
-         START 25 MIN TIMER
-      ========================= */
-
       startOfferTimer();
 
     }
   );
 
-  /* =========================================================
-   REGISTER TO MEMBER
+ /* =========================================================
+   MEMBER OFFER
 ========================================================= */
 
 document
@@ -4410,6 +4549,31 @@ document
   .addEventListener(
     "click",
     function(){
+
+      if(
+        !selectedSession ||
+        !selectedSession.checkout
+      )
+        return;
+
+
+      const cashback =
+        selectedSession.checkout
+          .cashbackMember;
+
+
+      const visitorTotal =
+        selectedSession.checkout
+          .visitorTotal;
+
+
+      const memberTotal =
+        Math.max(
+          0,
+          visitorTotal -
+          cashback
+        );
+
 
       const memberCard =
         document.getElementById(
@@ -4422,20 +4586,38 @@ document
       );
 
 
+      document.getElementById(
+        "membershipRateDetail"
+      ).innerText =
+
+        "Member price · Save Rp"
+        + cashback
+          .toLocaleString("id-ID");
+
+
+      document.getElementById(
+        "membershipRateTotal"
+      ).innerText =
+
+        "Rp"
+        + memberTotal
+          .toLocaleString("id-ID");
+
+
+      document.getElementById(
+        "membershipSaving"
+      ).innerText =
+
+        "You save Rp"
+        + cashback
+          .toLocaleString("id-ID");
+
+
       this.innerText =
         "MEMBERSHIP RATE SELECTED";
 
-
-      /*
-       * Untuk sementara belum redirect.
-       *
-       * Nanti tombol ini bisa diarahkan
-       * ke registration / membership flow GMTC.
-       */
-
     }
   );
-
 
 
 /* =========================================================
@@ -4587,7 +4769,9 @@ document
     function(){
 
       if(
-        offerSeconds <= 0
+        offerSeconds <= 0 ||
+        !selectedSession ||
+        !selectedSession.checkout
       )
         return;
 
@@ -4595,32 +4779,22 @@ document
       stopOfferTimer();
 
 
-      const monthlyRate =
-        funMatchRates
-          [selectedArena]
-          [selectedSession.day]
-          .monthly;
-
-
-      const monthlyTotal =
-        monthlyRate *
-        selectedSeats;
+      const monthly8Total =
+        selectedSession.checkout
+          .monthly8Total;
 
 
       document.getElementById(
         "checkoutRate"
       ).innerText =
-        "Rp"
-        + monthlyRate
-          .toLocaleString("id-ID")
-        + " / seat";
+        "Rp60.000 / session";
 
 
       document.getElementById(
         "checkoutTotal"
       ).innerText =
         "Rp"
-        + monthlyTotal
+        + monthly8Total
           .toLocaleString("id-ID");
 
 
@@ -4629,22 +4803,25 @@ document
       ).innerHTML = `
 
         <div class="offer-eyebrow">
-          MONTHLY RATE SELECTED
+          MONTHLY MEMBERSHIP
         </div>
 
         <div class="offer-title">
-          GREAT CHOICE.
+          8 SESSIONS / MONTH
         </div>
 
         <div class="offer-subtitle">
-          Your limited monthly rate has been selected
-          for this booking.
+
+          2× PER WEEK<br>
+
+          Only Rp60.000 per session
+
         </div>
 
         <div class="offer-price">
 
           <div class="offer-price-new">
-            Rp${monthlyTotal.toLocaleString("id-ID")}
+            Rp480.000 / MONTH
           </div>
 
         </div>
@@ -4662,7 +4839,6 @@ document
 
     }
   );
-
 
 
 /* =========================================================
@@ -5459,6 +5635,15 @@ window.funMatchScheduleData = grouped;
                         ${session.endTime || "--:--"}
 
                       </div>
+
+                      <div class="arena-session-price">
+
+  RATE / JAM:
+  Rp${Number(
+    session.pricePerHour || 0
+  ).toLocaleString("id-ID")}
+
+</div>
 
                       <div class="arena-session-slots">
 
