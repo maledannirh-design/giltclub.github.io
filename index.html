@@ -5150,38 +5150,40 @@ window.funMatchScheduleData = grouped;
 
 
     /* =========================
-       RE-BIND ARENA BUTTONS
-    ========================= */
+   RE-BIND ARENA BUTTONS
+========================= */
 
-    carousel
-      .querySelectorAll(
-        ".arena-select-btn"
-      )
-      .forEach(button => {
+carousel
+  .querySelectorAll(
+    ".arena-select-btn"
+  )
+  .forEach(button => {
 
-        button.addEventListener(
-          "click",
-          function(e){
+    button.addEventListener(
+      "click",
+      function(e){
 
-            e.stopPropagation();
+        e.stopPropagation();
 
-            selectedArena =
-              this.dataset.arena;
+        selectedArena =
+          this.dataset.arena;
 
-            console.log(
-              "Selected arena:",
-              selectedArena
-            );
+        const sessions =
+          window.funMatchScheduleData?.[selectedArena] || [];
 
-            /*
-             NEXT STEP:
-             session selection
-            */
-
-          }
+        renderSessionsFromFirebase(
+          selectedArena,
+          sessions
         );
 
-      });
+        showFunStep(
+          "funStepSession"
+        );
+
+      }
+    );
+
+  });
 
 
     /* =========================
