@@ -3411,6 +3411,29 @@ function resetFunMatch(){
   showFunStep("funStepArena");
 
 }
+  
+function showFunStep(stepId){
+
+  document
+    .querySelectorAll(".fun-match-step")
+    .forEach(step => {
+
+      step.classList.remove("active");
+
+    });
+
+
+  const target =
+    document.getElementById(stepId);
+
+
+  if(target){
+
+    target.classList.add("active");
+
+  }
+
+}
 /* =========================================================
    ARENA CAROUSEL
 ========================================================= */
@@ -5661,7 +5684,7 @@ window.funMatchScheduleData = grouped;
 
               <div class="arena-sessions">
 
-                $sessions.map((session, sessionIndex) => {
+                ${sessions.map((session, sessionIndex) => {
 
                   const slots =
                     Number(
