@@ -3308,12 +3308,20 @@ const funMatchRates = {
 };
 
 /* =========================================================
-   OPEN FUN MATCH
+   OPEN FUN MATCH — SAFE
 ========================================================= */
 
-document
-  .querySelectorAll(".experience-card")
-  .forEach(card => {
+document.addEventListener(
+  "click",
+  function(e){
+
+    const card =
+      e.target.closest(
+        ".experience-card"
+      );
+
+    if(!card)
+      return;
 
 
     const title =
@@ -3321,39 +3329,54 @@ document
 
 
     if(
-      title &&
+      !title ||
       title.innerText
         .replace("🎾","")
         .trim()
         .toUpperCase()
-        === "FUN MATCH"
+        !== "FUN MATCH"
     ){
+      return;
+    }
 
 
-      card.addEventListener(
-        "click",
-        function(e){
-
-          e.preventDefault();
+    e.preventDefault();
+    e.stopPropagation();
 
 
-          resetFunMatch();
+    /* RESET */
 
-funMatchModal
-  .classList
-  .add("active");
+    resetFunMatch();
 
-document.body.style.overflow =
-  "hidden";
-          window.loadFunMatchSchedule();
 
-        }
-      );
+    /* OPEN MODAL */
+
+    if(funMatchModal){
+
+      funMatchModal
+        .classList
+        .add("active");
 
     }
 
-  });
 
+    document.body.style.overflow =
+      "hidden";
+
+
+    /* LOAD SCHEDULE AFTER MODAL OPENS */
+
+    if(
+      typeof window.loadFunMatchSchedule ===
+      "function"
+    ){
+
+      window.loadFunMatchSchedule();
+
+    }
+
+  }
+);
 
 
 /* =========================================================
