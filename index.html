@@ -639,7 +639,19 @@ section{
 
   border:1px solid #e5dfd3;
 }
+.arena-session{
+  cursor:pointer;
+  transition:.2s;
+}
 
+.arena-session:hover{
+  border-color:#2E5D3A;
+}
+
+.arena-session.selected{
+  border:2px solid #2E5D3A;
+  background:#edf3ec;
+}
 .arena-session-day{
   font-size:9px;
   font-weight:800;
@@ -3290,37 +3302,6 @@ const funMatchRates = {
 
 };
 
-
-
-/* =========================================================
-   STEP CONTROL
-========================================================= */
-
-function showFunStep(stepId){
-
-  document
-    .querySelectorAll(".fun-match-step")
-    .forEach(step => {
-
-      step.classList.remove("active");
-
-    });
-
-
-  const target =
-    document.getElementById(stepId);
-
-
-  if(target){
-
-    target.classList.add("active");
-
-  }
-
-}
-
-
-
 /* =========================================================
    OPEN FUN MATCH
 ========================================================= */
@@ -3764,7 +3745,296 @@ function renderSessionsFromFirebase(arena, sessions){
 }
 window.renderSessionsFromFirebase =
   renderSessionsFromFirebase;
+/* =========================================================
+   SESSION SELECTION
+   SELECT SESSION FIRST
+   THEN BOOKING SEATS
+========================================================= */
 
+document.addEventListener(
+  "click",
+  function(e){
+
+    const sessionCard =
+      e.target.closest(
+        ".arena-session"
+      );
+
+
+    if(!sessionCard)
+      return;
+
+
+    e.preventDefault();
+    e.stopPropagation();
+
+
+    const arena =
+      sessionCard.dataset.arena;
+
+
+    const sessionIndex =
+      Number(
+        sessionCard.dataset.sessionIndex
+      );
+
+
+    const sessions =
+      window.funMatchScheduleData?.[arena] || [];
+
+
+    const session =
+      sessions[sessionIndex];
+
+
+    if(!session)
+      return;
+
+
+    const slots =
+      Number(
+        session.slots ?? 0
+      );
+
+
+    if(slots <= 0){
+
+      alert(
+        "This session is already full."
+      );
+
+      return;
+
+    }
+
+
+    /* =========================
+       SAVE SELECTION
+    ========================= */
+
+    selectedArena =
+      arena;
+
+
+    selectedSession = {
+
+      ...session,
+
+      available: slots
+
+    };
+
+
+    /* =========================
+       VISUAL SELECTED
+    ========================= */
+
+    const arenaCard =
+      sessionCard.closest(
+        ".arena-card"
+      );
+
+
+    if(arenaCard){
+
+      arenaCard
+        .querySelectorAll(
+          ".arena-session"
+        )
+        .forEach(card => {
+
+          card.classList.remove(
+            "selected"
+          );
+
+        });
+
+
+      sessionCard.classList.add(
+        "selected"
+      );
+
+
+      /* =========================
+         CHANGE BUTTON
+      ========================= */
+
+      const bookingButton =
+        arenaCard.querySelector(
+          ".arena-select-btn"
+        );
+
+
+      if(bookingButton){
+
+        bookingButton.innerText =
+          "BOOKING SEATS";
+
+        bookingButton.disabled =
+          false;
+
+      }
+
+    }
+
+  }
+);
+
+/* =========================================================
+   BOOKING SEATS BUTTON
+========================================================= */
+
+document.addEventListener(
+  "click",
+  function(e){
+
+    const button =
+      e.target.closest(
+        ".arena-select-btn"
+      );
+
+
+    if(!button)
+      return;
+
+
+    e.preventDefault();
+    e.stopPropagation();
+
+
+    const arena =
+      button.dataset.arena;
+
+
+    /* =========================
+       REQUIRE SESSION SELECTION
+    ========================= */
+
+    if(
+      !selectedSession ||
+      selectedArena !== arena
+    ){
+
+      alert(
+        "Please select a session first."
+      );
+
+      return;
+
+    }
+
+
+    const slots =
+      Number(
+        selectedSession.available ?? 0
+      );
+
+
+    if(slots <= 0){
+
+      alert(
+        "This session is already full."
+      );
+
+      return;
+
+    }
+
+
+    /* =========================
+       RESET SEATS
+    ========================= */
+
+    selectedSeats = 1;
+
+
+    document.getElementById(
+      "seatNumber"
+    ).innerText = "1";
+
+
+    document.getElementById(
+      "availableSlots"
+    ).innerText =
+      "Available slots: " + slots;
+
+
+    /* =========================
+       SHOW SELECTED SESSION
+    ========================= */
+
+    const arenaInfo = {
+
+      BTS:
+        "BALIKPAPAN TENNIS STADIUM",
+
+      INDOORBTS:
+        "BTS INDOOR",
+
+      KJS:
+        "KANUDJOSO",
+
+      WIKA:
+        "WIKA",
+
+      BDI:
+        "BDI",
+
+      EXC:
+        "EXCHANGE",
+
+      BB:
+        "BB",
+
+      HOLA:
+        "HOLA",
+
+      ANANTA:
+        "ANANTA"
+
+    };
+
+
+    document.getElementById(
+      "selectedSessionName"
+    ).innerText =
+      arenaInfo[arena] || arena;
+
+
+    document.getElementById(
+      "selectedSessionTime"
+    ).innerText =
+
+      formatScheduleDate(
+        selectedSession.date
+      )
+
+      + " · "
+
+      + (
+        selectedSession.startTime ||
+        "--:--"
+      )
+
+      + " — "
+
+      + (
+        selectedSession.endTime ||
+        "--:--"
+      );
+
+
+    /* =========================
+       GO TO SEAT SELECTION
+    ========================= */
+
+    showFunStep(
+      "funStepSeats"
+    );
+
+  }
+);
+  
 /* =========================================================
    BACK — SESSION
 ========================================================= */
