@@ -2977,263 +2977,165 @@ LEARN MORE →
 
         </div>
 
-
-        <!-- =====================================================
-     CHECKOUT DETAILS
+<!-- =====================================================
+     SESSION SUMMARY
 ====================================================== -->
 
-<div class="checkout-row">
+<div class="checkout-session" id="checkoutSession">
 
-  <span>
-    Rate
-  </span>
+  <div class="checkout-session-title">
+    BALIKPAPAN TENNIS STADIUM
+  </div>
 
-  <strong id="checkoutRate">
-  </strong>
-
-</div>
-
-
-<div class="checkout-row">
-
-  <span>
-    Seats
-  </span>
-
-  <strong id="checkoutSeats">
-  </strong>
+  <div class="checkout-session-meta" id="checkoutSessionMeta">
+    MONDAY, SEP 14 · 19:00 — 23:00
+  </div>
 
 </div>
+
 
 <!-- =====================================================
-     MEMBERSHIP RATE
+     VISITOR PAYMENT
+====================================================== -->
+
+<div class="checkout-payment-card">
+
+  <div class="checkout-card-eyebrow">
+    TOTAL PAYMENT
+  </div>
+
+  <div class="checkout-card-seats" id="checkoutSeats">
+    3 SEATS
+  </div>
+
+  <div
+    class="checkout-card-price"
+    id="checkoutTotal">
+    Rp285.000
+  </div>
+
+  <button
+    type="button"
+    class="checkout-primary-btn"
+    id="proceedVisitorPayment">
+
+    PROCEED TO PAYMENT
+
+  </button>
+
+</div>
+
+
+<!-- =====================================================
+     MEMBERSHIP DISCOUNT
 ====================================================== -->
 
 <div
-  class="membership-rate-card"
+  class="checkout-offer-card membership-offer-card"
   id="membershipRateCard">
 
-  <div class="membership-rate-eyebrow">
-    MEMBERSHIP RATE
-  </div>
-
-  <div class="membership-rate-title">
-    Become a GMTC Member
-  </div>
-
-  <div class="membership-rate-detail">
-    <span
-      id="membershipVisitorPrice"
-      style="text-decoration:line-through;color:#999;">
-      Rp170.000
-    </span>
+  <div class="checkout-card-eyebrow">
+    MEMBERSHIP DISCOUNT
   </div>
 
   <div
-    class="membership-rate-price"
+    class="checkout-old-price"
+    id="membershipVisitorPrice">
+    Rp285.000
+  </div>
+
+  <div
+    class="checkout-offer-price"
     id="membershipRateTotal">
-    Rp150.000
-  </div>
-
-  <div
-    class="membership-rate-saving"
-    id="membershipSaving">
-    Get Rp20.000 discount on this session
+    Rp255.000
   </div>
 
   <button
     type="button"
-    class="membership-rate-btn"
+    class="checkout-secondary-btn"
     id="registerMemberBtn">
 
-    BECOME A MEMBER
+    REGISTER TO OUR MEMBER
 
   </button>
 
 </div>
 
-<!-- =====================================================
-     VISITOR TOTAL
-====================================================== -->
-
-<div class="visitor-total-box">
-
-  <div class="visitor-total-label">
-    TOTAL — VISITOR RATE
-  </div>
-
-  <div
-    class="visitor-total-price"
-    id="checkoutTotal">
-    Rp170.000
-  </div>
-
-</div>
 
 <!-- =====================================================
-     VVIP SPECIAL RATE
+     VVIP EXCLUSIVE CIRCLE
 ====================================================== -->
 
 <div
-  class="membership-rate-card vvip-rate-card"
+  class="checkout-offer-card vvip-offer-card"
   id="vvipRateCard">
 
-  <div class="membership-rate-eyebrow">
-    SPECIAL RATE
+  <div class="checkout-card-eyebrow">
+    BECOME OUR VVIP
   </div>
 
-  <div class="membership-rate-title">
-    Become Our VVIP Member
-  </div>
-
-  <div class="membership-rate-detail">
-
-    <span
-      id="vvipVisitorPrice"
-      style="
-        text-decoration:line-through;
-        color:#777;
-      ">
-      Rp170.000
-    </span>
-
+  <div class="vvip-title">
+    EXCLUSIVE CIRCLE
   </div>
 
   <div
-    class="membership-rate-price"
+    class="vvip-price"
     id="vvipRateTotal">
-    Rp130.000
+    Rp195.000
   </div>
 
-  <div class="membership-rate-saving">
-    Get a special discount on this session
+  <div class="vvip-seat-label">
+    TOTAL FOR 3 SEATS
   </div>
 
-  <div
-    style="
-      margin-top:8px;
-      font-size:10px;
-      line-height:1.5;
-      color:#aaa;
-    ">
-
-    Only 2 more slots in our VVIP Circle membership.
-
+  <div class="vvip-scarcity">
+    ONLY 2 SPOTS LEFT TO JOIN OUR VVIP CIRCLE
   </div>
 
   <button
     type="button"
-    class="membership-rate-btn"
+    class="checkout-secondary-btn vvip-btn"
     id="contactVVIPBtn">
 
-    TALK TO VVIP CONCIERGE
+    CONNECT TO OUR VVIP CONCIERGE
 
   </button>
 
 </div>
 
+
 <!-- =====================================================
-     LIMITED TIME OFFER
+     MONTHLY PACKAGE
 ====================================================== -->
 
 <div
-  class="limited-offer"
+  class="checkout-offer-card monthly-offer-card"
   id="limitedOffer">
 
-
-  <div class="offer-eyebrow">
-    LIMITED TIME OFFER
+  <div class="checkout-card-eyebrow">
+    LIMITED MONTHLY PACKAGE
   </div>
-
-
-  <div class="offer-title">
-    PLAY MORE. PAY LESS.
-  </div>
-
-
-  <div class="offer-subtitle">
-    Unlock a better rate before you complete
-    your booking.
-  </div>
-
-
-  <div class="offer-timer-label">
-    OFFER EXPIRES IN
-  </div>
-
 
   <div
-    class="offer-timer"
-    id="offerTimer">
-
-    25:00
-
+    class="checkout-old-price"
+    id="offerVisitorTotal">
+    Rp285.000
   </div>
 
-
-  <div class="offer-price">
-
-    <div class="offer-price-old">
-
-      Visitor Rate:
-      <span id="offerVisitorTotal">
-        Rp170.000
-      </span>
-
-    </div>
-
-
-    <div class="offer-price-new">
-
-      <span id="offerMonthlyTotal">
-        Rp120.000
-      </span>
-
-    </div>
-
+  <div
+    class="checkout-offer-price"
+    id="offerMonthlyTotal">
+    Rp180.000
   </div>
-
-
-  <div class="offer-saving">
-
-    Save
-    <strong id="offerSaving">
-      Rp50.000
-    </strong>
-    on this booking
-
-  </div>
-
 
   <button
     type="button"
-    class="offer-accept-btn"
+    class="checkout-secondary-btn monthly-btn"
     id="acceptMonthlyOffer">
 
-    GET LIMITED MONTHLY RATE
+    PAY FOR MONTHLY PACKAGE
 
   </button>
-
-
-  <button
-    type="button"
-    class="offer-decline-btn"
-    id="declineMonthlyOffer">
-
-    Continue with Visitor Rate
-
-  </button>
-
-
-</div>
-
-
-      </div>
-
-    </div>
-
-
-  </div>
 
 </div>
   
