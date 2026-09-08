@@ -4066,7 +4066,6 @@ document
     }
   );
 
-
 /* =========================================================
    BOOK NOW → CHECKOUT
    PRICE SOURCE = FIREBASE SCHEDULE
@@ -4077,10 +4076,17 @@ document
   .addEventListener(
     "click",
     function(){
-    console.log("BOOK NOW FIRED");
-console.log("selectedArena:", selectedArena);
-console.log("selectedSession:", selectedSession);
-console.log("selectedSeats:", selectedSeats);
+
+      console.log("BOOK NOW FIRED");
+      console.log("selectedArena:", selectedArena);
+      console.log("selectedSession:", selectedSession);
+      console.log("selectedSeats:", selectedSeats);
+
+
+      /* =====================================================
+         VALIDATE SELECTION
+      ===================================================== */
+
       if(
         !selectedArena ||
         !selectedSession
@@ -4186,28 +4192,27 @@ console.log("selectedSeats:", selectedSeats);
         selectedSeats;
 
 
+      /* =====================================================
+         DISCOUNT FROM FIREBASE
+      ===================================================== */
+
+      const cashbackMember =
+        Number(
+          selectedSession.cashbackMember ?? 0
+        );
+
+
+      const cashbackVVIP =
+        Number(
+          selectedSession.cashbackVVIP ?? 0
+        );
+
 
       /* =====================================================
-   CASHBACK FROM FIREBASE
-===================================================== */
-
-const cashbackMember =
-  Number(
-    selectedSession.cashbackMember ?? 0
-  );
-
-
-const cashbackVVIP =
-  Number(
-    selectedSession.cashbackVVIP ?? 0
-  );
-
-
-      /*
-       * Cashback is treated as a discount
-       * for this booking, not multiplied by seats.
-       */
-
+         MEMBER TOTAL
+         Keep existing GMTC member logic:
+         cashbackMember is applied once.
+      ===================================================== */
 
       const memberTotal =
         Math.max(
@@ -4217,50 +4222,364 @@ const cashbackVVIP =
         );
 
 
+      /* =====================================================
+         VVIP TOTAL
+         VVIP discount is PER SEAT
+      ===================================================== */
+
       const vvipDiscountTotal =
-  cashbackVVIP * selectedSeats;
+        cashbackVVIP *
+        selectedSeats;
 
-const vvipTotal =
-  Math.max(
-    0,
-    visitorTotal -
-    vvipDiscountTotal
+
+      const vvipTotal =
+        Math.max(
+          0,
+          visitorTotal -
+          vvipDiscountTotal
+        );
+
+
+      /* =====================================================
+         ARENA
+      ===================================================== */
+
+      const arenaInfo = {
+
+        BTS:
+          "BALIKPAPAN TENNIS STADIUM",
+
+        INDOORBTS:
+          "BTS INDOOR",
+
+        KJS:
+          "KANUDJOSO",
+
+        WIKA:
+          "WIKA",
+
+        BDI:
+          "BDI",
+
+        EXC:
+          "EXCHANGE",
+
+        BB:
+          "BB",
+
+        HOLA:
+          "HOLA",
+
+        ANANTA:
+          "ANANTA"
+
+      };
+
+
+      /* =====================================================
+         CHECKOUT ARENA
+      ===================================================== */
+
+      const checkoutArena =
+        document.getElementById(
+          "checkoutArena"
+        );
+
+
+      if(checkoutArena){
+
+        checkoutArena.innerText =
+          arenaInfo[selectedArena] ||
+          selectedArena;
+
+      }
+
+
+      /* =====================================================
+         CHECKOUT SESSION
+      ===================================================== */
+
+      const sessionDate =
+        new Date(
+          selectedSession.date +
+          "T00:00:00"
+        );
+
+
+      const formattedSessionDate =
+        sessionDate.toLocaleDateString(
+          "en-US",
+          {
+            weekday:"long",
+            month:"short",
+            day:"numeric"
+          }
+        ).toUpperCase();
+
+
+      const checkoutSessionMeta =
+        document.getElementById(
+          "checkoutSessionMeta"
+        );
+
+
+      if(checkoutSessionMeta){
+
+        checkoutSessionMeta.innerText =
+
+          formattedSessionDate
+          + " · "
+          + (
+            selectedSession.startTime ||
+            "--:--"
+          )
+          + " — "
+          + (
+            selectedSession.endTime ||
+            "--:--"
+          );
+
+      }
+
+
+      /* =====================================================
+         SEATS
+      ===================================================== */
+
+      const checkoutSeats =
+        document.getElementById(
+          "checkoutSeats"
+        );
+
+
+      if(checkoutSeats){
+
+        checkoutSeats.innerText =
+          selectedSeats
+          + " SEATS";
+
+      }
+
+
+      /* =====================================================
+         VISITOR TOTAL
+      ===================================================== */
+
+      const checkoutTotal =
+        document.getElementById(
+          "checkoutTotal"
+        );
+
+
+      if(checkoutTotal){
+
+        checkoutTotal.innerText =
+          "Rp"
+          + visitorTotal
+            .toLocaleString("id-ID");
+
+      }
+
+
+      /* =====================================================
+         MEMBER OFFER
+      ===================================================== */
+
+      const membershipVisitorPrice =
+        document.getElementById(
+          "membershipVisitorPrice"
+        );
+
+
+      if(membershipVisitorPrice){
+
+        membershipVisitorPrice.innerText =
+          "Rp"
+          + visitorTotal
+            .toLocaleString("id-ID");
+
+      }
+
+
+      const membershipRateTotal =
+        document.getElementById(
+          "membershipRateTotal"
+        );
+
+
+      if(membershipRateTotal){
+
+        membershipRateTotal.innerText =
+          "Rp"
+          + memberTotal
+            .toLocaleString("id-ID");
+
+      }
+
+
+      /* =====================================================
+         VVIP OFFER
+      ===================================================== */
+
+      const vvipRateTotal =
+        document.getElementById(
+          "vvipRateTotal"
+        );
+
+
+      if(vvipRateTotal){
+
+        vvipRateTotal.innerText =
+          "Rp"
+          + vvipTotal
+            .toLocaleString("id-ID");
+
+      }
+
+
+      const vvipSeatLabel =
+        document.querySelector(
+          ".vvip-seat-label"
+        );
+
+
+      if(vvipSeatLabel){
+
+        vvipSeatLabel.innerText =
+          "TOTAL FOR "
+          + selectedSeats
+          + " SEATS";
+
+      }
+
+
+      /* =====================================================
+         MONTHLY PACKAGE
+         
+         Display price:
+         Rp180.000
+         
+         Actual package prices:
+         8x  = Rp480.000
+         12x = Rp660.000
+      ===================================================== */
+
+      const monthly8Total =
+        480000;
+
+
+      const monthly12Total =
+        660000;
+
+
+      const offerVisitorTotal =
+        document.getElementById(
+          "offerVisitorTotal"
+        );
+
+
+      if(offerVisitorTotal){
+
+        offerVisitorTotal.innerText =
+          "Rp"
+          + visitorTotal
+            .toLocaleString("id-ID");
+
+      }
+
+
+      const offerMonthlyTotal =
+        document.getElementById(
+          "offerMonthlyTotal"
+        );
+
+
+      if(offerMonthlyTotal){
+
+        offerMonthlyTotal.innerText =
+          "Rp180.000";
+
+      }
+
+
+      /* =====================================================
+         RESET MEMBER SELECTED STATE
+      ===================================================== */
+
+      const memberCard =
+        document.getElementById(
+          "membershipRateCard"
+        );
+
+
+      if(memberCard){
+
+        memberCard.classList.remove(
+          "membership-selected"
+        );
+
+      }
+
+
+      const registerMemberBtn =
+        document.getElementById(
+          "registerMemberBtn"
+        );
+
+
+      if(registerMemberBtn){
+
+        registerMemberBtn.innerText =
+          "REGISTER TO OUR MEMBER";
+
+      }
+
+
+      /* =====================================================
+         SAVE CHECKOUT STATE
+      ===================================================== */
+
+      selectedSession.checkout = {
+
+        pricePerHour,
+
+        billedHours,
+
+        visitorTotal,
+
+        cashbackMember,
+
+        cashbackVVIP,
+
+        memberTotal,
+
+        vvipDiscountTotal,
+
+        vvipTotal,
+
+        monthly8Total,
+
+        monthly12Total
+
+      };
+
+
+      console.log(
+        "GMTC CHECKOUT:",
+        selectedSession.checkout
+      );
+
+
+      /* =====================================================
+         SHOW CHECKOUT
+      ===================================================== */
+
+      showFunStep(
+        "funStepCheckout"
+      );
+
+    }
   );
-
-
-      const memberSaving =
-        Math.min(
-          cashbackMember,
-          visitorTotal
-        );
-
-
-      const vvipSaving =
-        Math.min(
-          cashbackVVIP,
-          visitorTotal
-        );
-
-/* =====================================================
-   VVIP OFFER
-===================================================== */
-
-document.getElementById(
-  "vvipVisitorPrice"
-).innerText =
-
-  "Rp"
-  + visitorTotal
-    .toLocaleString("id-ID");
-
-
-document.getElementById(
-  "vvipRateTotal"
-).innerText =
-
-  "Rp"
-  + vvipTotal
-    .toLocaleString("id-ID");
 
       /* =====================================================
          ARENA
