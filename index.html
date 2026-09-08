@@ -1942,6 +1942,338 @@ object-fit:cover;
 display:block;
 
 }
+
+/* =========================================================
+   GMTC CHECKOUT — NEW DESIGN
+========================================================= */
+
+.checkout-box{
+  width:min(420px,92vw);
+  max-height:82vh;
+  overflow-y:auto;
+  margin:auto;
+  padding:22px;
+  background:#fff;
+  border-radius:24px;
+  box-sizing:border-box;
+}
+
+.checkout-top{
+  text-align:center;
+  margin-bottom:18px;
+}
+
+.checkout-eyebrow{
+  font-size:10px;
+  letter-spacing:2px;
+  font-weight:800;
+  color:#2E5D3A;
+}
+
+.checkout-title{
+  margin-top:5px;
+  font-size:25px;
+  font-weight:900;
+  color:#2E5D3A;
+}
+
+.checkout-session{
+  padding:15px;
+  margin-bottom:12px;
+  background:#F2E8D5;
+  border-radius:14px;
+}
+
+.checkout-session-title{
+  font-size:13px;
+  font-weight:900;
+  color:#2E5D3A;
+}
+
+.checkout-session-meta{
+  margin-top:4px;
+  font-size:11px;
+  color:#666;
+}
+
+.checkout-payment-card,
+.checkout-offer-card{
+  padding:18px;
+  margin-top:12px;
+  border-radius:18px;
+  background:#fff;
+  border:1px solid #e6e0d5;
+  box-sizing:border-box;
+}
+
+.checkout-payment-card{
+  background:#2E5D3A;
+  color:#fff;
+}
+
+.checkout-card-eyebrow{
+  font-size:10px;
+  letter-spacing:1.5px;
+  font-weight:900;
+}
+
+.checkout-card-seats{
+  margin-top:8px;
+  font-size:11px;
+  font-weight:800;
+  opacity:.8;
+}
+
+.checkout-card-price,
+.checkout-offer-price{
+  margin-top:5px;
+  font-size:27px;
+  font-weight:900;
+}
+
+.checkout-old-price{
+  margin-top:9px;
+  font-size:12px;
+  color:#999;
+  text-decoration:line-through;
+}
+
+.checkout-secondary-btn,
+.checkout-primary-btn{
+  width:100%;
+  margin-top:15px;
+  padding:13px 15px;
+  border:none;
+  border-radius:12px;
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:.5px;
+  cursor:pointer;
+}
+
+.checkout-primary-btn{
+  background:#E3C565;
+  color:#2E5D3A;
+}
+
+.checkout-secondary-btn{
+  background:#2E5D3A;
+  color:#fff;
+}
+
+.vvip-offer-card{
+  background:#2E5D3A;
+  color:#fff;
+}
+
+.vvip-title{
+  margin-top:5px;
+  font-size:18px;
+  font-weight:900;
+}
+
+.vvip-price{
+  margin-top:12px;
+  font-size:28px;
+  font-weight:900;
+}
+
+.vvip-seat-label,
+.vvip-scarcity{
+  margin-top:5px;
+  font-size:10px;
+  font-weight:800;
+}
+
+.vvip-scarcity{
+  opacity:.7;
+}
+
+.vvip-btn{
+  background:#E3C565;
+  color:#2E5D3A;
+}
+
+.monthly-offer-card{
+  background:#F2E8D5;
+}
+
+.monthly-btn{
+  background:#E5A9A9;
+  color:#2E5D3A;
+}
+
+
+/* =========================================================
+   PAYMENT POPUP
+========================================================= */
+
+.gmc-payment-overlay,
+.gmc-monthly-overlay{
+  position:fixed;
+  inset:0;
+  z-index:99999;
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+  background:rgba(0,0,0,.65);
+}
+
+.gmc-payment-sheet,
+.gmc-monthly-sheet{
+  width:min(430px,100vw);
+  max-height:90vh;
+  overflow-y:auto;
+  padding:25px;
+  background:#fff;
+  border-radius:25px 25px 0 0;
+  box-sizing:border-box;
+  position:relative;
+}
+
+.gmc-payment-close,
+.gmc-monthly-close{
+  position:absolute;
+  top:15px;
+  right:15px;
+  width:34px;
+  height:34px;
+  border:0;
+  border-radius:50%;
+  background:#F2E8D5;
+  color:#2E5D3A;
+  font-size:22px;
+  cursor:pointer;
+}
+
+.gmc-payment-eyebrow,
+.gmc-monthly-eyebrow{
+  margin-top:10px;
+  font-size:10px;
+  letter-spacing:2px;
+  font-weight:900;
+  color:#2E5D3A;
+}
+
+.gmc-payment-title,
+.gmc-monthly-title{
+  margin-top:6px;
+  font-size:24px;
+  font-weight:900;
+  color:#2E5D3A;
+}
+
+.gmc-payment-amount{
+  margin-top:15px;
+  font-size:30px;
+  font-weight:900;
+  color:#2E5D3A;
+}
+
+.gmc-payment-timer,
+.gmc-monthly-timer{
+  margin-top:10px;
+  padding:12px;
+  border-radius:12px;
+  background:#F2E8D5;
+  font-size:10px;
+  font-weight:800;
+  color:#2E5D3A;
+}
+
+.gmc-payment-timer strong,
+.gmc-monthly-timer strong{
+  float:right;
+  font-size:15px;
+}
+
+.gmc-qris-box{
+  margin:18px auto;
+  width:220px;
+  padding:12px;
+  border:1px solid #ddd;
+  border-radius:15px;
+  background:#fff;
+}
+
+.gmc-qris-box img{
+  display:block;
+  width:100%;
+}
+
+.gmc-payment-confirm,
+.gmc-payment-admin{
+  width:100%;
+  padding:14px;
+  border:0;
+  border-radius:12px;
+  font-size:11px;
+  font-weight:900;
+  cursor:pointer;
+}
+
+.gmc-payment-confirm{
+  background:#2E5D3A;
+  color:#fff;
+}
+
+.gmc-payment-admin{
+  margin-top:8px;
+  background:#F2E8D5;
+  color:#2E5D3A;
+}
+
+.gmc-payment-status{
+  margin-top:15px;
+  text-align:center;
+  font-size:11px;
+  color:#2E5D3A;
+}
+
+
+/* =========================================================
+   MONTHLY PACKAGE
+========================================================= */
+
+.gmc-package-card{
+  width:100%;
+  margin-top:12px;
+  padding:18px;
+  border:1px solid #ddd;
+  border-radius:16px;
+  background:#fff;
+  text-align:left;
+  cursor:pointer;
+}
+
+.gmc-package-card strong,
+.gmc-package-card span,
+.gmc-package-card small{
+  display:block;
+}
+
+.gmc-package-card strong{
+  font-size:12px;
+  color:#2E5D3A;
+}
+
+.gmc-package-card span{
+  margin-top:8px;
+  font-size:24px;
+  font-weight:900;
+  color:#2E5D3A;
+}
+
+.gmc-package-card small{
+  margin-top:3px;
+  font-size:10px;
+  color:#888;
+}
+
+.gmc-package-card:disabled{
+  opacity:.35;
+  cursor:not-allowed;
+}
 /* ==========================
    end of css
 ========================== */
@@ -4467,73 +4799,6 @@ const vvipTotal =
       );
    }
   );
- /* =========================================================
-   MEMBER OFFER
-========================================================= */
-
-document
-  .getElementById("registerMemberBtn")
-  .addEventListener(
-    "click",
-    function(){
-
-      if(
-        !selectedSession ||
-        !selectedSession.checkout
-      )
-        return;
-
-
-      const cashback =
-        selectedSession.checkout
-          .cashbackMember;
-
-
-      const visitorTotal =
-        selectedSession.checkout
-          .visitorTotal;
-
-
-      const memberTotal =
-        Math.max(
-          0,
-          visitorTotal - cashback
-        );
-
-
-      const memberCard =
-        document.getElementById(
-          "membershipRateCard"
-        );
-
-
-      memberCard.classList.add(
-        "membership-selected"
-      );
-
-
-      /* ORIGINAL VISITOR PRICE */
-
-      document.getElementById(
-        "membershipVisitorPrice"
-      ).innerText =
-
-        "Rp"
-        + visitorTotal
-          .toLocaleString("id-ID");
-
-
-      /* MEMBER PRICE */
-
-      document.getElementById(
-        "membershipRateTotal"
-      ).innerText =
-
-        "Rp"
-        + memberTotal
-          .toLocaleString("id-ID");
-    }
-  );
 
 /* =========================================================
    VVIP CONCIERGE → WHATSAPP
@@ -4560,83 +4825,547 @@ document
   );
 
 /* =========================================================
-   UPDATE TIMER
+   CHECKOUT ACTIONS — NEW
 ========================================================= */
 
-function updateOfferTimer(){
+const proceedVisitorPayment =
+  document.getElementById("proceedVisitorPayment");
 
-  const minutes =
-    Math.floor(
-      offerSeconds / 60
-    );
+const registerMemberBtn =
+  document.getElementById("registerMemberBtn");
 
-
-  const seconds =
-    offerSeconds % 60;
+const monthlyPackageBtn =
+  document.getElementById("acceptMonthlyOffer");
 
 
-  document.getElementById(
-    "offerTimer"
-  ).innerText =
+/* =========================
+   VISITOR PAYMENT
+========================= */
 
-    String(minutes)
-      .padStart(2,"0")
+if(proceedVisitorPayment){
 
-    + ":"
+  proceedVisitorPayment.addEventListener(
+    "click",
+    function(){
 
-    + String(seconds)
-      .padStart(2,"0");
+      if(
+        !selectedSession ||
+        !selectedSession.checkout
+      ){
+
+        alert("Session data is not available.");
+        return;
+
+      }
+
+      openPaymentPopup(
+        "VISITOR",
+        selectedSession.checkout.visitorTotal
+      );
+
+    }
+  );
 
 }
 
 
+/* =========================
+   MEMBER
+========================= */
 
-/* =========================================================
-   STOP TIMER
-========================================================= */
+if(registerMemberBtn){
 
-function stopOfferTimer(){
+  registerMemberBtn.addEventListener(
+    "click",
+    function(){
 
-  if(
-    offerTimerInterval
-  ){
+      if(
+        !selectedSession ||
+        !selectedSession.checkout
+      ){
 
-    clearInterval(
-      offerTimerInterval
-    );
+        alert("Session data is not available.");
+        return;
 
-    offerTimerInterval =
-      null;
+      }
 
-  }
+      const checkout =
+        selectedSession.checkout;
+
+      const memberTotal =
+        checkout.memberTotal;
+
+      this.innerText =
+        "MEMBERSHIP RATE SELECTED";
+
+      this.classList.add(
+        "selected"
+      );
+
+      console.log(
+        "GMTC MEMBER RATE:",
+        memberTotal
+      );
+
+    }
+  );
 
 }
 
 
+/* =========================
+   MONTHLY PACKAGE
+========================= */
+
+if(monthlyPackageBtn){
+
+  monthlyPackageBtn.addEventListener(
+    "click",
+    function(){
+
+      openMonthlyPackageModal();
+
+    }
+  );
+
+}
 
 /* =========================================================
-   EXPIRED
+   PAYMENT POPUP
 ========================================================= */
 
-function disableExpiredOffer(){
+function openPaymentPopup(
+  paymentType,
+  amount
+){
 
-  const button =
+  const existing =
     document.getElementById(
-      "acceptMonthlyOffer"
+      "gmcPaymentPopup"
+    );
+
+  if(existing)
+    existing.remove();
+
+
+  const popup =
+    document.createElement("div");
+
+  popup.id =
+    "gmcPaymentPopup";
+
+  popup.innerHTML = `
+
+    <div class="gmc-payment-overlay">
+
+      <div class="gmc-payment-sheet">
+
+        <button
+          type="button"
+          class="gmc-payment-close"
+          id="closePaymentPopup">
+
+          ×
+
+        </button>
+
+
+        <div class="gmc-payment-eyebrow">
+          GMTC PAYMENT
+        </div>
+
+
+        <div class="gmc-payment-title">
+          ${paymentType === "MONTHLY"
+            ? "MONTHLY PACKAGE"
+            : "COMPLETE PAYMENT"}
+        </div>
+
+
+        <div class="gmc-payment-amount">
+
+          Rp${Number(amount)
+            .toLocaleString("id-ID")}
+
+        </div>
+
+
+        <div class="gmc-payment-timer">
+          PAYMENT EXPIRES IN
+          <strong id="gmcPaymentTimer">
+            ${paymentType === "MONTHLY"
+              ? "10:00"
+              : "15:00"}
+          </strong>
+        </div>
+
+
+        <div class="gmc-qris-box">
+
+          <img
+            src="https://raw.githubusercontent.com/maledannirh-design/giltclub-mobile/main/app/image/qris_deposit.webp"
+            alt="QRIS">
+
+        </div>
+
+
+        <button
+          type="button"
+          class="gmc-payment-confirm"
+          id="gmcPaymentConfirm">
+
+          I'VE MADE THE PAYMENT
+
+        </button>
+
+
+        <button
+          type="button"
+          class="gmc-payment-admin"
+          id="gmcPaymentAdmin">
+
+          CONTACT ADMIN
+
+        </button>
+
+
+        <div
+          class="gmc-payment-status"
+          id="gmcPaymentStatus">
+
+        </div>
+
+      </div>
+
+    </div>
+
+  `;
+
+
+  document.body.appendChild(popup);
+
+
+  let seconds =
+    paymentType === "MONTHLY"
+      ? 10 * 60
+      : 15 * 60;
+
+
+  const timer =
+    document.getElementById(
+      "gmcPaymentTimer"
     );
 
 
-  button.disabled = true;
+  const interval =
+    setInterval(
+      function(){
 
-  button.innerText =
-    "OFFER EXPIRED";
+        seconds--;
 
 
-  button.style.opacity =
-    ".5";
+        const min =
+          Math.floor(seconds / 60);
+
+        const sec =
+          seconds % 60;
+
+
+        if(timer){
+
+          timer.innerText =
+            String(min).padStart(2,"0")
+            + ":"
+            + String(sec).padStart(2,"0");
+
+        }
+
+
+        if(seconds <= 0){
+
+          clearInterval(interval);
+
+        }
+
+      },
+      1000
+    );
+
+
+  document
+    .getElementById(
+      "closePaymentPopup"
+    )
+    .addEventListener(
+      "click",
+      function(){
+
+        clearInterval(interval);
+        popup.remove();
+
+      }
+    );
+
+
+  document
+    .getElementById(
+      "gmcPaymentConfirm"
+    )
+    .addEventListener(
+      "click",
+      function(){
+
+        const status =
+          document.getElementById(
+            "gmcPaymentStatus"
+          );
+
+        if(status){
+
+          status.innerHTML = `
+
+            <strong>
+              AWAITING CONFIRMATION BY OUR ADMIN
+            </strong>
+
+          `;
+
+        }
+
+      }
+    );
+
+
+  document
+    .getElementById(
+      "gmcPaymentAdmin"
+    )
+    .addEventListener(
+      "click",
+      function(){
+
+        const message =
+          "Hello GMTC Admin, I've made the payment for my Fun Match booking. Please verify my payment.";
+
+        window.open(
+          "https://wa.me/"
+          + GMTC_ADMIN_WA
+          + "?text="
+          + encodeURIComponent(message),
+          "_blank"
+        );
+
+      }
+    );
 
 }
 
+/* =========================================================
+   MONTHLY PACKAGE MODAL
+========================================================= */
+
+function openMonthlyPackageModal(){
+
+  const existing =
+    document.getElementById(
+      "gmcMonthlyModal"
+    );
+
+  if(existing)
+    existing.remove();
+
+
+  const modal =
+    document.createElement("div");
+
+  modal.id =
+    "gmcMonthlyModal";
+
+  modal.innerHTML = `
+
+    <div class="gmc-monthly-overlay">
+
+      <div class="gmc-monthly-sheet">
+
+        <button
+          type="button"
+          class="gmc-monthly-close"
+          id="closeMonthlyModal">
+
+          ×
+
+        </button>
+
+
+        <div class="gmc-monthly-eyebrow">
+          GMTC MONTHLY PACKAGE
+        </div>
+
+
+        <div class="gmc-monthly-title">
+          CHOOSE YOUR PACKAGE
+        </div>
+
+
+        <div class="gmc-monthly-timer">
+          OFFER EXPIRES IN
+          <strong id="gmcMonthlyTimer">
+            10:00
+          </strong>
+        </div>
+
+
+        <button
+          type="button"
+          class="gmc-package-card"
+          id="package8">
+
+          <strong>
+            8 SESSIONS / MONTH
+          </strong>
+
+          <span>
+            Rp480.000
+          </span>
+
+          <small>
+            Rp60.000 / SESSION
+          </small>
+
+        </button>
+
+
+        <button
+          type="button"
+          class="gmc-package-card"
+          id="package12">
+
+          <strong>
+            12 SESSIONS / MONTH
+          </strong>
+
+          <span>
+            Rp660.000
+          </span>
+
+          <small>
+            Rp55.000 / SESSION
+          </small>
+
+        </button>
+
+      </div>
+
+    </div>
+
+  `;
+
+
+  document.body.appendChild(modal);
+
+
+  let seconds = 10 * 60;
+
+
+  const timer =
+    document.getElementById(
+      "gmcMonthlyTimer"
+    );
+
+
+  const interval =
+    setInterval(
+      function(){
+
+        seconds--;
+
+        const min =
+          Math.floor(seconds / 60);
+
+        const sec =
+          seconds % 60;
+
+
+        if(timer){
+
+          timer.innerText =
+            String(min).padStart(2,"0")
+            + ":"
+            + String(sec).padStart(2,"0");
+
+        }
+
+
+        if(seconds <= 0){
+
+          clearInterval(interval);
+
+          document
+            .querySelectorAll(
+              ".gmc-package-card"
+            )
+            .forEach(
+              btn => btn.disabled = true
+            );
+
+        }
+
+      },
+      1000
+    );
+
+
+  document
+    .getElementById(
+      "closeMonthlyModal"
+    )
+    .addEventListener(
+      "click",
+      function(){
+
+        clearInterval(interval);
+        modal.remove();
+
+      }
+    );
+
+
+  document
+    .getElementById("package8")
+    .addEventListener(
+      "click",
+      function(){
+
+        clearInterval(interval);
+        modal.remove();
+
+        openPaymentPopup(
+          "MONTHLY",
+          480000
+        );
+
+      }
+    );
+
+
+  document
+    .getElementById("package12")
+    .addEventListener(
+      "click",
+      function(){
+
+        clearInterval(interval);
+        modal.remove();
+
+        openPaymentPopup(
+          "MONTHLY",
+          660000
+        );
+
+      }
+    );
+
+}
 /* =========================================================
    CLOSE MODAL
 ========================================================= */
