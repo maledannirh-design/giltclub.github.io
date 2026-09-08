@@ -2033,7 +2033,7 @@ start your journey with GMTC.
 
 <div class="experience-grid">
 
-<a href="#" class="experience-card" id="funMatchTrigger">
+<a href="javascript:void(0);" class="experience-card" id="funMatchTrigger">
 
 <img src="images/fun-match-cover.webp">
 
@@ -2650,6 +2650,7 @@ LEARN MORE →
 
 </footer>
 
+<!-- CEK DARI SINI BOOKING -->
 <!-- =========================================================
      FUN MATCH BOOKING MODAL
 ========================================================= -->
@@ -3155,8 +3156,6 @@ const arenaPrev =
 const arenaNext =
   document.getElementById("arenaNext");
 
-
-
 /* =========================================================
    BOOKING STATE
 ========================================================= */
@@ -3179,7 +3178,7 @@ const GMTC_ADMIN_WA =
   "6282253704720";
 
 /* =========================================================
-   OPEN FUN MATCH — SAFE
+   OPEN FUN MATCH
 ========================================================= */
 
 document.addEventListener(
@@ -3187,28 +3186,10 @@ document.addEventListener(
   function(e){
 
     const card =
-      e.target.closest(
-        ".experience-card"
-      );
+      e.target.closest("#funMatchTrigger");
 
     if(!card)
       return;
-
-
-    const title =
-      card.querySelector("h3");
-
-
-    if(
-      !title ||
-      title.innerText
-        .replace("🎾","")
-        .trim()
-        .toUpperCase()
-        !== "FUN MATCH"
-    ){
-      return;
-    }
 
 
     e.preventDefault();
@@ -3224,18 +3205,15 @@ document.addEventListener(
 
     if(funMatchModal){
 
-      funMatchModal
-        .classList
-        .add("active");
+      funMatchModal.classList.add("active");
 
     }
 
 
-    document.body.style.overflow =
-      "hidden";
+    document.body.style.overflow = "hidden";
 
 
-    /* LOAD SCHEDULE AFTER MODAL OPENS */
+    /* LOAD SCHEDULE */
 
     if(
       typeof window.loadFunMatchSchedule ===
@@ -3248,6 +3226,7 @@ document.addEventListener(
 
   }
 );
+  
 /* =========================================================
    STEP NAVIGATION
 ========================================================= */
@@ -3279,41 +3258,6 @@ function showFunStep(stepId){
     );
 
   }
-
-}
-
-
-/* =========================================================
-   RESET
-========================================================= */
-
-function resetFunMatch(){
-
-  selectedArena = null;
-
-  selectedSession = null;
-
-  selectedSeats = 1;
-
-
-  const seatNumber =
-    document.getElementById("seatNumber");
-
-  if(seatNumber){
-
-    seatNumber.innerText = "1";
-
-  }
-
-
-  if(typeof stopOfferTimer === "function"){
-
-    stopOfferTimer();
-
-  }
-
-
-  showFunStep("funStepArena");
 
 }
 
