@@ -3261,7 +3261,74 @@ document.addEventListener(
 
   }
 );
+/* =========================================================
+   STEP NAVIGATION
+========================================================= */
 
+function showFunStep(stepId){
+
+  document
+    .querySelectorAll(".fun-match-step")
+    .forEach(function(step){
+
+      step.classList.remove("active");
+
+    });
+
+
+  const target =
+    document.getElementById(stepId);
+
+
+  if(target){
+
+    target.classList.add("active");
+
+  }else{
+
+    console.error(
+      "GMTC Fun Match step not found:",
+      stepId
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+function resetFunMatch(){
+
+  selectedArena = null;
+
+  selectedSession = null;
+
+  selectedSeats = 1;
+
+
+  const seatNumber =
+    document.getElementById("seatNumber");
+
+  if(seatNumber){
+
+    seatNumber.innerText = "1";
+
+  }
+
+
+  if(typeof stopOfferTimer === "function"){
+
+    stopOfferTimer();
+
+  }
+
+
+  showFunStep("funStepArena");
+
+}
 
 /* =========================================================
    RESET
