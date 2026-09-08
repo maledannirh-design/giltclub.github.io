@@ -652,10 +652,6 @@ section{
   border:2px solid #2E5D3A;
   background:#edf3ec;
 }
-.arena-session{
-  cursor:pointer;
-  transition:.2s;
-}
 
 .arena-session-day{
   font-size:9px;
@@ -1092,114 +1088,8 @@ section{
   }
 
 }
-/* =========================================================
-   MEMBERSHIP RATE CARD
-========================================================= */
 
-.membership-rate-card{
-  margin-top:16px;
-  background:#F6F1E7;
-  border:1px solid #d9d1c2;
-  border-radius:16px;
-  padding:17px 16px;
-}
-
-.membership-rate-eyebrow{
-  font-size:9px;
-  font-weight:800;
-  letter-spacing:1.8px;
-  color:#777;
-}
-
-.membership-rate-title{
-  font-size:18px;
-  font-weight:900;
-  color:#2E5D3A;
-  margin-top:4px;
-}
-
-.membership-rate-detail{
-  font-size:11px;
-  color:#777;
-  margin-top:3px;
-}
-
-.membership-rate-price{
-  font-size:25px;
-  font-weight:900;
-  color:#2E5D3A;
-  margin-top:10px;
-}
-
-.membership-rate-saving{
-  font-size:11px;
-  color:#2E5D3A;
-  margin-top:2px;
-}
-
-.membership-rate-btn{
-  width:100%;
-  min-height:43px;
-  margin-top:13px;
-  border:none;
-  border-radius:10px;
-  background:#E5A9A9;
-  color:#2E5D3A;
-  font-size:11px;
-  font-weight:900;
-  letter-spacing:.7px;
-  cursor:pointer;
-}
-
-.membership-rate-btn:hover{
-  opacity:.9;
-}
-
-/* =========================================================
-   VVIP SPECIAL RATE
-========================================================= */
-
-.vvip-rate-card{
-  background:#0b0b0b;
-  border:1px solid #b8953d;
-  color:#fff;
-}
-
-.vvip-rate-card
-.membership-rate-eyebrow{
-  color:#d5aa3d;
-}
-
-.vvip-rate-card
-.membership-rate-title{
-  color:#d5aa3d;
-}
-
-.vvip-rate-card
-.membership-rate-detail{
-  color:#bbb;
-}
-
-.vvip-rate-card
-.membership-rate-price{
-  color:#d5aa3d;
-}
-
-.vvip-rate-card
-.membership-rate-saving{
-  color:#ddd;
-}
-
-.vvip-rate-card
-.membership-rate-btn{
-  background:#d5aa3d;
-  color:#050505;
-}
-
-.vvip-rate-card
-.membership-rate-btn:hover{
-  opacity:.9;
-}
+  
 /* =========================================================
    VISITOR TOTAL LABEL
 ========================================================= */
@@ -1239,11 +1129,53 @@ section{
   background:#2E5D3A;
   color:#fff;
 }
-
+.membership-rate-btn:hover{
+  opacity:.9;
+}
 .membership-selected
 .membership-rate-saving{
   font-weight:800;
 }
+
+/* =========================================================
+   VVIP SPECIAL RATE
+========================================================= */
+
+.vvip-rate-card{
+  background:#0b0b0b;
+  border:1px solid #b8953d;
+  color:#fff;
+}
+
+.vvip-rate-card .membership-rate-eyebrow{
+  color:#d5aa3d;
+}
+
+.vvip-rate-card .membership-rate-title{
+  color:#d5aa3d;
+}
+
+.vvip-rate-card .membership-rate-detail{
+  color:#bbb;
+}
+
+.vvip-rate-card .membership-rate-price{
+  color:#d5aa3d;
+}
+
+.vvip-rate-card .membership-rate-saving{
+  color:#ddd;
+}
+
+.vvip-rate-card .membership-rate-btn{
+  background:#d5aa3d;
+  color:#050505;
+}
+
+.vvip-rate-card .membership-rate-btn:hover{
+  opacity:.9;
+}
+  
 /* ==========================
    OUR PARTNERS
 ========================== */
@@ -2010,7 +1942,9 @@ object-fit:cover;
 display:block;
 
 }
-
+/* ==========================
+   end of css
+========================== */
 </style>
 
   <!-- Google tag (gtag.js) -->
@@ -3071,8 +3005,6 @@ LEARN MORE →
 
 </div>
 
-
-
 <!-- =====================================================
      MEMBERSHIP RATE
 ====================================================== -->
@@ -3089,10 +3021,12 @@ LEARN MORE →
     Become a GMTC Member
   </div>
 
-  <div
-    class="membership-rate-detail"
-    id="membershipRateDetail">
-    Rp75.000 × 2 seats
+  <div class="membership-rate-detail">
+    <span
+      id="membershipVisitorPrice"
+      style="text-decoration:line-through;color:#999;">
+      Rp170.000
+    </span>
   </div>
 
   <div
@@ -3112,13 +3046,11 @@ LEARN MORE →
     class="membership-rate-btn"
     id="registerMemberBtn">
 
-    REGISTER TO MEMBER
+    BECOME A MEMBER
 
   </button>
 
 </div>
-
-
 
 <!-- =====================================================
      VISITOR TOTAL
@@ -3154,23 +3086,27 @@ LEARN MORE →
     Become Our VVIP Member
   </div>
 
-  <div
-    class="membership-rate-detail"
-    id="vvipRateDetail">
-    Get a special discount on this session.
+  <div class="membership-rate-detail">
+
+    <span
+      id="vvipVisitorPrice"
+      style="
+        text-decoration:line-through;
+        color:#777;
+      ">
+      Rp170.000
+    </span>
+
   </div>
 
   <div
     class="membership-rate-price"
     id="vvipRateTotal">
-    Rp0
+    Rp130.000
   </div>
 
-  <div
-    class="membership-rate-saving">
-
-    Reserve your place in our exclusive circle.
-
+  <div class="membership-rate-saving">
+    Get a special discount on this session
   </div>
 
   <div
@@ -3178,10 +3114,10 @@ LEARN MORE →
       margin-top:8px;
       font-size:10px;
       line-height:1.5;
-      color:#777;
+      color:#aaa;
     ">
 
-    Only 2 VVIP memberships available.
+    Only 2 more slots in our VVIP Circle membership.
 
   </div>
 
@@ -4369,7 +4305,26 @@ const cashbackVVIP =
           visitorTotal
         );
 
+/* =====================================================
+   VVIP OFFER
+===================================================== */
 
+document.getElementById(
+  "vvipVisitorPrice"
+).innerText =
+
+  "Rp"
+  + visitorTotal
+    .toLocaleString("id-ID");
+
+
+document.getElementById(
+  "vvipRateTotal"
+).innerText =
+
+  "Rp"
+  + vvipTotal
+    .toLocaleString("id-ID");
 
       /* =====================================================
          ARENA
@@ -4481,8 +4436,6 @@ const cashbackVVIP =
         "checkoutSeats"
       ).innerText =
         selectedSeats;
-
-
 
       /* =====================================================
          MEMBER OFFER
@@ -4675,8 +4628,7 @@ document
       const memberTotal =
         Math.max(
           0,
-          visitorTotal -
-          cashback
+          visitorTotal - cashback
         );
 
 
@@ -4691,14 +4643,18 @@ document
       );
 
 
+      /* ORIGINAL VISITOR PRICE */
+
       document.getElementById(
-        "membershipRateDetail"
+        "membershipVisitorPrice"
       ).innerText =
 
-        "Member price · Save Rp"
-        + cashback
+        "Rp"
+        + visitorTotal
           .toLocaleString("id-ID");
 
+
+      /* MEMBER PRICE */
 
       document.getElementById(
         "membershipRateTotal"
@@ -4709,13 +4665,16 @@ document
           .toLocaleString("id-ID");
 
 
+      /* DISCOUNT */
+
       document.getElementById(
         "membershipSaving"
       ).innerText =
 
-        "You save Rp"
+        "Get Rp"
         + cashback
-          .toLocaleString("id-ID");
+          .toLocaleString("id-ID")
+        + " discount on this session";
 
 
       this.innerText =
