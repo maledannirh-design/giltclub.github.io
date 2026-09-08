@@ -3130,13 +3130,11 @@ LEARN MORE →
 </div>
 </div>
 </div>
-  
+
+<!-- =====================================================
+     END OF MODAL
+====================================================== -->
 <script>
-
-
-/* =========================================================
-   end of modal
-========================================================= */
 
 /* =========================================================
    ELEMENTS
@@ -3172,7 +3170,36 @@ let selectedSeats = 1;
 
 let offerTimerInterval = null;
 
+const arenaInfo = {
 
+  BTS:
+    "BALIKPAPAN TENNIS STADIUM",
+
+  INDOORBTS:
+    "BTS INDOOR",
+
+  KJS:
+    "KANUDJOSO",
+
+  WIKA:
+    "WIKA",
+
+  BDI:
+    "BDI",
+
+  EXC:
+    "EXCHANGE",
+
+  BB:
+    "BB",
+
+  HOLA:
+    "HOLA",
+
+  ANANTA:
+    "ANANTA"
+
+};
   /* =========================================================
    GMTC ADMIN WHATSAPP
 ========================================================= */
@@ -4137,43 +4164,6 @@ const vvipTotal =
     0,
     visitorTotal - vvipDiscountTotal
   );
-
-      /* =====================================================
-         ARENA
-      ===================================================== */
-
-      const arenaInfo = {
-
-        BTS:
-          "BALIKPAPAN TENNIS STADIUM",
-
-        INDOORBTS:
-          "BTS INDOOR",
-
-        KJS:
-          "KANUDJOSO",
-
-        WIKA:
-          "WIKA",
-
-        BDI:
-          "BDI",
-
-        EXC:
-          "EXCHANGE",
-
-        BB:
-          "BB",
-
-        HOLA:
-          "HOLA",
-
-        ANANTA:
-          "ANANTA"
-
-      };
-
-
       /* =====================================================
          CHECKOUT ARENA
       ===================================================== */
@@ -4475,124 +4465,8 @@ const vvipTotal =
       showFunStep(
         "funStepCheckout"
       );
-
-
-     /* =====================================================
-   MEMBER OFFER
-===================================================== */
-
-document.getElementById(
-  "membershipVisitorPrice"
-).innerText =
-  "Rp"
-  + visitorTotal.toLocaleString("id-ID");
-
-
-document.getElementById(
-  "membershipRateTotal"
-).innerText =
-
-  "Rp"
-  + memberTotal
-    .toLocaleString("id-ID");
-
-    }
+   }
   );
-
-      /* =====================================================
-         MONTHLY OFFER
-      ===================================================== */
-
-      const monthly8Total =
-        480000;
-
-
-      const monthly12Total =
-        660000;
-
-
-      document.getElementById(
-        "offerVisitorTotal"
-      ).innerText =
-
-        "Rp"
-        + visitorTotal
-          .toLocaleString("id-ID");
-
-
-      document.getElementById(
-        "offerMonthlyTotal"
-      ).innerText =
-
-        "Rp"
-        + monthly8Total
-          .toLocaleString("id-ID");
-
-      /* =====================================================
-         RESET MEMBER STATE
-      ===================================================== */
-
-      const memberCard =
-        document.getElementById(
-          "membershipRateCard"
-        );
-
-
-      memberCard.classList.remove(
-        "membership-selected"
-      );
-
-
-      document.getElementById(
-        "registerMemberBtn"
-      ).innerText =
-        "BECOME A MEMBER";
-
-
-
-      /* =====================================================
-         SAVE CHECKOUT STATE
-      ===================================================== */
-
-      selectedSession.checkout = {
-
-        pricePerHour,
-
-        billedHours,
-
-        visitorTotal,
-
-        cashbackMember,
-
-        cashbackVVIP,
-
-        memberTotal,
-
-        vvipTotal,
-
-        monthly8Total,
-
-        monthly12Total
-
-      };
-
-
-      console.log(
-        "GMTC CHECKOUT:",
-        selectedSession.checkout
-      );
-
-
-
-      /* =====================================================
-         SHOW CHECKOUT
-      ===================================================== */
-
-      showFunStep(
-        "funStepCheckout"
-      );
-      
-
  /* =========================================================
    MEMBER OFFER
 ========================================================= */
