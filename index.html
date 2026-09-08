@@ -4476,113 +4476,6 @@ const vvipTotal =
         "funStepCheckout"
       );
 
-      /* =====================================================
-         ARENA
-      ===================================================== */
-
-      const arenaInfo = {
-
-        BTS:
-          "BALIKPAPAN TENNIS STADIUM",
-
-        INDOORBTS:
-          "BTS INDOOR",
-
-        KJS:
-          "KANUDJOSO",
-
-        WIKA:
-          "WIKA",
-
-        BDI:
-          "BDI",
-
-        EXC:
-          "EXCHANGE",
-
-        BB:
-          "BB",
-
-        HOLA:
-          "HOLA",
-
-        ANANTA:
-          "ANANTA"
-
-      };
-
-
-      document.getElementById(
-        "checkoutArena"
-      ).innerText =
-
-        arenaInfo[selectedArena] ||
-        selectedArena;
-
-
-
-      /* =====================================================
-         SESSION
-      ===================================================== */
-
-      const sessionDate =
-        new Date(
-          selectedSession.date +
-          "T00:00:00"
-        );
-
-
-      const formattedSessionDate =
-        sessionDate
-          .toLocaleDateString(
-            "en-US",
-            {
-              weekday:"long",
-              month:"short",
-              day:"numeric"
-            }
-          )
-          .toUpperCase();
-
-
-     document.getElementById(
-  "checkoutArena"
-).innerText =
-  arenaInfo[selectedArena] ||
-  selectedArena;
-
-        formattedSessionDate
-        + " · "
-        + (
-          selectedSession.startTime ||
-          "--:--"
-        )
-        + " — "
-        + (
-          selectedSession.endTime ||
-          "--:--"
-        );
-
-      /* =====================================================
-         SEATS
-      ===================================================== */
-
-      document.getElementById(
-        "checkoutSeats"
-      ).innerText =
-        selectedSeats;
-
-      /* =====================================================
-         VISITOR TOTAL
-      ===================================================== */
-
-      document.getElementById(
-        "checkoutTotal"
-      ).innerText =
-
-        "Rp"
-        + visitorTotal
-          .toLocaleString("id-ID");
 
      /* =====================================================
    MEMBER OFFER
@@ -4598,8 +4491,13 @@ document.getElementById(
 document.getElementById(
   "membershipRateTotal"
 ).innerText =
+
   "Rp"
-  + memberTotal.toLocaleString("id-ID");
+  + memberTotal
+    .toLocaleString("id-ID");
+
+    }
+  );
 
       /* =====================================================
          MONTHLY OFFER
