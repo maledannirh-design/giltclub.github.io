@@ -2964,19 +2964,6 @@ LEARN MORE →
 
         </div>
 
-
-        <div class="checkout-session">
-
-          <strong
-            id="checkoutArena">
-          </strong>
-
-          <span
-            id="checkoutSession">
-          </span>
-
-        </div>
-
 <!-- =====================================================
      SESSION SUMMARY
 ====================================================== -->
@@ -4230,12 +4217,15 @@ const cashbackVVIP =
         );
 
 
-      const vvipTotal =
-        Math.max(
-          0,
-          visitorTotal -
-          cashbackVVIP
-        );
+      const vvipDiscountTotal =
+  cashbackVVIP * selectedSeats;
+
+const vvipTotal =
+  Math.max(
+    0,
+    visitorTotal -
+    vvipDiscountTotal
+  );
 
 
       const memberSaving =
@@ -4341,9 +4331,11 @@ document.getElementById(
           .toUpperCase();
 
 
-      document.getElementById(
-        "checkoutSession"
-      ).innerText =
+     document.getElementById(
+  "checkoutArena"
+).innerText =
+  arenaInfo[selectedArena] ||
+  selectedArena;
 
         formattedSessionDate
         + " · "
@@ -4357,23 +4349,6 @@ document.getElementById(
           "--:--"
         );
 
-
-
-      /* =====================================================
-         RATE / JAM
-      ===================================================== */
-
-      document.getElementById(
-        "checkoutRate"
-      ).innerText =
-
-        "Rp"
-        + pricePerHour
-          .toLocaleString("id-ID")
-        + " / jam";
-
-
-
       /* =====================================================
          SEATS
       ===================================================== */
@@ -4384,8 +4359,16 @@ document.getElementById(
         selectedSeats;
 
       /* =====================================================
-         MEMBER OFFER
+         VISITOR TOTAL
       ===================================================== */
+
+      document.getElementById(
+        "checkoutTotal"
+      ).innerText =
+
+        "Rp"
+        + visitorTotal
+          .toLocaleString("id-ID");
 
      /* =====================================================
    MEMBER OFFER
@@ -4403,30 +4386,6 @@ document.getElementById(
 ).innerText =
   "Rp"
   + memberTotal.toLocaleString("id-ID");
-
-
-document.getElementById(
-  "membershipSaving"
-).innerText =
-  "Get Rp"
-  + memberSaving.toLocaleString("id-ID")
-  + " discount on this session";
-
-
-
-      /* =====================================================
-         VISITOR TOTAL
-      ===================================================== */
-
-      document.getElementById(
-        "checkoutTotal"
-      ).innerText =
-
-        "Rp"
-        + visitorTotal
-          .toLocaleString("id-ID");
-
-
 
       /* =====================================================
          MONTHLY OFFER
@@ -4456,21 +4415,6 @@ document.getElementById(
         "Rp"
         + monthly8Total
           .toLocaleString("id-ID");
-
-
-      document.getElementById(
-        "offerSaving"
-      ).innerText =
-
-        "Rp"
-        + Math.max(
-          0,
-          visitorTotal -
-          monthly8Total
-        )
-          .toLocaleString("id-ID");
-
-
 
       /* =====================================================
          RESET MEMBER STATE
@@ -4535,9 +4479,6 @@ document.getElementById(
       showFunStep(
         "funStepCheckout"
       );
-
-
-      startOfferTimer();
 
     }
   );
