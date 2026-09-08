@@ -3276,48 +3276,34 @@ function resetFunMatch(){
   selectedSeats = 1;
 
 
-  document.getElementById(
-    "seatNumber"
-  ).innerText = "1";
+  const seatNumber =
+    document.getElementById("seatNumber");
+
+  if(seatNumber){
+
+    seatNumber.innerText = "1";
+
+  }
 
 
-  stopOfferTimer();
+  /*
+   * OLD CHECKOUT TIMER REMOVED
+   *
+   * Monthly Package now has
+   * its own persistent 10-minute timer.
+   */
 
+  if(typeof stopOfferTimer === "function"){
 
-  offerSeconds = 25 * 60;
+    stopOfferTimer();
 
-
-  document.getElementById(
-    "offerTimer"
-  ).innerText = "25:00";
+  }
 
 
   showFunStep("funStepArena");
 
 }
   
-function showFunStep(stepId){
-
-  document
-    .querySelectorAll(".fun-match-step")
-    .forEach(step => {
-
-      step.classList.remove("active");
-
-    });
-
-
-  const target =
-    document.getElementById(stepId);
-
-
-  if(target){
-
-    target.classList.add("active");
-
-  }
-
-}
 /* =========================================================
    ARENA CAROUSEL
 ========================================================= */
