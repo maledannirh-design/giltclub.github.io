@@ -3126,7 +3126,12 @@ LEARN MORE →
   </button>
 
 </div>
-  
+  </div>
+</div>
+</div>
+</div>
+
+<script>
 <script>
 
 
@@ -3168,7 +3173,6 @@ let selectedSeats = 1;
 
 let offerTimerInterval = null;
 
-let offerSeconds = 25 * 60;
 
   /* =========================================================
    GMTC ADMIN WHATSAPP
@@ -3283,19 +3287,12 @@ function resetFunMatch(){
 
   }
 
-
   /*
    * OLD CHECKOUT TIMER REMOVED
    *
    * Monthly Package now has
    * its own persistent 10-minute timer.
    */
-
-  if(typeof stopOfferTimer === "function"){
-
-    stopOfferTimer();
-
-  }
 
 
   showFunStep("funStepArena");
@@ -3673,43 +3670,6 @@ document.addEventListener("click", function(e){
       "Available slots: " + slots;
 
   }
-
-
-  /* =====================================================
-     ARENA NAME
-  ===================================================== */
-
-  const arenaInfo = {
-
-    BTS:
-      "BALIKPAPAN TENNIS STADIUM",
-
-    INDOORBTS:
-      "BTS INDOOR",
-
-    KJS:
-      "KANUDJOSO",
-
-    WIKA:
-      "WIKA",
-
-    BDI:
-      "BDI",
-
-    EXC:
-      "EXCHANGE",
-
-    BB:
-      "BB",
-
-    HOLA:
-      "HOLA",
-
-    ANANTA:
-      "ANANTA"
-
-  };
-
 
   const selectedSessionName =
     document.getElementById(
@@ -4168,21 +4128,16 @@ document
 
       /* =====================================================
          VVIP TOTAL
-         VVIP discount is PER SEAT
+        revised
       ===================================================== */
+const vvipDiscountTotal =
+  cashbackVVIP * selectedSeats;
 
-      const vvipDiscountTotal =
-        cashbackVVIP *
-        selectedSeats;
-
-
-      const vvipTotal =
-        Math.max(
-          0,
-          visitorTotal -
-          vvipDiscountTotal
-        );
-
+const vvipTotal =
+  Math.max(
+    0,
+    visitorTotal - vvipDiscountTotal
+  );
 
       /* =====================================================
          ARENA
@@ -4522,9 +4477,6 @@ document
         "funStepCheckout"
       );
 
-
-  );
-
       /* =====================================================
          ARENA
       ===================================================== */
@@ -4742,7 +4694,7 @@ document.getElementById(
       showFunStep(
         "funStepCheckout"
       );
-
+      }
   );
 
  /* =========================================================
@@ -4811,23 +4763,6 @@ document
         + memberTotal
           .toLocaleString("id-ID");
 
-
-      /* DISCOUNT */
-
-      document.getElementById(
-        "membershipSaving"
-      ).innerText =
-
-        "Get Rp"
-        + cashback
-          .toLocaleString("id-ID")
-        + " discount on this session";
-
-
-      this.innerText =
-        "MEMBERSHIP RATE SELECTED";
-
-    }
   );
 
 /* =========================================================
@@ -4853,55 +4788,6 @@ document
 
     }
   );
-/* =========================================================
-   LIMITED OFFER TIMER
-========================================================= */
-
-function startOfferTimer(){
-
-  stopOfferTimer();
-
-
-  offerSeconds =
-    25 * 60;
-
-
-  updateOfferTimer();
-
-
-  offerTimerInterval =
-    setInterval(
-      function(){
-
-        offerSeconds--;
-
-
-        if(
-          offerSeconds <= 0
-        ){
-
-          offerSeconds = 0;
-
-          updateOfferTimer();
-
-          stopOfferTimer();
-
-          disableExpiredOffer();
-
-          return;
-
-        }
-
-
-        updateOfferTimer();
-
-      },
-      1000
-    );
-
-}
-
-
 
 /* =========================================================
    UPDATE TIMER
@@ -4979,158 +4865,7 @@ function disableExpiredOffer(){
   button.style.opacity =
     ".5";
 
-
-  document.getElementById(
-    "declineMonthlyOffer"
-  ).innerText =
-    "Continue with Visitor Rate";
-
 }
-
-
-
-/* =========================================================
-   ACCEPT MONTHLY OFFER
-========================================================= */
-
-document
-  .getElementById(
-    "acceptMonthlyOffer"
-  )
-  .addEventListener(
-    "click",
-    function(){
-
-      if(
-        offerSeconds <= 0 ||
-        !selectedSession ||
-        !selectedSession.checkout
-      )
-        return;
-
-
-      stopOfferTimer();
-
-
-      const monthly8Total =
-        selectedSession.checkout
-          .monthly8Total;
-
-
-      document.getElementById(
-        "checkoutRate"
-      ).innerText =
-        "Rp60.000 / session";
-
-
-      document.getElementById(
-        "checkoutTotal"
-      ).innerText =
-        "Rp"
-        + monthly8Total
-          .toLocaleString("id-ID");
-
-
-      document.getElementById(
-        "limitedOffer"
-      ).innerHTML = `
-
-        <div class="offer-eyebrow">
-          MONTHLY MEMBERSHIP
-        </div>
-
-        <div class="offer-title">
-          8 SESSIONS / MONTH
-        </div>
-
-        <div class="offer-subtitle">
-
-          2× PER WEEK<br>
-
-          Only Rp60.000 per session
-
-        </div>
-
-        <div class="offer-price">
-
-          <div class="offer-price-new">
-            Rp480.000 / MONTH
-          </div>
-
-        </div>
-
-        <button
-          type="button"
-          class="offer-accept-btn"
-          onclick="alert('Next step: connect payment / booking system.')">
-
-          CONTINUE TO PAYMENT
-
-        </button>
-
-      `;
-
-    }
-  );
-
-
-/* =========================================================
-   DECLINE OFFER
-========================================================= */
-
-document
-  .getElementById(
-    "declineMonthlyOffer"
-  )
-  .addEventListener(
-    "click",
-    function(){
-
-      stopOfferTimer();
-
-
-      document.getElementById(
-        "limitedOffer"
-      ).innerHTML = `
-
-        <div class="offer-eyebrow">
-          VISITOR RATE
-        </div>
-
-        <div class="offer-title">
-          BOOKING READY
-        </div>
-
-        <div class="offer-subtitle">
-          You are continuing with the standard
-          visitor rate.
-        </div>
-
-        <div class="offer-price">
-
-          <div class="offer-price-new">
-            ${document.getElementById(
-              "checkoutTotal"
-            ).innerText}
-          </div>
-
-        </div>
-
-        <button
-          type="button"
-          class="offer-accept-btn"
-          onclick="alert('Next step: connect payment / booking system.')">
-
-          CONTINUE TO PAYMENT
-
-        </button>
-
-      `;
-
-    }
-  );
-
-
 
 /* =========================================================
    CLOSE MODAL
