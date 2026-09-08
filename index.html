@@ -4432,28 +4432,27 @@ document.getElementById(
          MEMBER OFFER
       ===================================================== */
 
-      document.getElementById(
-  "membershipRateDetail"
+     /* =====================================================
+   MEMBER OFFER
+===================================================== */
+
+document.getElementById(
+  "membershipVisitorPrice"
 ).innerText =
-
-  "Get Rp"
-  + cashbackMember.toLocaleString("id-ID")
-  + " discount on this session";
+  "Rp"
+  + visitorTotal.toLocaleString("id-ID");
 
 
-      document.getElementById(
-        "membershipRateTotal"
-      ).innerText =
-
-        "Rp"
-        + memberTotal
-          .toLocaleString("id-ID");
+document.getElementById(
+  "membershipRateTotal"
+).innerText =
+  "Rp"
+  + memberTotal.toLocaleString("id-ID");
 
 
-      document.getElementById(
+document.getElementById(
   "membershipSaving"
 ).innerText =
-
   "Get Rp"
   + memberSaving.toLocaleString("id-ID")
   + " discount on this session";
