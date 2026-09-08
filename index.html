@@ -3239,22 +3239,10 @@ LEARN MORE →
   
 <script>
 
+
 /* =========================================================
-   GMTC FUN MATCH BOOKING FLOW
-
-   ARENA
-      ↓
-   SESSION
-      ↓
-   SEATS
-      ↓
-   BOOK NOW
-      ↓
-   CHECKOUT
-      ↓
-   LIMITED TIME OFFER 25:00
+   end of modal
 ========================================================= */
-
 
 /* =========================================================
    ELEMENTS
@@ -4072,7 +4060,7 @@ document
     function(){
 
       showFunStep(
-        "funStepSession"
+        "funStepArena"
       );
 
     }
@@ -4147,7 +4135,10 @@ document
   .addEventListener(
     "click",
     function(){
-
+    console.log("BOOK NOW FIRED");
+console.log("selectedArena:", selectedArena);
+console.log("selectedSession:", selectedSession);
+console.log("selectedSeats:", selectedSeats);
       if(
         !selectedArena ||
         !selectedSession
@@ -4442,13 +4433,12 @@ document.getElementById(
       ===================================================== */
 
       document.getElementById(
-        "membershipRateDetail"
-      ).innerText =
+  "membershipRateDetail"
+).innerText =
 
-        "Save Rp"
-        + cashbackMember
-          .toLocaleString("id-ID")
-        + " this session";
+  "Get Rp"
+  + cashbackMember.toLocaleString("id-ID")
+  + " discount on this session";
 
 
       document.getElementById(
@@ -4461,12 +4451,12 @@ document.getElementById(
 
 
       document.getElementById(
-        "membershipSaving"
-      ).innerText =
+  "membershipSaving"
+).innerText =
 
-        "Rp"
-        + memberSaving
-          .toLocaleString("id-ID");
+  "Get Rp"
+  + memberSaving.toLocaleString("id-ID")
+  + " discount on this session";
 
 
 
