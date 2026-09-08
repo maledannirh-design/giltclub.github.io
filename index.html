@@ -2121,7 +2121,7 @@ display:block;
 
 .gmc-payment-sheet,
 .gmc-monthly-sheet{
-  width:min(430px,100vw);
+  width:min(430px, calc(100vw - 24px));
   max-height:90vh;
   overflow-y:auto;
   padding:25px;
@@ -3375,7 +3375,7 @@ LEARN MORE →
     class="checkout-secondary-btn"
     id="registerMemberBtn">
 
-    REGISTER TO OUR MEMBER
+    JOIN US — REGISTER MEMBER APP
 
   </button>
 
@@ -3453,7 +3453,7 @@ LEARN MORE →
     class="checkout-secondary-btn monthly-btn"
     id="acceptMonthlyOffer">
 
-    PAY FOR MONTHLY PACKAGE
+    TRY GMTC MONTHLY
 
   </button>
 
@@ -4714,12 +4714,17 @@ const vvipTotal =
         );
 
 
-      if(offerMonthlyTotal){
+     const monthlySeatTotal =
+  55000 * selectedSeats;
 
-        offerMonthlyTotal.innerText =
-          "Rp180.000";
+if(offerMonthlyTotal){
 
-      }
+  offerMonthlyTotal.innerText =
+    "Rp"
+    + monthlySeatTotal
+      .toLocaleString("id-ID");
+
+}
 
 
       /* =====================================================
@@ -4895,16 +4900,30 @@ if(registerMemberBtn){
       const memberTotal =
         checkout.memberTotal;
 
-      this.innerText =
-        "MEMBERSHIP RATE SELECTED";
+      /*
+       * MEMBER RATE SELECTED
+       */
 
-      this.classList.add(
-        "selected"
-      );
+      const memberCard =
+        document.getElementById(
+          "membershipRateCard"
+        );
 
-      console.log(
-        "GMTC MEMBER RATE:",
-        memberTotal
+      if(memberCard){
+
+        memberCard.classList.add(
+          "membership-selected"
+        );
+
+      }
+
+      /*
+       * OPEN MEMBER APP
+       */
+
+      window.open(
+        "https://m.giltclub.my.id/app/",
+        "_blank"
       );
 
     }
@@ -5161,227 +5180,20 @@ function openPaymentPopup(
 }
 
 /* =========================================================
-   MONTHLY PACKAGE MODAL
-========================================================= */
-
-function openMonthlyPackageModal(){
-
-  const existing =
-    document.getElementById(
-      "gmcMonthlyModal"
-    );
-
-  if(existing)
-    existing.remove();
-
-
-  const modal =
-    document.createElement("div");
-
-  modal.id =
-    "gmcMonthlyModal";
-
-  modal.innerHTML = `
-
-    <div class="gmc-monthly-overlay">
-
-      <div class="gmc-monthly-sheet">
-
-        <button
-          type="button"
-          class="gmc-monthly-close"
-          id="closeMonthlyModal">
-
-          ×
-
-        </button>
-
-
-        <div class="gmc-monthly-eyebrow">
-          GMTC MONTHLY PACKAGE
-        </div>
-
-
-        <div class="gmc-monthly-title">
-          CHOOSE YOUR PACKAGE
-        </div>
-
-
-        <div class="gmc-monthly-timer">
-          OFFER EXPIRES IN
-          <strong id="gmcMonthlyTimer">
-            10:00
-          </strong>
-        </div>
-
-
-        <button
-          type="button"
-          class="gmc-package-card"
-          id="package8">
-
-          <strong>
-            8 SESSIONS / MONTH
-          </strong>
-
-          <span>
-            Rp480.000
-          </span>
-
-          <small>
-            Rp60.000 / SESSION
-          </small>
-
-        </button>
-
-
-        <button
-          type="button"
-          class="gmc-package-card"
-          id="package12">
-
-          <strong>
-            12 SESSIONS / MONTH
-          </strong>
-
-          <span>
-            Rp660.000
-          </span>
-
-          <small>
-            Rp55.000 / SESSION
-          </small>
-
-        </button>
-
-      </div>
-
-    </div>
-
-  `;
-
-
-  document.body.appendChild(modal);
-
-
-  let seconds = 10 * 60;
-
-
-  const timer =
-    document.getElementById(
-      "gmcMonthlyTimer"
-    );
-
-
-  const interval =
-    setInterval(
-      function(){
-
-        seconds--;
-
-        const min =
-          Math.floor(seconds / 60);
-
-        const sec =
-          seconds % 60;
-
-
-        if(timer){
-
-          timer.innerText =
-            String(min).padStart(2,"0")
-            + ":"
-            + String(sec).padStart(2,"0");
-
-        }
-
-
-        if(seconds <= 0){
-
-          clearInterval(interval);
-
-          document
-            .querySelectorAll(
-              ".gmc-package-card"
-            )
-            .forEach(
-              btn => btn.disabled = true
-            );
-
-        }
-
-      },
-      1000
-    );
-
-
-  document
-    .getElementById(
-      "closeMonthlyModal"
-    )
-    .addEventListener(
-      "click",
-      function(){
-
-        clearInterval(interval);
-        modal.remove();
-
-      }
-    );
-
-
-  document
-    .getElementById("package8")
-    .addEventListener(
-      "click",
-      function(){
-
-        clearInterval(interval);
-        modal.remove();
-
-        openPaymentPopup(
-          "MONTHLY",
-          480000
-        );
-
-      }
-    );
-
-
-  document
-    .getElementById("package12")
-    .addEventListener(
-      "click",
-      function(){
-
-        clearInterval(interval);
-        modal.remove();
-
-        openPaymentPopup(
-          "MONTHLY",
-          660000
-        );
-
-      }
-    );
-
-}
-/* =========================================================
    CLOSE MODAL
 ========================================================= */
 
 function closeFunMatchModal(){
 
-  stopOfferTimer();
+  if(funMatchModal){
 
+    funMatchModal
+      .classList
+      .remove("active");
 
-  funMatchModal
-    .classList
-    .remove("active");
+  }
 
-
-  document.body.style.overflow =
-    "";
+  document.body.style.overflow = "";
 
 }
 
