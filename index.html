@@ -2061,37 +2061,234 @@ display:block;
   color:#fff;
 }
 
+/* =========================================================
+   VVIP EXCLUSIVE CIRCLE
+   CRIMSON × GOLD PREMIUM
+========================================================= */
+
 .vvip-offer-card{
-  background:#2E5D3A;
+
+  position:relative;
+
+  overflow:hidden;
+
+  background:
+    linear-gradient(
+      135deg,
+      #5a0710 0%,
+      #8b0f1b 45%,
+      #4b050c 100%
+    );
+
   color:#fff;
+
+  border:1px solid #d4af37;
+
+  box-shadow:
+    0 12px 35px rgba(139,15,27,.28),
+    inset 0 0 25px rgba(212,175,55,.08);
+
 }
+
+
+/* GOLD SHINE */
+
+.vvip-offer-card::before{
+
+  content:"";
+
+  position:absolute;
+
+  top:0;
+  left:-130%;
+
+  width:70%;
+  height:100%;
+
+  background:
+    linear-gradient(
+      105deg,
+      transparent 0%,
+      rgba(255,255,255,0) 35%,
+      rgba(255,215,100,.35) 50%,
+      rgba(255,255,255,.65) 55%,
+      rgba(255,215,100,0) 70%,
+      transparent 100%
+    );
+
+  transform:skewX(-20deg);
+
+  animation:
+    vvipGoldShine 3.8s infinite;
+
+  pointer-events:none;
+
+}
+
+
+/* GOLD SPARKLES */
+
+.vvip-offer-card::after{
+
+  content:"✦  ✧  ✦  ✧  ✦";
+
+  position:absolute;
+
+  top:8px;
+  right:12px;
+
+  color:#f5d76e;
+
+  font-size:12px;
+
+  letter-spacing:5px;
+
+  opacity:.7;
+
+  animation:
+    vvipSparkle 1.8s ease-in-out infinite;
+
+  pointer-events:none;
+
+}
+
+
+@keyframes vvipGoldShine{
+
+  0%{
+    left:-130%;
+  }
+
+  45%{
+    left:150%;
+  }
+
+  100%{
+    left:150%;
+  }
+
+}
+
+
+@keyframes vvipSparkle{
+
+  0%,100%{
+    opacity:.35;
+    transform:scale(.9);
+  }
+
+  50%{
+    opacity:1;
+    transform:scale(1.08);
+  }
+
+}
+
+
+.vvip-offer-card
+.checkout-card-eyebrow{
+
+  position:relative;
+  z-index:2;
+
+  color:#f1d477;
+
+}
+
 
 .vvip-title{
+
+  position:relative;
+  z-index:2;
+
   margin-top:5px;
+
   font-size:18px;
+
   font-weight:900;
+
+  color:#fff;
+
 }
 
+
 .vvip-price{
+
+  position:relative;
+  z-index:2;
+
   margin-top:12px;
+
   font-size:28px;
+
   font-weight:900;
+
+  color:#f5d76e;
+
 }
+
 
 .vvip-seat-label,
 .vvip-scarcity{
+
+  position:relative;
+  z-index:2;
+
   margin-top:5px;
+
   font-size:10px;
+
   font-weight:800;
+
 }
+
+
+.vvip-seat-label{
+
+  color:#fff;
+
+}
+
 
 .vvip-scarcity{
-  opacity:.7;
+
+  color:#f1d477;
+
 }
 
+
 .vvip-btn{
-  background:#E3C565;
-  color:#2E5D3A;
+
+  position:relative;
+  z-index:2;
+
+  background:
+    linear-gradient(
+      135deg,
+      #d4af37,
+      #f5d76e,
+      #c99b25
+    );
+
+  color:#4b050c;
+
+  font-weight:900;
+
+  border:1px solid #f8e59a;
+
+  box-shadow:
+    0 5px 18px rgba(212,175,55,.25);
+
+}
+
+
+.vvip-btn:hover{
+
+  transform:translateY(-1px);
+
+  box-shadow:
+    0 8px 25px rgba(212,175,55,.4);
+
 }
 
 .monthly-offer-card{
@@ -2103,6 +2300,41 @@ display:block;
   color:#2E5D3A;
 }
 
+  /* =========================================================
+   MEMBER OFFER — PREMIUM CLEAN
+========================================================= */
+
+.membership-offer-card{
+  background:#fff;
+  color:#2E5D3A;
+  border:1px solid #ddd6c8;
+}
+
+.membership-offer-card
+.checkout-card-eyebrow{
+  color:#2E5D3A;
+}
+
+.membership-offer-card
+.checkout-old-price{
+  color:#999;
+}
+
+.membership-offer-card
+.checkout-offer-price{
+  color:#2E5D3A;
+}
+
+.membership-offer-card
+.checkout-secondary-btn{
+  background:#2E5D3A;
+  color:#fff;
+}
+
+.membership-offer-card
+.checkout-secondary-btn:hover{
+  opacity:.9;
+}
 
 /* =========================================================
    PAYMENT POPUP
@@ -2273,6 +2505,182 @@ display:block;
 .gmc-package-card:disabled{
   opacity:.35;
   cursor:not-allowed;
+}
+
+  /* =========================================================
+   MONTHLY PREMIUM PACKAGE
+   LUXURY GOLD
+========================================================= */
+
+.monthly-offer-card{
+
+  position:relative;
+
+  overflow:hidden;
+
+  background:
+    linear-gradient(
+      135deg,
+      #f8edc9 0%,
+      #ead08a 45%,
+      #f7e8b6 100%
+    );
+
+  color:#3f3210;
+
+  border:1px solid #c8a53b;
+
+  box-shadow:
+    0 10px 30px rgba(200,165,59,.18),
+    inset 0 0 18px rgba(255,255,255,.45);
+
+}
+
+
+.monthly-offer-card::before{
+
+  content:"";
+
+  position:absolute;
+
+  top:0;
+  left:-120%;
+
+  width:65%;
+  height:100%;
+
+  background:
+    linear-gradient(
+      105deg,
+      transparent,
+      rgba(255,255,255,.7),
+      transparent
+    );
+
+  transform:skewX(-20deg);
+
+  animation:
+    monthlyGoldShine 4.5s infinite;
+
+  pointer-events:none;
+
+}
+
+
+@keyframes monthlyGoldShine{
+
+  0%{
+    left:-120%;
+  }
+
+  40%{
+    left:150%;
+  }
+
+  100%{
+    left:150%;
+  }
+
+}
+
+
+.monthly-offer-card
+.checkout-card-eyebrow{
+
+  position:relative;
+  z-index:2;
+
+  color:#725a12;
+
+}
+
+
+.monthly-offer-card
+.checkout-old-price{
+
+  position:relative;
+  z-index:2;
+
+  color:#8b8062;
+
+}
+
+
+.monthly-offer-card
+.checkout-offer-price{
+
+  position:relative;
+  z-index:2;
+
+  color:#5a4308;
+
+  font-size:30px;
+
+}
+
+
+.monthly-btn{
+
+  position:relative;
+  z-index:2;
+
+  background:
+    linear-gradient(
+      135deg,
+      #b88a16,
+      #e3c565,
+      #b88a16
+    );
+
+  color:#2f2305;
+
+  border:1px solid #a77b0c;
+
+  font-weight:900;
+
+  box-shadow:
+    0 5px 15px rgba(150,110,10,.2);
+
+}
+
+
+.monthly-btn:hover{
+
+  transform:translateY(-1px);
+
+  box-shadow:
+    0 8px 22px rgba(150,110,10,.35);
+
+}
+
+  .monthly-offer-note{
+
+  position:relative;
+  z-index:2;
+
+  margin-top:7px;
+
+  text-align:center;
+
+  font-size:10px;
+
+  line-height:1.5;
+
+  font-weight:800;
+
+  letter-spacing:.6px;
+
+  color:#66500d;
+
+}
+
+
+.monthly-offer-note strong{
+
+  color:#3f2d03;
+
+  font-weight:900;
+
 }
 /* ==========================
    end of css
@@ -3447,7 +3855,23 @@ LEARN MORE →
     id="offerMonthlyTotal">
     Rp180.000
   </div>
+<div
+  class="monthly-offer-note"
+  id="monthlyOfferNote">
 
+  LIMITED OFFER — ONLY PAY
+  <strong id="monthlyOfferPay">
+    Rp110.000
+  </strong>
+
+  <br>
+
+  SAVE
+  <strong id="monthlyOfferSaving">
+    Rp60.000
+  </strong>
+
+</div>
   <button
     type="button"
     class="checkout-secondary-btn monthly-btn"
@@ -4270,7 +4694,27 @@ document
     }
   );
 
+/* =========================================================
+   BACK — CHECKOUT
+========================================================= */
 
+const backToSeats =
+  document.getElementById("backToSeats");
+
+if(backToSeats){
+
+  backToSeats.addEventListener(
+    "click",
+    function(){
+
+      showFunStep(
+        "funStepSeats"
+      );
+
+    }
+  );
+
+}
 
 /* =========================================================
    SEAT MINUS
@@ -4716,7 +5160,12 @@ const vvipTotal =
 
      const monthlySeatTotal =
   55000 * selectedSeats;
-
+const monthlySaving =
+  Math.max(
+    0,
+    visitorTotal -
+    monthlySeatTotal
+  );
 if(offerMonthlyTotal){
 
   offerMonthlyTotal.innerText =
@@ -4724,8 +5173,34 @@ if(offerMonthlyTotal){
     + monthlySeatTotal
       .toLocaleString("id-ID");
 
+const monthlyOfferPay =
+  document.getElementById(
+    "monthlyOfferPay"
+  );
+
+if(monthlyOfferPay){
+
+  monthlyOfferPay.innerText =
+    "Rp"
+    + monthlySeatTotal
+      .toLocaleString("id-ID");
+
 }
 
+
+const monthlyOfferSaving =
+  document.getElementById(
+    "monthlyOfferSaving"
+  );
+
+if(monthlyOfferSaving){
+
+  monthlyOfferSaving.innerText =
+    "Rp"
+    + monthlySaving
+      .toLocaleString("id-ID");
+
+}
 
       /* =====================================================
          RESET MEMBER SELECTED STATE
