@@ -4916,16 +4916,18 @@ document
 
       /* =====================================================
          MEMBER TOTAL
-         Keep existing GMTC member logic:
-         cashbackMember is applied once.
+         cashbackMember is applied per seat.
       ===================================================== */
 
-      const memberTotal =
-        Math.max(
-          0,
-          visitorTotal -
-          cashbackMember
-        );
+      const memberDiscountTotal =
+  cashbackMember * selectedSeats;
+
+const memberTotal =
+  Math.max(
+    0,
+    visitorTotal -
+    memberDiscountTotal
+  );
 
 
       /* =====================================================
@@ -5255,6 +5257,8 @@ if(monthlyOfferSaving){
 
         memberTotal,
 
+        memberDiscountTotal,
+
         vvipDiscountTotal,
 
         vvipTotal,
@@ -5418,6 +5422,10 @@ if(monthlyPackageBtn){
   monthlyPackageBtn.addEventListener(
     "click",
     function(){
+
+      console.log(
+        "GMTC MONTHLY CLICKED"
+      );
 
       openMonthlyPackageModal();
 
