@@ -5715,6 +5715,285 @@ function openPaymentPopup(
 
 }
 
+
+/* =========================================================
+   MONTHLY PACKAGE MODAL
+========================================================= */
+
+function openMonthlyPackageModal(){
+
+  const existing =
+    document.getElementById(
+      "gmcMonthlyModal"
+    );
+
+  if(existing)
+    existing.remove();
+
+
+  const modal =
+    document.createElement("div");
+
+  modal.id =
+    "gmcMonthlyModal";
+
+  modal.innerHTML = `
+
+    <div class="gmc-monthly-overlay">
+
+      <div class="gmc-monthly-sheet">
+
+        <button
+          type="button"
+          class="gmc-monthly-close"
+          id="closeMonthlyModal">
+
+          ×
+
+        </button>
+
+
+        <div class="gmc-monthly-eyebrow">
+          GMTC MONTHLY PACKAGE
+        </div>
+
+
+        <div class="gmc-monthly-title">
+          TRY MONTHLY PACKAGE
+        </div>
+
+
+        <div class="gmc-monthly-timer">
+
+          OFFER EXPIRES IN
+
+          <strong id="gmcMonthlyTimer">
+            10:00
+          </strong>
+
+        </div>
+
+
+        <!-- =========================
+             8 SESSION CARD
+        ========================== -->
+
+        <button
+          type="button"
+          class="gmc-package-card"
+          id="package8">
+
+          <strong>
+            8 SESSIONS / MONTH
+          </strong>
+
+          <span>
+            Rp480.000
+          </span>
+
+          <small>
+            Rp60.000 / SESSION
+          </small>
+
+        </button>
+
+
+        <!-- =========================
+             12 SESSION CARD
+        ========================== -->
+
+        <button
+          type="button"
+          class="gmc-package-card"
+          id="package12">
+
+          <strong>
+            12 SESSIONS / MONTH
+          </strong>
+
+          <span>
+            Rp660.000
+          </span>
+
+          <small>
+            Rp55.000 / SESSION
+          </small>
+
+        </button>
+
+
+      </div>
+
+    </div>
+
+  `;
+
+
+  document.body.appendChild(
+    modal
+  );
+
+
+  /* =====================================================
+     10 MINUTE OFFER TIMER
+  ===================================================== */
+
+  let seconds =
+    10 * 60;
+
+
+  const timer =
+    document.getElementById(
+      "gmcMonthlyTimer"
+    );
+
+
+  const interval =
+    setInterval(
+      function(){
+
+        seconds--;
+
+
+        const min =
+          Math.floor(
+            seconds / 60
+          );
+
+
+        const sec =
+          seconds % 60;
+
+
+        if(timer){
+
+          timer.innerText =
+            String(min).padStart(2,"0")
+            + ":"
+            + String(sec).padStart(2,"0");
+
+        }
+
+
+        if(seconds <= 0){
+
+          clearInterval(
+            interval
+          );
+
+
+          document
+            .querySelectorAll(
+              ".gmc-package-card"
+            )
+            .forEach(
+              function(button){
+
+                button.disabled =
+                  true;
+
+                button.style.opacity =
+                  ".45";
+
+                button.style.cursor =
+                  "not-allowed";
+
+              }
+            );
+
+        }
+
+      },
+      1000
+    );
+
+
+  /* =====================================================
+     CLOSE
+  ===================================================== */
+
+  document
+    .getElementById(
+      "closeMonthlyModal"
+    )
+    .addEventListener(
+      "click",
+      function(){
+
+        clearInterval(
+          interval
+        );
+
+        modal.remove();
+
+      }
+    );
+
+
+  /* =====================================================
+     8 SESSION PACKAGE
+  ===================================================== */
+
+  document
+    .getElementById(
+      "package8"
+    )
+    .addEventListener(
+      "click",
+      function(){
+
+        if(seconds <= 0)
+          return;
+
+
+        clearInterval(
+          interval
+        );
+
+        modal.remove();
+
+
+        openPaymentPopup(
+          "MONTHLY",
+          480000
+        );
+
+      }
+    );
+
+
+  /* =====================================================
+     12 SESSION PACKAGE
+  ===================================================== */
+
+  document
+    .getElementById(
+      "package12"
+    )
+    .addEventListener(
+      "click",
+      function(){
+
+        if(seconds <= 0)
+          return;
+
+
+        clearInterval(
+          interval
+        );
+
+        modal.remove();
+
+
+        openPaymentPopup(
+          "MONTHLY",
+          660000
+        );
+
+      }
+    );
+
+}
 /* =========================================================
    CLOSE MODAL
 ========================================================= */
