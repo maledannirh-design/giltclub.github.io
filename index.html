@@ -6765,8 +6765,14 @@ window.funMatchScheduleData = grouped;
               <div class="arena-info">
 
                 <span class="arena-type">
-                  FUN MATCH
-                </span>
+  ${
+    String(
+      window.bookingSessionType || "Mabar"
+    ).toLowerCase() === "drill"
+      ? "DRILL SESSION"
+      : "FUN MATCH"
+  }
+</span>
 
                 <h3>
                   ${arena.name}
@@ -6814,8 +6820,14 @@ window.funMatchScheduleData = grouped;
             <div class="arena-info">
 
               <span class="arena-type">
-                FUN MATCH
-              </span>
+  ${
+    String(
+      window.bookingSessionType || "Mabar"
+    ).toLowerCase() === "drill"
+      ? "DRILL SESSION"
+      : "FUN MATCH"
+  }
+</span>
 
               <h3>
                 ${arena.name}
