@@ -5249,55 +5249,66 @@ if(membershipSaving){
 
 
       /* =====================================================
-         MONTHLY PACKAGE
-         
-         Display price:
-         Rp180.000
-         
-         Actual package prices:
-         8x  = Rp480.000
-         12x = Rp660.000
-      ===================================================== */
+   MONTHLY PACKAGE
 
-      const monthly8Total =
-        480000;
+   Display price:
+   Rp180.000
 
+   Actual package prices:
+   8x  = Rp480.000
+   12x = Rp660.000
+===================================================== */
 
-      const monthly12Total =
-        660000;
+const monthly8Total =
+  480000;
 
 
-      const offerVisitorTotal =
-        document.getElementById(
-          "offerVisitorTotal"
-        );
+const monthly12Total =
+  660000;
 
 
-      if(offerVisitorTotal){
-
-        offerVisitorTotal.innerText =
-          "Rp"
-          + visitorTotal
-            .toLocaleString("id-ID");
-
-      }
+const offerVisitorTotal =
+  document.getElementById(
+    "offerVisitorTotal"
+  );
 
 
-      const offerMonthlyTotal =
-        document.getElementById(
-          "offerMonthlyTotal"
-        );
+if(offerVisitorTotal){
+
+  offerVisitorTotal.innerText =
+    "Rp"
+    + visitorTotal
+      .toLocaleString("id-ID");
+
+}
 
 
-     const monthlySeatTotal =
-  55000 * selectedSeats;
+const offerMonthlyTotal =
+  document.getElementById(
+    "offerMonthlyTotal"
+  );
+
+
+const monthlyBaseRate =
+  String(
+    window.bookingSessionType || "Mabar"
+  ).toLowerCase() === "drill"
+    ? 150000
+    : 55000;
+
+
+const monthlySeatTotal =
+  monthlyBaseRate * selectedSeats;
+
+
 const monthlySaving =
   Math.max(
     0,
     visitorTotal -
     monthlySeatTotal
   );
-      
+
+
 if(offerMonthlyTotal){
 
   offerMonthlyTotal.innerText =
@@ -5305,35 +5316,39 @@ if(offerMonthlyTotal){
     + monthlySeatTotal
       .toLocaleString("id-ID");
 
-const monthlyOfferPay =
-  document.getElementById(
-    "monthlyOfferPay"
-  );
 
-if(monthlyOfferPay){
-
-  monthlyOfferPay.innerText =
-    "Rp"
-    + monthlySeatTotal
-      .toLocaleString("id-ID");
-
-}
+  const monthlyOfferPay =
+    document.getElementById(
+      "monthlyOfferPay"
+    );
 
 
-const monthlyOfferSaving =
-  document.getElementById(
-    "monthlyOfferSaving"
-  );
+  if(monthlyOfferPay){
 
-if(monthlyOfferSaving){
+    monthlyOfferPay.innerText =
+      "Rp"
+      + monthlySeatTotal
+        .toLocaleString("id-ID");
 
-  monthlyOfferSaving.innerText =
-    "Rp"
-    + monthlySaving
-      .toLocaleString("id-ID");
+  }
 
-}
-  }   // ← TAMBAHKAN INI
+
+  const monthlyOfferSaving =
+    document.getElementById(
+      "monthlyOfferSaving"
+    );
+
+
+  if(monthlyOfferSaving){
+
+    monthlyOfferSaving.innerText =
+      "Rp"
+      + monthlySaving
+        .toLocaleString("id-ID");
+
+  }
+
+}   // ← TAMBAHKAN INI
 
       /* =====================================================
          RESET MEMBER SELECTED STATE
