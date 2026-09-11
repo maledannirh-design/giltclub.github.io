@@ -4006,7 +4006,7 @@ let selectedSeats = 1;
 
 let offerTimerInterval = null;
 
-let bookingSessionType = "Mabar";
+window.bookingSessionType = "Mabar";
 
 const arenaInfo = {
 
@@ -4064,12 +4064,13 @@ if(!card)
 
     e.preventDefault();
     e.stopPropagation();
-bookingSessionType =
+window.bookingSessionType =
   card.id === "drillSessionTrigger"
     ? "Drill"
     : "Mabar";
 
-    const bookingExperienceLabel =
+
+const bookingExperienceLabel =
   document.getElementById(
     "bookingExperienceLabel"
   );
@@ -4077,7 +4078,7 @@ bookingSessionType =
 if(bookingExperienceLabel){
 
   bookingExperienceLabel.innerText =
-    bookingSessionType === "Drill"
+    window.bookingSessionType === "Drill"
       ? "GMTC DRILL SESSION"
       : "GMTC EXPERIENCE";
 
@@ -4092,7 +4093,7 @@ const sessionTypeLabel =
 if(sessionTypeLabel){
 
   sessionTypeLabel.innerText =
-    bookingSessionType === "Drill"
+    window.bookingSessionType === "Drill"
       ? "DRILL SESSION"
       : "FUN MATCH";
 
@@ -5248,7 +5249,7 @@ if(membershipSaving){
       }
 
 
-      /* =====================================================
+/* =====================================================
    MONTHLY PACKAGE
 
    Display price:
@@ -6581,7 +6582,9 @@ if(
   String(s.sessionType || "")
     .trim()
     .toLowerCase()
-    !== bookingSessionType.toLowerCase()
+    !== String(
+  window.bookingSessionType || "Mabar"
+).toLowerCase()
 ){
   return;
 }
