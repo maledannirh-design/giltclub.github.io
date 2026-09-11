@@ -2830,7 +2830,10 @@ LEARN MORE →
 
 </a>
 
-<a href="drill-session.html" class="experience-card">
+<a
+  href="javascript:void(0);"
+  class="experience-card"
+  id="drillSessionTrigger">
 
 <img src="images/drill-session-cover.webp">
 
@@ -3462,7 +3465,9 @@ LEARN MORE →
 
       <div class="fun-match-header">
 
-        <span class="fun-match-eyebrow">
+        <span
+  class="fun-match-eyebrow"
+  id="bookingExperienceLabel">
           GMTC EXPERIENCE
         </span>
 
@@ -3559,7 +3564,9 @@ LEARN MORE →
 
       <div class="fun-match-header">
 
-        <span class="fun-match-eyebrow">
+        <span
+  class="fun-match-eyebrow"
+  id="sessionTypeLabel">
           FUN MATCH
         </span>
 
@@ -3999,6 +4006,8 @@ let selectedSeats = 1;
 
 let offerTimerInterval = null;
 
+let bookingSessionType = "Mabar";
+
 const arenaInfo = {
 
   BTS:
@@ -4045,15 +4054,49 @@ document.addEventListener(
   function(e){
 
     const card =
-      e.target.closest("#funMatchTrigger");
+  e.target.closest(
+    "#funMatchTrigger, #drillSessionTrigger"
+  );
 
-    if(!card)
-      return;
+if(!card)
+  return;
 
 
     e.preventDefault();
     e.stopPropagation();
+bookingSessionType =
+  card.id === "drillSessionTrigger"
+    ? "Drill"
+    : "Mabar";
 
+    const bookingExperienceLabel =
+  document.getElementById(
+    "bookingExperienceLabel"
+  );
+
+if(bookingExperienceLabel){
+
+  bookingExperienceLabel.innerText =
+    bookingSessionType === "Drill"
+      ? "GMTC DRILL SESSION"
+      : "GMTC EXPERIENCE";
+
+}
+
+
+const sessionTypeLabel =
+  document.getElementById(
+    "sessionTypeLabel"
+  );
+
+if(sessionTypeLabel){
+
+  sessionTypeLabel.innerText =
+    bookingSessionType === "Drill"
+      ? "DRILL SESSION"
+      : "FUN MATCH";
+
+}
 
     /* RESET */
 
@@ -4151,6 +4194,7 @@ function resetFunMatch(){
 
 
   showFunStep("funStepArena");
+  
 
 }
   
@@ -6516,16 +6560,16 @@ async function loadFunMatchSchedule(){
       };
 
 
-      /* ONLY MABAR */
+      /* ONLY CURRENT BOOKING SESSION TYPE */
 
-      if(
-        String(s.sessionType || "")
-          .trim()
-          .toLowerCase()
-          !== "mabar"
-      ){
-        return;
-      }
+if(
+  String(s.sessionType || "")
+    .trim()
+    .toLowerCase()
+    !== bookingSessionType.toLowerCase()
+){
+  return;
+}
 
 
       /* DATE REQUIRED */
