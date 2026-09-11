@@ -2716,6 +2716,186 @@ display:block;
   }
 
 }
+
+/* ==========================
+   GMTC CURRICULUM PROGRAMS
+========================== */
+
+.program-card{
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
+}
+
+.program-level{
+  font-size:12px;
+  letter-spacing:2px;
+  font-weight:600;
+  margin-bottom:14px;
+  opacity:.65;
+}
+
+.program-card h3{
+  font-size:28px;
+  margin-bottom:16px;
+}
+
+.program-card p{
+  line-height:1.7;
+  color:#777;
+}
+
+.program-meta{
+  margin-top:24px;
+  font-size:12px;
+  letter-spacing:2px;
+  font-weight:600;
+}
+
+.program-btn{
+  margin-top:24px;
+  padding:14px 18px;
+  border:1px solid #222;
+  background:transparent;
+  color:#222;
+  font-size:12px;
+  letter-spacing:1.5px;
+  cursor:pointer;
+  text-align:left;
+  transition:.25s ease;
+}
+
+.program-btn:hover{
+  background:#222;
+  color:#fff;
+}
+
+
+/* ==========================
+   CURRICULUM MODAL
+========================== */
+
+.gmc-curriculum-modal{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.gmc-curriculum-overlay{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,.72);
+}
+
+.gmc-curriculum-sheet{
+  position:relative;
+  z-index:2;
+  width:min(900px,100%);
+  max-height:90vh;
+  overflow-y:auto;
+  background:#fff;
+  padding:45px;
+  box-sizing:border-box;
+}
+
+.gmc-curriculum-close{
+  position:absolute;
+  top:18px;
+  right:20px;
+  border:none;
+  background:none;
+  font-size:30px;
+  cursor:pointer;
+}
+
+.gmc-curriculum-eyebrow{
+  font-size:11px;
+  letter-spacing:2px;
+  opacity:.6;
+  margin-bottom:12px;
+}
+
+.gmc-curriculum-title{
+  font-size:32px;
+  margin-bottom:8px;
+}
+
+.gmc-curriculum-subtitle{
+  font-size:15px;
+  color:#777;
+  margin-bottom:30px;
+}
+
+.gmc-curriculum-list{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.gmc-meet{
+  border:1px solid #ddd;
+  padding:18px;
+}
+
+.gmc-meet-number{
+  font-size:10px;
+  letter-spacing:2px;
+  opacity:.55;
+  margin-bottom:8px;
+}
+
+.gmc-meet-title{
+  font-size:15px;
+  font-weight:600;
+}
+
+.gmc-curriculum-description{
+  margin-top:40px;
+  padding-top:30px;
+  border-top:1px solid #ddd;
+  line-height:1.8;
+  color:#555;
+}
+
+.gmc-curriculum-description h3{
+  color:#222;
+  margin-bottom:18px;
+}
+
+.gmc-curriculum-description strong{
+  color:#222;
+}
+
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+  .gmc-curriculum-modal{
+    padding:0;
+  }
+
+  .gmc-curriculum-sheet{
+    width:100%;
+    height:100%;
+    max-height:none;
+    padding:35px 20px;
+  }
+
+  .gmc-curriculum-title{
+    font-size:25px;
+  }
+
+  .gmc-curriculum-list{
+    grid-template-columns:1fr;
+  }
+
+}
 /* ==========================
    end of css
 ========================== */
@@ -3357,214 +3537,92 @@ DISCOVER OUR DRILL →
 
 </section>
 
-<!-- =====================================================
-     PROGRAMS / GMTC DRILL
-===================================================== -->
+<!-- PROGRAMS -->
 
 <section id="programs">
 
   <h2 class="section-title">
-    GMTC Drill Session
+    GMTC DEVELOPMENT PROGRAMS
   </h2>
 
   <p class="section-sub">
-
-    We don't believe every tennis player should
-    train the same way.
-
-    <br><br>
-
-    GMTC Drill Session is built around three
-    different areas of development — how you learn,
-    how your body moves, and what your game actually needs.
-
+    Structured pathways designed to develop
+    better tennis players through progressive learning.
   </p>
 
 
   <div class="programs">
 
 
-    <!-- =================================================
-         01 — SKILL ACQUISITION
-    ================================================== -->
+    <!-- FOUNDATION -->
 
-    <div class="card">
+    <div class="card program-card">
+
+      <div class="program-level">
+        FOUNDATION PATHWAY
+      </div>
 
       <h3>
-        ⚡ Skill Acquisition
+        Newbie → Beginner
       </h3>
 
       <p>
-
-        <strong>
-          We don't teach you how to play.
-          We help you understand how to play.
-        </strong>
-
-        <br><br>
-
-        Every player learns differently.
-
-        We don't simply show you a technique,
-        feed you a ball and ask you to repeat it.
-
-        We help you understand what you are doing,
-        why you are doing it, and how the movement
-        can work for you.
-
-        <br><br>
-
-        The goal is not simply to make you
-        perform a movement.
-
-        The goal is to make you
-        <strong>understand the movement.</strong>
-
+        Build your tennis foundation through
+        movement, coordination, technique,
+        understanding and purposeful training.
       </p>
+
+      <div class="program-meta">
+        12 MEETS
+      </div>
+
+      <button
+        type="button"
+        class="program-btn"
+        onclick="openCurriculum('foundation')">
+
+        DISCOVER THE PATHWAY →
+
+      </button>
 
     </div>
 
 
-    <!-- =================================================
-         02 — BIOMECHANICS
-    ================================================== -->
+    <!-- DEVELOPMENT -->
 
-    <div class="card">
+    <div class="card program-card">
+
+      <div class="program-level">
+        DEVELOPMENT PATHWAY
+      </div>
 
       <h3>
-        🧬 Biomechanics
+        Beginner → Intermediate
       </h3>
 
       <p>
-
-        <strong>
-          We don't just feed you balls and make you repeat.
-          We study why you fail.
-        </strong>
-
-        <br><br>
-
-        Every player has a different body,
-        different movement patterns,
-        different energy and a different way
-        of understanding tennis.
-
-        <br><br>
-
-        Our drills look at how your body responds
-        to the subject being trained —
-        your balance, timing, movement,
-        positioning and response.
-
-        <br><br>
-
-        Instead of only asking,
-        <strong>"Can you do it?"</strong>
-
-        we want to understand
-        <strong>"Why can't you do it yet?"</strong>
-
+        Develop your technical, tactical,
+        athletic and mental game to become
+        a more complete tennis player.
       </p>
 
-    </div>
+      <div class="program-meta">
+        12 MEETS
+      </div>
 
+      <button
+        type="button"
+        class="program-btn"
+        onclick="openCurriculum('development')">
 
-    <!-- =================================================
-         03 — ATHLETIC DEVELOPMENT
-    ================================================== -->
+        DISCOVER THE PATHWAY →
 
-    <div class="card">
-
-      <h3>
-        🏃 Athletic Development
-      </h3>
-
-      <p>
-
-        <strong>
-          We don't ask you to run.
-          We teach you where to stop.
-        </strong>
-
-        <br><br>
-
-        Tennis is not simply about running
-        from one side of the court to another.
-
-        It's about moving efficiently,
-        arriving in the right position,
-        stopping at the right moment,
-        and being ready to hit the ball.
-
-        <br><br>
-
-        We train what
-        <strong>you need</strong> —
-        not what we think every tennis player
-        should be able to do.
-
-        <br><br>
-
-        Your movement should serve your game,
-        not the other way around.
-
-      </p>
+      </button>
 
     </div>
 
 
   </div>
-
-
-  <!-- =================================================
-       DRILL PHILOSOPHY
-  ================================================== -->
-
-  <div style="
-    max-width:900px;
-    margin:70px auto 0;
-    text-align:center;
-  ">
-
-    <h3 style="
-      font-size:30px;
-      margin-bottom:20px;
-    ">
-
-      TRAIN WHAT YOU NEED.
-
-      <br>
-
-      NOT WHAT EVERY TENNIS PLAYER NEEDS.
-
-    </h3>
-
-
-    <p style="
-      color:#aaa;
-      line-height:1.9;
-      font-size:15px;
-    ">
-
-      There is no single way to become
-      a better tennis player.
-
-      <br><br>
-
-      Your body is different.
-      Your learning process is different.
-      Your game is different.
-
-      <br><br>
-
-      <strong style="color:#fff;">
-        So your training should be different too.
-      </strong>
-
-    </p>
-
-  </div>
-
 
 </section>
 
@@ -7377,7 +7435,303 @@ if(productLink){
   );
 
 }
+/* =========================================================
+   GMTC CURRICULUM MODAL
+========================================================= */
 
+function openCurriculum(pathway){
+
+  const existing =
+    document.getElementById(
+      "gmcCurriculumModal"
+    );
+
+  if(existing)
+    existing.remove();
+
+
+  const foundation = [
+
+    "Tennis Foundations",
+
+    "Coordination & Ball Familiarity",
+
+    "Move Before You Hit",
+
+    "The Contact Point",
+
+    "Forehand & Backhand Fundamentals",
+
+    "7 Laws of Drill Basics",
+
+    "Consistency & Control",
+
+    "Footwork & Body Control",
+
+    "Serve & Return Foundations",
+
+    "From Drill to Rally",
+
+    "From Rally to Game",
+
+    "Becoming a Player — Assessment"
+
+  ];
+
+
+  const development = [
+
+    "Advanced Skill Acquisition",
+
+    "Biomechanics",
+
+    "Movement Efficiency",
+
+    "Tactical Development",
+
+    "Athletic Development",
+
+    "Match Intelligence",
+
+    "Mental Performance",
+
+    "Serve & Return Systems",
+
+    "Point Construction",
+
+    "Pattern Play & Decision Making",
+
+    "Competitive Preparation",
+
+    "Player Assessment & Development Plan"
+
+  ];
+
+
+  const isFoundation =
+    pathway === "foundation";
+
+
+  const meets =
+    isFoundation
+      ? foundation
+      : development;
+
+
+  const title =
+    isFoundation
+      ? "NEWBIE → BEGINNER"
+      : "BEGINNER → INTERMEDIATE";
+
+
+  const pathwayName =
+    isFoundation
+      ? "FOUNDATION PATHWAY"
+      : "DEVELOPMENT PATHWAY";
+
+
+  const description =
+    isFoundation
+
+      ? `
+        <h3>OUR CURRICULUM</h3>
+
+        <p>
+          Our curriculum is not built around simply
+          feeding balls and repeating movements.
+        </p>
+
+        <p>
+          At GMTC, we believe every player learns
+          differently. Your body, movement,
+          coordination, understanding and ability
+          to process the game are different from
+          everyone else's.
+        </p>
+
+        <p>
+          Our training is built around three core
+          development areas:
+        </p>
+
+        <p>
+          <strong>SKILL ACQUISITION</strong><br>
+          Understanding what you are doing,
+          why you are doing it, and how to apply it.
+        </p>
+
+        <p>
+          <strong>BIOMECHANICS</strong><br>
+          Understanding how your body moves,
+          responds and produces the shot.
+        </p>
+
+        <p>
+          <strong>ATHLETIC DEVELOPMENT</strong><br>
+          Learning how to move efficiently,
+          arrive in the right position,
+          and be ready for the next ball.
+        </p>
+
+        <p>
+          <strong>
+            TRAIN WHAT YOU NEED.<br>
+            NOT WHAT EVERY TENNIS PLAYER NEEDS.
+          </strong>
+        </p>
+      `
+
+      : `
+
+        <h3>OUR CURRICULUM</h3>
+
+        <p>
+          Moving from beginner to intermediate is
+          not simply about hitting harder or
+          learning more shots.
+        </p>
+
+        <p>
+          It is about developing the ability to
+          understand the game, make better decisions,
+          move more efficiently, and perform with
+          greater purpose.
+        </p>
+
+        <p>
+          The GMTC Development Pathway combines
+          <strong>
+            skill acquisition, biomechanics,
+            athletic development, tactical
+            understanding and match intelligence
+          </strong>
+          into one progressive learning system.
+        </p>
+
+        <p>
+          We don't train every player the same way.
+        </p>
+
+        <p>
+          <strong>
+            YOUR GAME IS DIFFERENT.<br>
+            YOUR TRAINING SHOULD BE DIFFERENT.
+          </strong>
+        </p>
+
+      `;
+
+
+  const modal =
+    document.createElement("div");
+
+  modal.id =
+    "gmcCurriculumModal";
+
+  modal.className =
+    "gmc-curriculum-modal";
+
+
+  modal.innerHTML = `
+
+    <div
+      class="gmc-curriculum-overlay"
+      id="gmcCurriculumOverlay">
+    </div>
+
+
+    <div class="gmc-curriculum-sheet">
+
+
+      <button
+        type="button"
+        class="gmc-curriculum-close"
+        id="closeCurriculum">
+
+        ×
+
+      </button>
+
+
+      <div class="gmc-curriculum-eyebrow">
+
+        ${pathwayName}
+
+      </div>
+
+
+      <div class="gmc-curriculum-title">
+
+        ${title}
+
+      </div>
+
+
+      <div class="gmc-curriculum-subtitle">
+
+        12 MEETS
+
+      </div>
+
+
+      <div class="gmc-curriculum-list">
+
+        ${meets.map((meet,index) => `
+
+          <div class="gmc-meet">
+
+            <div class="gmc-meet-number">
+
+              MEET ${String(index + 1).padStart(2,"0")}
+
+            </div>
+
+            <div class="gmc-meet-title">
+
+              ${meet}
+
+            </div>
+
+          </div>
+
+        `).join("")}
+
+      </div>
+
+
+      <div class="gmc-curriculum-description">
+
+        ${description}
+
+      </div>
+
+
+    </div>
+
+  `;
+
+
+  document.body.appendChild(modal);
+
+
+  document
+    .getElementById("closeCurriculum")
+    .addEventListener("click", () => {
+
+      modal.remove();
+
+    });
+
+
+  document
+    .getElementById("gmcCurriculumOverlay")
+    .addEventListener("click", () => {
+
+      modal.remove();
+
+    });
+
+}
   // akhir module script
 window.loadFunMatchSchedule = loadFunMatchSchedule;
 
