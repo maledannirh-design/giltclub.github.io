@@ -5831,6 +5831,41 @@ function openMonthlyPackageModal(){
   modal.id =
     "gmcMonthlyModal";
 
+
+  /* =====================================================
+     PACKAGE CONFIG
+  ===================================================== */
+
+  const isDrill =
+    String(
+      window.bookingSessionType || "Mabar"
+    ).toLowerCase() === "drill";
+
+
+  const package1Sessions =
+    isDrill ? 4 : 8;
+
+
+  const package1Price =
+    isDrill ? 600000 : 480000;
+
+
+  const package1Rate =
+    isDrill ? 150000 : 60000;
+
+
+  const package2Sessions =
+    isDrill ? 8 : 12;
+
+
+  const package2Price =
+    isDrill ? 1200000 : 660000;
+
+
+  const package2Rate =
+    isDrill ? 150000 : 55000;
+
+
   modal.innerHTML = `
 
     <div class="gmc-monthly-overlay">
@@ -5869,7 +5904,7 @@ function openMonthlyPackageModal(){
 
 
         <!-- =========================
-             8 SESSION CARD
+             PACKAGE 1
         ========================== -->
 
         <button
@@ -5878,22 +5913,22 @@ function openMonthlyPackageModal(){
           id="package8">
 
           <strong>
-            8 SESSIONS / MONTH
+            ${package1Sessions} SESSIONS / MONTH
           </strong>
 
           <span>
-            Rp480.000
+            Rp${package1Price.toLocaleString("id-ID")}
           </span>
 
           <small>
-            Rp60.000 / SESSION
+            Rp${package1Rate.toLocaleString("id-ID")} / SESSION
           </small>
 
         </button>
 
 
         <!-- =========================
-             12 SESSION CARD
+             PACKAGE 2
         ========================== -->
 
         <button
@@ -5902,15 +5937,15 @@ function openMonthlyPackageModal(){
           id="package12">
 
           <strong>
-            12 SESSIONS / MONTH
+            ${package2Sessions} SESSIONS / MONTH
           </strong>
 
           <span>
-            Rp660.000
+            Rp${package2Price.toLocaleString("id-ID")}
           </span>
 
           <small>
-            Rp55.000 / SESSION
+            Rp${package2Rate.toLocaleString("id-ID")} / SESSION
           </small>
 
         </button>
@@ -5926,7 +5961,6 @@ function openMonthlyPackageModal(){
   document.body.appendChild(
     modal
   );
-
 
   /* =====================================================
      10 MINUTE OFFER TIMER
