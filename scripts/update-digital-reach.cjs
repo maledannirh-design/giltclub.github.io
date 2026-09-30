@@ -41,7 +41,7 @@ async function main() {
     property,
     dateRanges: [
       {
-        startDate: "2000-01-01",
+        startDate: "2015-08-14",
         endDate: "today"
       }
     ],
