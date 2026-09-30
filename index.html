@@ -2336,30 +2336,379 @@ section{
   font-size:20px;
 }
 
-.digital-reach{
-  margin-top:60px;
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:20px;
+.digital-reach-section{
+  background:#050505;
+  overflow:hidden;
 }
 
-.reach-box{
-  border:1px solid #222;
-  padding:25px;
+.digital-reach-head{
   text-align:center;
 }
 
-.reach-box h4{
-  font-size:28px;
-  margin-bottom:10px;
+.digital-reach-kicker{
+  display:block;
+  color:#d5aa3d;
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:2.5px;
+  margin-bottom:8px;
+}
+
+.digital-reach-dashboard{
+  max-width:1180px;
+  margin:55px auto 0;
+  display:grid;
+  grid-template-columns:minmax(0,1.45fr) minmax(360px,.8fr);
+  gap:20px;
+}
+
+.reach-map-card,
+.reach-table-card{
+  border:1px solid #252525;
+  background:#090909;
+  border-radius:18px;
+  overflow:hidden;
+}
+
+.reach-map-card{
+  padding:22px;
+}
+
+.reach-panel-head{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:15px;
+  margin-bottom:15px;
+}
+
+.reach-panel-head.compact{
+  padding:20px 20px 14px;
+  margin:0;
+}
+
+.reach-panel-kicker{
+  display:block;
+  color:#777;
+  font-size:9px;
+  font-weight:800;
+  letter-spacing:1.8px;
+  margin-bottom:5px;
+}
+
+.reach-panel-head h3{
+  color:#fff;
+  font-size:18px;
+  margin:0;
+}
+
+.reach-live-badge{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  color:#d5aa3d;
+  font-size:9px;
+  font-weight:800;
+  letter-spacing:1.2px;
+  white-space:nowrap;
+}
+
+.reach-live-dot{
+  display:inline-block;
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#d5aa3d;
+  box-shadow:0 0 0 0 rgba(213,170,61,.55);
+  animation:reachLivePulse 1.6s infinite;
+}
+
+@keyframes reachLivePulse{
+  0%{box-shadow:0 0 0 0 rgba(213,170,61,.5)}
+  70%{box-shadow:0 0 0 7px rgba(213,170,61,0)}
+  100%{box-shadow:0 0 0 0 rgba(213,170,61,0)}
+}
+
+.reach-map{
+  position:relative;
+  width:100%;
+  aspect-ratio:2 / 1;
+  min-height:300px;
+  background:
+    radial-gradient(circle at 50% 50%,rgba(213,170,61,.06),transparent 58%),
+    #050505;
+  border:1px solid #171717;
+  border-radius:13px;
+  overflow:hidden;
+}
+
+.reach-map svg{
+  width:100%;
+  height:100%;
+  display:block;
+}
+
+.reach-continents path{
+  fill:#151515;
+  stroke:#252525;
+  stroke-width:1.5;
+}
+
+.reach-map-dot{
+  fill:#d5aa3d;
+  opacity:.9;
+  transition:transform .25s,opacity .25s;
+  transform-origin:center;
+}
+
+.reach-map-dot:hover{
+  opacity:1;
+  transform:scale(1.7);
+}
+
+.reach-live-map-dot{
+  fill:#fff;
+  stroke:#d5aa3d;
+  stroke-width:2;
+  animation:reachMapPulse 1.5s infinite;
+}
+
+@keyframes reachMapPulse{
+  0%,100%{opacity:.7}
+  50%{opacity:1}
+}
+
+.reach-map-footer{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  margin-top:10px;
+  color:#666;
+  font-size:8px;
+  font-weight:700;
+  letter-spacing:1px;
+}
+
+.reach-map-footer span{
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+
+.reach-legend-dot{
+  width:6px;
+  height:6px;
+  display:inline-block;
+  border-radius:50%;
+  background:#d5aa3d;
+}
+
+.reach-legend-dot.live{
+  background:#fff;
+  border:1px solid #d5aa3d;
+}
+
+.reach-side{
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+}
+
+.reach-stat-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+
+.reach-stat-card{
+  min-height:135px;
+  border:1px solid #252525;
+  background:#090909;
+  border-radius:18px;
+  padding:20px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+}
+
+.reach-stat-card.sponsor{
+  border-color:#3a3120;
+}
+
+.reach-stat-card.live{
+  border-color:#292929;
+}
+
+.reach-stat-label{
+  color:#777;
+  font-size:8px;
+  font-weight:800;
+  letter-spacing:1.6px;
+}
+
+.reach-stat-label .reach-live-dot{
+  margin-right:5px;
+  vertical-align:middle;
+}
+
+.reach-stat-card strong{
+  display:block;
+  color:#fff;
+  font-size:32px;
+  line-height:1;
+  margin:12px 0;
+}
+
+.reach-stat-card.sponsor strong{
+  color:#d5aa3d;
+}
+
+.reach-stat-card small{
+  color:#555;
+  font-size:8px;
+  font-weight:700;
+  letter-spacing:1px;
+}
+
+#digitalLiveCountries{
+  color:#888;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.reach-table-card{
+  flex:1;
+  min-height:300px;
+}
+
+.reach-table-wrap{
+  height:290px;
+  overflow:hidden;
+  border-top:1px solid #171717;
+}
+
+.reach-table{
+  width:100%;
+  border-collapse:collapse;
+  table-layout:fixed;
+}
+
+.reach-table th{
+  padding:10px 12px;
+  color:#555;
+  font-size:7px;
+  letter-spacing:1px;
+  text-align:left;
+  background:#070707;
+  position:sticky;
+  top:0;
+  z-index:2;
+}
+
+.reach-table th:nth-child(n+2),
+.reach-table td:nth-child(n+2){
+  text-align:right;
+}
+
+.reach-table td{
+  padding:11px 12px;
+  border-top:1px solid #151515;
+  color:#aaa;
+  font-size:10px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.reach-table td:first-child{
+  color:#fff;
+  font-weight:700;
+}
+
+.reach-table td:nth-child(2){
+  color:#d5aa3d;
+  font-weight:700;
+}
+
+.reach-empty{
+  text-align:center !important;
+  color:#555 !important;
+  padding:40px 12px !important;
+  letter-spacing:1px;
+}
+
+.reach-row-enter{
+  animation:reachRowEnter .45s ease both;
+}
+
+@keyframes reachRowEnter{
+  from{opacity:0;transform:translateY(8px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+.reach-status{
+  color:#555;
+  font-size:7px;
+  font-weight:800;
+  letter-spacing:1px;
+  white-space:nowrap;
+}
+
+.reach-status.ready{
+  color:#d5aa3d;
 }
 
 @media(max-width:900px){
-
-  .digital-reach{
-    grid-template-columns:1fr 1fr;
+  .digital-reach-dashboard{
+    grid-template-columns:1fr;
   }
 
+  .reach-map{
+    min-height:0;
+  }
+
+  .reach-side{
+    gap:15px;
+  }
+}
+
+@media(max-width:520px){
+  .digital-reach-dashboard{
+    margin-top:35px;
+  }
+
+  .reach-map-card{
+    padding:14px;
+  }
+
+  .reach-panel-head h3{
+    font-size:15px;
+  }
+
+  .reach-stat-grid{
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+  }
+
+  .reach-stat-card{
+    min-height:120px;
+    padding:15px;
+  }
+
+  .reach-stat-card strong{
+    font-size:27px;
+  }
+
+  .reach-table-wrap{
+    height:270px;
+  }
+
+  .reach-table th,
+  .reach-table td{
+    padding-left:8px;
+    padding-right:8px;
+  }
 }
 
 /* ==========================
@@ -4316,32 +4665,126 @@ DISCOVER OUR DRILL →
 
 <!-- DIGITAL REACH -->
 
-<section>
+<section class="digital-reach-section">
 
-  <h2 class="section-title">
-    Digital Reach
-  </h2>
+  <div class="digital-reach-head">
+    <span class="digital-reach-kicker">GMTC DIGITAL REACH</span>
 
-  <div class="digital-reach">
+    <h2 class="section-title">
+      WORLD REACH
+    </h2>
 
-    <div class="reach-box">
-      <h4 id="weeklyVisits">0</h4>
-      <p>Weekly Visits</p>
+    <p class="section-sub">
+      A lifetime view of where GMTC visitors come from, powered by Google Analytics 4.
+    </p>
+  </div>
+
+  <div class="digital-reach-dashboard">
+
+    <div class="reach-map-card">
+
+      <div class="reach-panel-head">
+        <div>
+          <span class="reach-panel-kicker">GLOBAL FOOTPRINT</span>
+          <h3>Visitors Around The World</h3>
+        </div>
+
+        <div class="reach-live-badge">
+          <span class="reach-live-dot"></span>
+          LIVE
+        </div>
+      </div>
+
+      <div class="reach-map">
+        <svg id="reachWorldMap" viewBox="0 0 1000 500" role="img" aria-label="GMTC world reach map">
+          <g class="reach-continents">
+            <path d="M72 106 L170 62 L247 78 L286 125 L255 170 L207 187 L177 232 L133 207 L112 173 L75 157 Z"></path>
+            <path d="M273 227 L329 248 L327 302 L304 354 L275 417 L245 377 L231 326 L247 278 Z"></path>
+            <path d="M397 101 L470 72 L551 78 L625 87 L708 82 L801 112 L868 153 L842 198 L771 205 L701 185 L637 180 L567 161 L498 171 L454 153 Z"></path>
+            <path d="M470 204 L531 199 L584 228 L607 283 L580 349 L548 392 L505 354 L474 303 L449 256 Z"></path>
+            <path d="M758 316 L819 300 L881 330 L899 363 L858 398 L793 387 L753 354 Z"></path>
+            <path d="M889 235 L927 221 L946 245 L925 267 L894 259 Z"></path>
+          </g>
+
+          <g id="reachMapDots"></g>
+          <g id="reachLiveDots"></g>
+        </svg>
+      </div>
+
+      <div class="reach-map-footer">
+        <span><i class="reach-legend-dot"></i> LIFETIME VISITORS</span>
+        <span><i class="reach-legend-dot live"></i> LIVE NOW</span>
+      </div>
+
     </div>
 
-    <div class="reach-box">
-      <h4 id="uniqueVisitors">0</h4>
-      <p>Unique Visitors</p>
-    </div>
+    <div class="reach-side">
 
-    <div class="reach-box">
-      <h4 id="pageViews">0</h4>
-      <p>Page Views</p>
-    </div>
+      <div class="reach-stat-grid">
 
-    <div class="reach-box">
-      <h4 id="sponsorClicks">0</h4>
-      <p>Sponsor Clicks</p>
+        <div class="reach-stat-card sponsor">
+          <span class="reach-stat-label">SPONSOR CLICKS</span>
+          <strong id="digitalSponsorClicks">0</strong>
+          <small>LIFETIME</small>
+        </div>
+
+        <div class="reach-stat-card live">
+          <span class="reach-stat-label">
+            <span class="reach-live-dot"></span>
+            LIVE VISITORS
+          </span>
+
+          <strong id="digitalLiveVisitors">0</strong>
+
+          <small id="digitalLiveCountries">
+            NO ACTIVE VISITORS
+          </small>
+        </div>
+
+      </div>
+
+      <div class="reach-table-card">
+
+        <div class="reach-panel-head compact">
+
+          <div>
+            <span class="reach-panel-kicker">LIFETIME COUNTRY DATA</span>
+            <h3>Digital Footprint</h3>
+          </div>
+
+          <span id="digitalReachStatus" class="reach-status">
+            CONNECTING...
+          </span>
+
+        </div>
+
+        <div class="reach-table-wrap">
+
+          <table class="reach-table">
+
+            <thead>
+              <tr>
+                <th>COUNTRY</th>
+                <th>NEW USERS</th>
+                <th>ENGAGEMENT</th>
+                <th>EVENTS</th>
+              </tr>
+            </thead>
+
+            <tbody id="digitalReachTableBody">
+              <tr>
+                <td colspan="4" class="reach-empty">
+                  CONNECTING TO GA4...
+                </td>
+              </tr>
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
     </div>
 
   </div>
@@ -8048,6 +8491,357 @@ document.addEventListener(
 
   }
 );
+
+// =========================================================
+// GMTC DIGITAL REACH — GA4 + FIRESTORE SPONSOR CLICKS
+// =========================================================
+
+const GMTC_DIGITAL_REACH_ENDPOINT =
+  "https://asia-southeast1-giltianappsmobile.cloudfunctions.net/getDigitalReach";
+
+const GMTC_COUNTRY_COORDS = {
+  ID:[-2.5,118], US:[37.1,-95.7], IN:[22.6,79], SE:[62,15],
+  DE:[51.2,10.4], CN:[35.9,104.2], JP:[36.2,138.3], CA:[56.1,-106.3],
+  IE:[53.4,-8.2], GB:[55.4,-3.4], FR:[46.2,2.2], NL:[52.1,5.3],
+  BE:[50.8,4.5], CH:[46.8,8.2], AT:[47.5,14.5], IT:[41.9,12.6],
+  ES:[40.5,-3.7], PT:[39.4,-8.2], NO:[60.5,8.5], DK:[56.3,9.5],
+  FI:[64.0,26], PL:[51.9,19.1], CZ:[49.8,15.5], AU:[-25.3,133.8],
+  NZ:[-40.9,174.9], SG:[1.35,103.8], MY:[4.2,101.9], TH:[15.9,100.9],
+  VN:[14.1,108.3], PH:[12.9,121.8], KR:[35.9,127.8], TW:[23.7,120.9],
+  HK:[22.3,114.2], AE:[23.4,53.8], SA:[23.9,45.1], QA:[25.3,51.2],
+  TR:[38.9,35.2], PK:[30.4,69.3], BD:[23.7,90.4], LK:[7.9,80.8],
+  BR:[-10.8,-51.9], AR:[-38.4,-63.6], CL:[-35.7,-71.5], MX:[23.6,-102.5],
+  CO:[4.6,-74.3], PE:[-9.2,-75], ZA:[-30.6,22.9], NG:[9.1,8.7],
+  EG:[26.8,30.8], KE:[0.2,37.9]
+};
+
+function reachProject(lat,lon){
+  return {
+    x:((Number(lon)+180)/360)*1000,
+    y:((90-Number(lat))/180)*500
+  };
+}
+
+function reachCountryCode(row){
+  return String(
+    row.countryCode || row.countryId || ""
+  ).trim().toUpperCase();
+}
+
+function reachCountryName(row){
+  return String(
+    row.country || ""
+  ).trim() || "UNKNOWN";
+}
+
+function renderReachMap(lifetimeRows,liveRows){
+  const lifetimeLayer =
+    document.getElementById("reachMapDots");
+
+  const liveLayer =
+    document.getElementById("reachLiveDots");
+
+  if(!lifetimeLayer || !liveLayer) return;
+
+  lifetimeLayer.innerHTML =
+    lifetimeRows.map(row => {
+
+      const code =
+        reachCountryCode(row);
+
+      const coords =
+        GMTC_COUNTRY_COORDS[code];
+
+      if(!coords) return "";
+
+      const p =
+        reachProject(
+          coords[0],
+          coords[1]
+        );
+
+      const users =
+        Number(row.newUsers || 0);
+
+      return `
+        <circle
+          class="reach-map-dot"
+          cx="${p.x.toFixed(1)}"
+          cy="${p.y.toFixed(1)}"
+          r="${users > 100 ? 5 : users > 25 ? 4 : 3}">
+          <title>
+            ${reachCountryName(row)}
+            —
+            ${users.toLocaleString("en-US")}
+            new users
+          </title>
+        </circle>
+      `;
+
+    }).join("");
+
+  liveLayer.innerHTML =
+    liveRows.map(row => {
+
+      const code =
+        reachCountryCode(row);
+
+      const coords =
+        GMTC_COUNTRY_COORDS[code];
+
+      if(!coords) return "";
+
+      const p =
+        reachProject(
+          coords[0],
+          coords[1]
+        );
+
+      return `
+        <circle
+          class="reach-live-map-dot"
+          cx="${p.x.toFixed(1)}"
+          cy="${p.y.toFixed(1)}"
+          r="5">
+          <title>
+            ${reachCountryName(row)}
+            — live visitor
+          </title>
+        </circle>
+      `;
+
+    }).join("");
+}
+
+function renderReachTable(rows){
+  const body =
+    document.getElementById(
+      "digitalReachTableBody"
+    );
+
+  if(!body) return;
+
+  if(!rows.length){
+    body.innerHTML = `
+      <tr>
+        <td colspan="4" class="reach-empty">
+          NO COUNTRY DATA
+        </td>
+      </tr>
+    `;
+    return;
+  }
+
+  body.innerHTML =
+    rows.map((row,index) => {
+
+      const engagement =
+        Number(
+          row.engagementRate || 0
+        ) * 100;
+
+      return `
+        <tr
+          class="reach-row-enter"
+          style="animation-delay:${Math.min(index,10)*35}ms">
+
+          <td>${reachCountryName(row)}</td>
+
+          <td>
+            ${Number(
+              row.newUsers || 0
+            ).toLocaleString("en-US")}
+          </td>
+
+          <td>${engagement.toFixed(1)}%</td>
+
+          <td>
+            ${Number(
+              row.eventCount || 0
+            ).toLocaleString("en-US")}
+          </td>
+
+        </tr>
+      `;
+
+    }).join("");
+}
+
+function renderLiveVisitors(rows){
+  const countEl =
+    document.getElementById(
+      "digitalLiveVisitors"
+    );
+
+  const countriesEl =
+    document.getElementById(
+      "digitalLiveCountries"
+    );
+
+  if(!countEl || !countriesEl) return;
+
+  const total =
+    rows.reduce(
+      (sum,row) =>
+        sum + Number(
+          row.activeUsers || 0
+        ),
+      0
+    );
+
+  const countries =
+    [...new Set(
+      rows
+        .filter(row =>
+          Number(row.activeUsers || 0) > 0
+        )
+        .map(reachCountryName)
+    )];
+
+  countEl.innerText =
+    total.toLocaleString("en-US");
+
+  countriesEl.innerText =
+    countries.length
+      ? countries.join(" · ").toUpperCase()
+      : "NO ACTIVE VISITORS";
+}
+
+async function loadDigitalSponsorClicks(){
+  const target =
+    document.getElementById(
+      "digitalSponsorClicks"
+    );
+
+  if(!target) return;
+
+  try{
+    const statsRef =
+      doc(
+        db,
+        "websiteStats",
+        "Summary"
+      );
+
+    const snap =
+      await getDoc(statsRef);
+
+    const data =
+      snap.exists()
+        ? snap.data()
+        : {};
+
+    target.innerText =
+      Number(
+        data.sponsorClicks || 0
+      ).toLocaleString("en-US");
+
+  }catch(error){
+
+    console.error(
+      "Digital Reach sponsor clicks error:",
+      error
+    );
+
+    target.innerText = "—";
+
+  }
+}
+
+async function loadDigitalReach(){
+
+  const status =
+    document.getElementById(
+      "digitalReachStatus"
+    );
+
+  if(!status) return;
+
+  await loadDigitalSponsorClicks();
+
+  try{
+
+    const response =
+      await fetch(
+        GMTC_DIGITAL_REACH_ENDPOINT,
+        {
+          cache:"no-store"
+        }
+      );
+
+    if(!response.ok){
+      throw new Error(
+        `GA4 endpoint returned ${response.status}`
+      );
+    }
+
+    const payload =
+      await response.json();
+
+    const lifetimeRows =
+      Array.isArray(payload.lifetime)
+        ? payload.lifetime
+        : [];
+
+    const liveRows =
+      Array.isArray(payload.realtime)
+        ? payload.realtime
+        : [];
+
+    renderReachMap(
+      lifetimeRows,
+      liveRows
+    );
+
+    renderReachTable(
+      lifetimeRows
+    );
+
+    renderLiveVisitors(
+      liveRows
+    );
+
+    status.innerText = "LIVE";
+    status.classList.add("ready");
+
+  }catch(error){
+
+    console.error(
+      "Digital Reach GA4 error:",
+      error
+    );
+
+    status.innerText =
+      "GA4 NOT CONNECTED";
+
+    const body =
+      document.getElementById(
+        "digitalReachTableBody"
+      );
+
+    if(body){
+      body.innerHTML = `
+        <tr>
+          <td colspan="4" class="reach-empty">
+            GA4 DATA API CONNECTION REQUIRED
+          </td>
+        </tr>
+      `;
+    }
+
+    renderLiveVisitors([]);
+
+  }
+
+}
+
+await loadDigitalReach();
+
+setInterval(
+  loadDigitalReach,
+  60000
+);
+
 
 // =========================
 // WEBSITE VISIT TRACKING
