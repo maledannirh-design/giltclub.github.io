@@ -1,5 +1,110 @@
 {
-  "lifetime": [],
-  "realtime": [],
-  "generatedAt": null
+  "lifetime": [
+    {
+      "country": "Indonesia",
+      "countryCode": "ID",
+      "newUsers": 78,
+      "engagementRate": 0.49169435215946844,
+      "eventCount": 1649
+    },
+    {
+      "country": "United States",
+      "countryCode": "US",
+      "newUsers": 14,
+      "engagementRate": 0.14285714285714285,
+      "eventCount": 45
+    },
+    {
+      "country": "India",
+      "countryCode": "IN",
+      "newUsers": 10,
+      "engagementRate": 0,
+      "eventCount": 30
+    },
+    {
+      "country": "Sweden",
+      "countryCode": "SE",
+      "newUsers": 5,
+      "engagementRate": 0.2,
+      "eventCount": 17
+    },
+    {
+      "country": "Germany",
+      "countryCode": "DE",
+      "newUsers": 4,
+      "engagementRate": 0.25,
+      "eventCount": 14
+    },
+    {
+      "country": "Canada",
+      "countryCode": "CA",
+      "newUsers": 1,
+      "engagementRate": 1,
+      "eventCount": 11
+    },
+    {
+      "country": "China",
+      "countryCode": "CN",
+      "newUsers": 1,
+      "engagementRate": 0,
+      "eventCount": 3
+    },
+    {
+      "country": "Ireland",
+      "countryCode": "IE",
+      "newUsers": 1,
+      "engagementRate": 1,
+      "eventCount": 4
+    },
+    {
+      "country": "Japan",
+      "countryCode": "JP",
+      "newUsers": 1,
+      "engagementRate": 1,
+      "eventCount": 4
+    },
+    {
+      "country": "Netherlands",
+      "countryCode": "NL",
+      "newUsers": 1,
+      "engagementRate": 1,
+      "eventCount": 6
+    },
+    {
+      "country": "New Zealand",
+      "countryCode": "NZ",
+      "newUsers": 1,
+      "engagementRate": 1,
+      "eventCount": 5
+    },
+    {
+      "country": "Philippines",
+      "countryCode": "PH",
+      "newUsers": 1,
+      "engagementRate": 1,
+      "eventCount": 11
+    },
+    {
+      "country": "United Arab Emirates",
+      "countryCode": "AE",
+      "newUsers": 1,
+      "engagementRate": 1,
+      "eventCount": 6
+    },
+    {
+      "country": "United Kingdom",
+      "countryCode": "GB",
+      "newUsers": 1,
+      "engagementRate": 0,
+      "eventCount": 4
+    }
+  ],
+  "realtime": [
+    {
+      "country": "Indonesia",
+      "countryCode": "ID",
+      "activeUsers": 1
+    }
+  ],
+  "generatedAt": "2026-09-30T14:07:38.509Z"
 }
