@@ -4843,7 +4843,7 @@ DISCOVER OUR DRILL →
       <button
         type="button"
         class="program-btn"
-        onclick="openCurriculum('foundation')">
+        data-curriculum="foundation">
 
         DISCOVER THE PATHWAY →
 
@@ -4877,7 +4877,7 @@ DISCOVER OUR DRILL →
       <button
         type="button"
         class="program-btn"
-        onclick="openCurriculum('development')">
+        data-curriculum="development">
 
         DISCOVER THE PATHWAY →
 
@@ -9465,6 +9465,21 @@ window.openCurriculum = function(pathway){
     });
 
 }
+  // BIND CURRICULUM BUTTONS
+  document
+    .querySelectorAll("[data-curriculum]")
+    .forEach(button => {
+
+      button.addEventListener("click", () => {
+
+        window.openCurriculum(
+          button.dataset.curriculum
+        );
+
+      });
+
+    });
+
   // akhir module script
 window.loadFunMatchSchedule = loadFunMatchSchedule;
 
