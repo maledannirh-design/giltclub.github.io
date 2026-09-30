@@ -109,6 +109,9 @@ nav a{
 
   text-align:center;
   z-index:10;
+
+  /* DESKTOP — MOVE HERO COPY DOWN SLIGHTLY */
+  transform:translateY(8%);
 }
 
 .hero h1{
@@ -2762,14 +2765,15 @@ footer{
     display:none;
   }
 
-  /* HERO MOBILE — TEXT ONLY IN THE BOTTOM 20% */
+  /* HERO MOBILE — RAISED SLIGHTLY SO BUTTON STAYS VISIBLE */
   .hero-content{
     top:auto;
     bottom:0;
-    height:20%;
+    height:25%;
     padding:0 18px;
     box-sizing:border-box;
     justify-content:center;
+    transform:none;
   }
 
   .hero h1{
