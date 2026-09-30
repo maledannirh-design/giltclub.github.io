@@ -9465,24 +9465,170 @@ window.openCurriculum = function(pathway){
     });
 
 }
-  // BIND CURRICULUM BUTTONS
-  document
-    .querySelectorAll("[data-curriculum]")
-    .forEach(button => {
-
-      button.addEventListener("click", () => {
-
-        window.openCurriculum(
-          button.dataset.curriculum
-        );
-
-      });
-
-    });
-
   // akhir module script
 window.loadFunMatchSchedule = loadFunMatchSchedule;
 
+<script>
+/* =========================================================
+   GMTC CURRICULUM BUTTON BRIDGE
+   Keeps DISCOVER THE PATHWAY independent from module flow.
+========================================================= */
+
+(function(){
+
+  const foundation = [
+    "Tennis Foundations",
+    "Coordination & Ball Familiarity",
+    "Move Before You Hit",
+    "The Contact Point",
+    "Forehand & Backhand Fundamentals",
+    "7 Laws of Drill Basics",
+    "Consistency & Control",
+    "Footwork & Body Control",
+    "Serve & Return Foundations",
+    "From Drill to Rally",
+    "From Rally to Game",
+    "Becoming a Player — Assessment"
+  ];
+
+  const development = [
+    "Advanced Skill Acquisition",
+    "Biomechanics",
+    "Movement Efficiency",
+    "Tactical Development",
+    "Athletic Development",
+    "Match Intelligence",
+    "Mental Performance",
+    "Serve & Return Systems",
+    "Point Construction",
+    "Pattern Play & Decision Making",
+    "Competitive Preparation",
+    "Player Assessment & Development Plan"
+  ];
+
+  function fallbackCurriculum(pathway){
+
+    const isFoundation =
+      pathway === "foundation";
+
+    const meets =
+      isFoundation
+        ? foundation
+        : development;
+
+    const title =
+      isFoundation
+        ? "NEWBIE → BEGINNER"
+        : "BEGINNER → INTERMEDIATE";
+
+    const pathwayName =
+      isFoundation
+        ? "FOUNDATION PATHWAY"
+        : "DEVELOPMENT PATHWAY";
+
+    const modal =
+      document.createElement("div");
+
+    modal.id = "gmcCurriculumModal";
+    modal.className = "gmc-curriculum-modal";
+
+    modal.innerHTML = `
+      <div
+        class="gmc-curriculum-overlay"
+        data-curriculum-close>
+      </div>
+
+      <div class="gmc-curriculum-sheet">
+
+        <button
+          type="button"
+          class="gmc-curriculum-close"
+          data-curriculum-close>
+          ×
+        </button>
+
+        <div class="gmc-curriculum-eyebrow">
+          ${pathwayName}
+        </div>
+
+        <div class="gmc-curriculum-title">
+          ${title}
+        </div>
+
+        <div class="gmc-curriculum-subtitle">
+          12 MEETS
+        </div>
+
+        <div class="gmc-curriculum-list">
+          ${meets.map((meet,index) => `
+            <div class="gmc-meet">
+              <div class="gmc-meet-number">
+                MEET ${String(index + 1).padStart(2,"0")}
+              </div>
+              <div class="gmc-meet-title">
+                ${meet}
+              </div>
+            </div>
+          `).join("")}
+        </div>
+
+      </div>
+    `;
+
+    document.body.appendChild(modal);
+
+    modal
+      .querySelectorAll("[data-curriculum-close]")
+      .forEach(el => {
+        el.addEventListener(
+          "click",
+          () => modal.remove()
+        );
+      });
+  }
+
+  document.addEventListener("click", function(e){
+
+    const button =
+      e.target.closest("[data-curriculum]");
+
+    if(button){
+
+      e.preventDefault();
+      e.stopPropagation();
+
+      const pathway =
+        button.getAttribute("data-curriculum");
+
+      if(
+        typeof window.openCurriculum === "function"
+      ){
+        window.openCurriculum(pathway);
+      }else{
+        fallbackCurriculum(pathway);
+      }
+
+      return;
+    }
+
+    const close =
+      e.target.closest("[data-curriculum-close]");
+
+    if(close){
+
+      const modal =
+        document.getElementById(
+          "gmcCurriculumModal"
+        );
+
+      if(modal)
+        modal.remove();
+
+    }
+
+  });
+
+})();
 </script>
 </body>
 </html>
