@@ -7463,7 +7463,9 @@ import {
   increment,
   serverTimestamp,
   collection,
-  getDocs
+  getDocs,
+  query,
+  where
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 import { db } from "./firebase-config.js";
@@ -8042,11 +8044,14 @@ document.addEventListener(
 
 async function trackWebsiteVisit(){
 
-  let visitorId = localStorage.getItem("gmtcVisitorId");
+  let visitorId =
+    localStorage.getItem("gmtcVisitorId");
+
 
   if(!visitorId){
 
-    visitorId = crypto.randomUUID();
+    visitorId =
+      crypto.randomUUID();
 
     localStorage.setItem(
       "gmtcVisitorId",
@@ -8055,66 +8060,116 @@ async function trackWebsiteVisit(){
 
   }
 
+
   const visitorRef =
-    doc(db, "websiteVisitors", visitorId);
+    doc(
+      db,
+      "websiteVisitors",
+      visitorId
+    );
+
 
   const visitorSnap =
     await getDoc(visitorRef);
 
-  const statsRef =
-    doc(db, "websiteStats", "Summary");
 
+  const statsRef =
+    doc(
+      db,
+      "websiteStats",
+      "Summary"
+    );
+
+
+  /* =========================================
+     EVERY PAGE LOAD = ONE VISIT LOG
+     Used for rolling 7-day Weekly Visits
+  ========================================= */
+
+  const visitLogRef =
+    doc(
+      collection(
+        db,
+        "websiteVisitLogs"
+      )
+    );
+
+
+  await setDoc(
+    visitLogRef,
+    {
+
+      visitorId:
+        visitorId,
+
+      createdAt:
+        serverTimestamp()
+
+    }
+  );
+
+
+  /* =========================================
+     LIFETIME VISITOR / PAGE VIEW STATS
+  ========================================= */
 
   if(!visitorSnap.exists()){
 
-    await setDoc(visitorRef, {
+    await setDoc(
+      visitorRef,
+      {
 
-      firstVisit:
-        serverTimestamp(),
+        firstVisit:
+          serverTimestamp(),
 
-      lastVisit:
-        serverTimestamp(),
+        lastVisit:
+          serverTimestamp(),
 
-      visitCount: 1
+        visitCount:
+          1
 
-    });
+      }
+    );
 
 
-    await updateDoc(statsRef, {
+    await updateDoc(
+      statsRef,
+      {
 
-      totalVisits:
-        increment(1),
+        uniqueVisitors:
+          increment(1),
 
-      uniqueVisitors:
-        increment(1),
+        pageViews:
+          increment(1)
 
-      pageViews:
-        increment(1)
-
-    });
+      }
+    );
 
   }else{
 
-    await updateDoc(visitorRef, {
+    await updateDoc(
+      visitorRef,
+      {
 
-      lastVisit:
-        serverTimestamp(),
+        lastVisit:
+          serverTimestamp(),
 
-      visitCount:
-        increment(1)
+        visitCount:
+          increment(1)
 
-    });
+      }
+    );
 
 
-    await updateDoc(statsRef, {
+    await updateDoc(
+      statsRef,
+      {
 
-      totalVisits:
-        increment(1),
+        pageViews:
+          increment(1)
 
-      pageViews:
-        increment(1)
-
-    });
+      }
+    );
 
   }
 
@@ -8128,15 +8183,22 @@ async function trackWebsiteVisit(){
 async function trackSponsorClick(){
 
   const statsRef =
-    doc(db, "websiteStats", "Summary");
+    doc(
+      db,
+      "websiteStats",
+      "Summary"
+    );
 
 
-  await updateDoc(statsRef, {
+  await updateDoc(
+    statsRef,
+    {
 
-    sponsorClicks:
-      increment(1)
+      sponsorClicks:
+        increment(1)
 
-  });
+    }
+  );
 
 }
 
@@ -8148,7 +8210,11 @@ async function trackSponsorClick(){
 async function loadWebsiteStats(){
 
   const statsRef =
-    doc(db, "websiteStats", "Summary");
+    doc(
+      db,
+      "websiteStats",
+      "Summary"
+    );
 
 
   const snap =
@@ -8162,11 +8228,47 @@ async function loadWebsiteStats(){
     snap.data();
 
 
+  /* =========================================
+     WEEKLY VISITS
+     Rolling 7 days from now
+  ========================================= */
+
+  const sevenDaysAgo =
+    new Date(
+      Date.now() -
+      (7 * 24 * 60 * 60 * 1000)
+    );
+
+
+  const weeklyQuery =
+    query(
+      collection(
+        db,
+        "websiteVisitLogs"
+      ),
+      where(
+        "createdAt",
+        ">=",
+        sevenDaysAgo
+      )
+    );
+
+
+  const weeklySnap =
+    await getDocs(
+      weeklyQuery
+    );
+
+
   document.getElementById(
     "weeklyVisits"
   ).innerText =
-    data.totalVisits || 0;
+    weeklySnap.size || 0;
 
+
+  /* =========================================
+     LIFETIME UNIQUE VISITORS
+  ========================================= */
 
   document.getElementById(
     "uniqueVisitors"
@@ -8174,11 +8276,19 @@ async function loadWebsiteStats(){
     data.uniqueVisitors || 0;
 
 
+  /* =========================================
+     LIFETIME PAGE VIEWS
+  ========================================= */
+
   document.getElementById(
     "pageViews"
   ).innerText =
     data.pageViews || 0;
 
+
+  /* =========================================
+     LIFETIME SPONSOR CLICKS
+  ========================================= */
 
   document.getElementById(
     "sponsorClicks"
@@ -8192,14 +8302,14 @@ async function loadWebsiteStats(){
 // START VISIT TRACKING
 // =========================
 
-trackWebsiteVisit();
+await trackWebsiteVisit();
 
 
 // =========================
 // LOAD CURRENT STATS
 // =========================
 
-loadWebsiteStats();
+await loadWebsiteStats();
 
 
 // =========================
@@ -8210,18 +8320,25 @@ document
   .querySelectorAll(".sponsor-link")
   .forEach(link => {
 
-    link.addEventListener("click", function(){
+    link.addEventListener(
+      "click",
+      function(){
 
-      trackSponsorClick();
+        trackSponsorClick();
 
-    });
+      }
+    );
 
   });
 
 
 // PRODUCT SPONSOR LINK
+
 const productLink =
-  document.getElementById("productLink");
+  document.getElementById(
+    "productLink"
+  );
+
 
 if(productLink){
 
@@ -8235,6 +8352,7 @@ if(productLink){
   );
 
 }
+
 /* =========================================================
    GMTC CURRICULUM MODAL
 ========================================================= */
