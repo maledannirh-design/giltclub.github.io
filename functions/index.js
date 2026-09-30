@@ -42,6 +42,8 @@ function parseRealtimeRows(response){
 exports.getDigitalReach = onRequest(
   {
     region: "asia-southeast1",
+    serviceAccount:
+      "giltclub-ga4-reader@giltianappsmobile.iam.gserviceaccount.com",
     cors: [
       "https://giltclub.my.id",
       "https://www.giltclub.my.id"
