@@ -1,0 +1,52 @@
+name: Update GMTC Digital Reach
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "*/5 * * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  update-digital-reach:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Google Analytics Data API client
+        run: npm install --no-save @google-analytics/data@7.2.1
+
+      - name: Prepare Google service account credentials
+        env:
+          GA4_SERVICE_ACCOUNT_JSON: ${{ secrets.GA4_SERVICE_ACCOUNT_JSON }}
+        run: |
+          test -n "$GA4_SERVICE_ACCOUNT_JSON"
+          printf '%s' "$GA4_SERVICE_ACCOUNT_JSON" > "$RUNNER_TEMP/ga4-service-account.json"
+
+      - name: Pull GA4 lifetime and realtime data
+        env:
+          GA4_PROPERTY_ID: ${{ secrets.GA4_PROPERTY_ID }}
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/ga4-service-account.json
+        run: node scripts/update-digital-reach.cjs
+
+      - name: Commit updated Digital Reach data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          if git diff --quiet -- data/digital-reach.json; then
+            echo "No Digital Reach changes to commit."
+            exit 0
+          fi
+
+          git add data/digital-reach.json
+          git commit -m "Update Digital Reach data"
+          git push
