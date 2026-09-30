@@ -2454,6 +2454,12 @@ section{
   stroke-width:1.5;
 }
 
+.reach-indonesia path{
+  fill:#1d1d1d;
+  stroke:#343434;
+  stroke-width:1.2;
+}
+
 .reach-map-dot{
   fill:#d5aa3d;
   opacity:.9;
@@ -4714,6 +4720,39 @@ DISCOVER OUR DRILL →
             <path d="M470 204 L531 199 L584 228 L607 283 L580 349 L548 392 L505 354 L474 303 L449 256 Z"></path>
             <path d="M758 316 L819 300 L881 330 L899 363 L858 398 L793 387 L753 354 Z"></path>
             <path d="M889 235 L927 221 L946 245 L925 267 L894 259 Z"></path>
+          </g>
+
+          <!-- INDONESIA — dedicated island silhouette -->
+          <g class="reach-indonesia" aria-label="Indonesia">
+            <!-- Sumatra -->
+            <path d="M768 238 L780 234 L791 242 L789 252 L782 263 L773 258 L767 247 Z">
+              <title>Indonesia — Sumatra</title>
+            </path>
+
+            <!-- Kalimantan -->
+            <path d="M800 232 L815 230 L828 238 L831 250 L824 260 L812 258 L802 249 L797 240 Z">
+              <title>Indonesia — Kalimantan</title>
+            </path>
+
+            <!-- Sulawesi -->
+            <path d="M833 238 L840 242 L838 250 L846 255 L841 260 L833 256 L828 262 L826 254 L831 248 L827 242 Z">
+              <title>Indonesia — Sulawesi</title>
+            </path>
+
+            <!-- Java -->
+            <path d="M796 270 L807 269 L818 271 L819 274 L808 276 L797 274 Z">
+              <title>Indonesia — Java</title>
+            </path>
+
+            <!-- Lesser Sunda Islands -->
+            <path d="M821 276 L829 278 L837 280 L843 283 L838 286 L830 283 L822 282 Z">
+              <title>Indonesia — Lesser Sunda Islands</title>
+            </path>
+
+            <!-- Papua -->
+            <path d="M861 250 L874 247 L888 251 L896 259 L890 269 L878 273 L867 269 L860 262 Z">
+              <title>Indonesia — Papua</title>
+            </path>
           </g>
 
           <g id="reachMapDots"></g>
@@ -9022,12 +9061,7 @@ async function trackSponsorClick(){
 // LOAD WEBSITE STATS
 // =========================
 
-async function loadWebsiteStats(){
-
-  const statsRef =
-    doc(
-      db,
-      "websiteStats",
+bsiteStats",
       "Summary"
     );
 
@@ -9119,12 +9153,6 @@ async function loadWebsiteStats(){
 
 await trackWebsiteVisit();
 
-
-// =========================
-// LOAD CURRENT STATS
-// =========================
-
-await loadWebsiteStats();
 
 
 // =========================
