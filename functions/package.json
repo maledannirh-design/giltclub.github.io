@@ -1,0 +1,12 @@
+{
+  "name": "giltclub-functions",
+  "description": "GMTC backend functions",
+  "private": true,
+  "engines": {
+    "node": "22"
+  },
+  "dependencies": {
+    "@google-analytics/data": "^7.2.1",
+    "firebase-functions": "^7.4.0"
+  }
+}
