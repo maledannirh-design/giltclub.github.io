@@ -291,6 +291,14 @@ section{
     object-fit: contain;
 }
 
+.sponsor-track img.kunkwan-sponsor-logo{
+  width:160px;
+  height:80px;
+  object-fit:contain;
+  filter:none;
+  opacity:.95;
+}
+
 @keyframes scroll{
   from{
     transform:translateX(0);
@@ -1631,8 +1639,8 @@ section{
 
 .kunkwan-section{
   background:
-    radial-gradient(circle at 18% 20%, rgba(220,40,55,.13), transparent 30%),
-    radial-gradient(circle at 82% 75%, rgba(220,40,55,.08), transparent 30%),
+    radial-gradient(circle at 15% 15%, rgba(220,40,55,.13), transparent 30%),
+    radial-gradient(circle at 85% 80%, rgba(220,40,55,.08), transparent 30%),
     #050505;
   padding:90px 5%;
   overflow:hidden;
@@ -1654,28 +1662,28 @@ section{
 }
 
 .kunkwan-logo-wrap{
-  width:42%;
-  min-height:430px;
+  width:36%;
+  min-height:760px;
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:55px;
+  padding:45px;
   background:
-    radial-gradient(circle at center, rgba(220,40,55,.11), transparent 58%),
+    radial-gradient(circle at center, rgba(220,40,55,.12), transparent 58%),
     #000;
   border-right:1px solid #242424;
 }
 
 .kunkwan-logo{
-  width:min(90%,460px);
-  max-height:230px;
+  width:min(92%,430px);
+  max-height:250px;
   object-fit:contain;
   display:block;
 }
 
 .kunkwan-content{
-  width:58%;
-  padding:50px 55px;
+  width:64%;
+  padding:48px 48px 52px;
   display:flex;
   flex-direction:column;
   justify-content:center;
@@ -1685,81 +1693,185 @@ section{
   color:#fff;
   font-size:34px;
   line-height:1.15;
-  margin:0 0 14px;
+  margin:0 0 12px;
+  letter-spacing:.5px;
 }
 
 .kunkwan-intro{
-  color:#bdbdbd;
-  font-size:15px;
-  line-height:1.7;
+  color:#d1d1d1;
+  font-size:17px;
+  line-height:1.6;
   margin-bottom:28px;
+}
+
+.kunkwan-intro strong{
+  color:#ef3340;
+}
+
+.kunkwan-block{
+  margin-bottom:25px;
+}
+
+.kunkwan-block-title{
+  color:#ef3340;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:2px;
+  margin-bottom:12px;
+}
+
+.kunkwan-stat-grid{
+  display:grid;
+  grid-template-columns:1.2fr 1fr 1fr;
+  gap:10px;
+}
+
+.kunkwan-stat{
+  border:1px solid #292929;
+  background:#0b0b0b;
+  border-radius:12px;
+  padding:16px 13px;
+  min-height:118px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+.kunkwan-stat-wide{
+  border-color:#4a2528;
+  background:
+    linear-gradient(135deg,#10090a,#0b0b0b);
+}
+
+.kunkwan-stat strong{
+  display:block;
+  color:#ef3340;
+  font-size:24px;
+  line-height:1.1;
+  margin-bottom:7px;
+}
+
+.kunkwan-stat span{
+  color:#eee;
+  font-size:9px;
+  font-weight:800;
+  line-height:1.45;
+  letter-spacing:1px;
+}
+
+.kunkwan-stat small{
+  color:#777;
+  font-size:8px;
+  line-height:1.4;
+  margin-top:6px;
+}
+
+.kunkwan-note{
+  color:#aaa;
+  font-size:12px;
+  line-height:1.6;
+  margin:12px 0 8px;
+}
+
+.kunkwan-sources{
+  color:#666;
+  font-size:8px;
+  line-height:1.5;
 }
 
 .kunkwan-highlights{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:12px;
-  margin-bottom:24px;
+  gap:10px;
 }
 
 .kunkwan-highlight{
   border:1px solid #292929;
   background:#0b0b0b;
   border-radius:12px;
-  padding:18px 14px;
-  text-align:center;
+  padding:17px 13px;
 }
 
 .kunkwan-highlight strong{
   display:block;
   color:#ef3340;
-  font-size:22px;
-  margin-bottom:6px;
-}
-
-.kunkwan-highlight span{
-  color:#999;
-  font-size:9px;
-  line-height:1.4;
-  letter-spacing:1px;
-}
-
-.kunkwan-opportunity{
-  border-left:2px solid #ef3340;
-  padding:4px 0 4px 16px;
-  margin-bottom:24px;
-}
-
-.kunkwan-opportunity-title{
-  color:#ef3340;
-  font-size:12px;
-  font-weight:800;
-  letter-spacing:2px;
+  font-size:21px;
+  line-height:1.1;
   margin-bottom:7px;
 }
 
-.kunkwan-opportunity p{
+.kunkwan-highlight span{
+  display:block;
+  color:#999;
+  font-size:8px;
+  font-weight:800;
+  line-height:1.45;
+  letter-spacing:1px;
+}
+
+.kunkwan-highlight p{
   color:#aaa;
-  font-size:13px;
+  font-size:11px;
+  line-height:1.55;
+  margin:9px 0 0;
+}
+
+.kunkwan-cta{
+  margin-top:2px;
+  padding:22px;
+  border:1px solid #3a2224;
+  border-radius:15px;
+  background:
+    linear-gradient(135deg,rgba(239,51,64,.10),rgba(0,0,0,.15));
+}
+
+.kunkwan-cta-title{
+  color:#fff;
+  font-size:20px;
+  font-weight:900;
+  line-height:1.25;
+  letter-spacing:.3px;
+}
+
+.kunkwan-cta p{
+  color:#aaa;
+  font-size:12px;
   line-height:1.6;
-  margin:0;
+  margin:9px 0 16px;
+  max-width:650px;
 }
 
 .kunkwan-btn{
+  display:inline-block;
   align-self:flex-start;
   background:#ef3340;
   color:#fff;
+  border:none;
+  padding:14px 24px;
+  border-radius:7px;
+  font-size:13px;
+  font-weight:900;
+  letter-spacing:.5px;
+  text-decoration:none;
 }
 
 .kunkwan-btn:hover{
   background:#c92531;
   opacity:1;
+  transform:translateY(-2px);
 }
 
-@media(max-width:800px){
+.kunkwan-cta small{
+  display:block;
+  color:#666;
+  font-size:9px;
+  margin-top:9px;
+}
+
+@media(max-width:900px){
 
   .kunkwan-section{
-    padding:60px 18px 70px;
+    padding:65px 18px 75px;
   }
 
   .kunkwan-card{
@@ -1768,7 +1880,7 @@ section{
 
   .kunkwan-logo-wrap{
     width:100%;
-    min-height:230px;
+    min-height:250px;
     padding:35px;
     border-right:0;
     border-bottom:1px solid #242424;
@@ -1781,15 +1893,31 @@ section{
 
   .kunkwan-content{
     width:100%;
-    padding:34px 25px;
+    padding:35px 24px 40px;
   }
 
   .kunkwan-content h3{
-    font-size:27px;
+    font-size:28px;
+  }
+
+  .kunkwan-intro{
+    font-size:15px;
+  }
+
+  .kunkwan-stat-grid{
+    grid-template-columns:1fr;
+  }
+
+  .kunkwan-stat{
+    min-height:auto;
   }
 
   .kunkwan-highlights{
     grid-template-columns:1fr;
+  }
+
+  .kunkwan-cta-title{
+    font-size:18px;
   }
 
   .kunkwan-btn{
@@ -1799,182 +1927,6 @@ section{
   }
 
 }
-
-/* ==========================
-   KUNKWAN PARTNER
-========================== */
-
-.kunkwan-section{
-  background:
-    radial-gradient(circle at 18% 20%, rgba(220,40,55,.13), transparent 30%),
-    radial-gradient(circle at 82% 75%, rgba(220,40,55,.08), transparent 30%),
-    #050505;
-  padding:90px 5%;
-  overflow:hidden;
-}
-
-.kunkwan-card{
-  max-width:1100px;
-  margin:0 auto;
-  display:flex;
-  align-items:stretch;
-  background:
-    linear-gradient(135deg,#090909 0%,#111 50%,#070707 100%);
-  border:1px solid #3a3a3a;
-  border-radius:22px;
-  overflow:hidden;
-  box-shadow:
-    0 24px 70px rgba(0,0,0,.45),
-    inset 0 0 45px rgba(255,255,255,.02);
-}
-
-.kunkwan-logo-wrap{
-  width:42%;
-  min-height:430px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:55px;
-  background:
-    radial-gradient(circle at center, rgba(220,40,55,.11), transparent 58%),
-    #000;
-  border-right:1px solid #242424;
-}
-
-.kunkwan-logo{
-  width:min(90%,460px);
-  max-height:230px;
-  object-fit:contain;
-  display:block;
-}
-
-.kunkwan-content{
-  width:58%;
-  padding:50px 55px;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-}
-
-.kunkwan-content h3{
-  color:#fff;
-  font-size:34px;
-  line-height:1.15;
-  margin:0 0 14px;
-}
-
-.kunkwan-intro{
-  color:#bdbdbd;
-  font-size:15px;
-  line-height:1.7;
-  margin-bottom:28px;
-}
-
-.kunkwan-highlights{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:12px;
-  margin-bottom:24px;
-}
-
-.kunkwan-highlight{
-  border:1px solid #292929;
-  background:#0b0b0b;
-  border-radius:12px;
-  padding:18px 14px;
-  text-align:center;
-}
-
-.kunkwan-highlight strong{
-  display:block;
-  color:#ef3340;
-  font-size:22px;
-  margin-bottom:6px;
-}
-
-.kunkwan-highlight span{
-  color:#999;
-  font-size:9px;
-  line-height:1.4;
-  letter-spacing:1px;
-}
-
-.kunkwan-opportunity{
-  border-left:2px solid #ef3340;
-  padding:4px 0 4px 16px;
-  margin-bottom:24px;
-}
-
-.kunkwan-opportunity-title{
-  color:#ef3340;
-  font-size:12px;
-  font-weight:800;
-  letter-spacing:2px;
-  margin-bottom:7px;
-}
-
-.kunkwan-opportunity p{
-  color:#aaa;
-  font-size:13px;
-  line-height:1.6;
-  margin:0;
-}
-
-.kunkwan-btn{
-  align-self:flex-start;
-  background:#ef3340;
-  color:#fff;
-}
-
-.kunkwan-btn:hover{
-  background:#c92531;
-  opacity:1;
-}
-
-@media(max-width:800px){
-
-  .kunkwan-section{
-    padding:60px 18px 70px;
-  }
-
-  .kunkwan-card{
-    display:block;
-  }
-
-  .kunkwan-logo-wrap{
-    width:100%;
-    min-height:230px;
-    padding:35px;
-    border-right:0;
-    border-bottom:1px solid #242424;
-  }
-
-  .kunkwan-logo{
-    width:min(92%,360px);
-    max-height:150px;
-  }
-
-  .kunkwan-content{
-    width:100%;
-    padding:34px 25px;
-  }
-
-  .kunkwan-content h3{
-    font-size:27px;
-  }
-
-  .kunkwan-highlights{
-    grid-template-columns:1fr;
-  }
-
-  .kunkwan-btn{
-    width:100%;
-    box-sizing:border-box;
-    text-align:center;
-  }
-
-}
-
 /* ==========================
    TOP PICKS
 ========================== */
@@ -3422,14 +3374,26 @@ DISCOVER OUR DRILL →
       <img src="images/hokiko.png">
       <img src="images/aplogo.png">
       <img src="images/apw.png" class="ap-logo">
+      <img
+        src="images/kunkwanlogo.png"
+        class="kunkwan-sponsor-logo"
+        alt="Kunkwan Indonesia">
 
       <img src="images/hokiko.png">
       <img src="images/aplogo.png">
       <img src="images/apw.png" class="ap-logo">
+      <img
+        src="images/kunkwanlogo.png"
+        class="kunkwan-sponsor-logo"
+        alt="Kunkwan Indonesia">
 
       <img src="images/hokiko.png">
       <img src="images/aplogo.png">
       <img src="images/apw.png" class="ap-logo">
+      <img
+        src="images/kunkwanlogo.png"
+        class="kunkwan-sponsor-logo"
+        alt="Kunkwan Indonesia">
 
     </div>
 
@@ -3723,6 +3687,7 @@ DISCOVER OUR DRILL →
 
     </div>
 
+
     <div class="kunkwan-content">
 
       <div class="partner-label">
@@ -3730,58 +3695,191 @@ DISCOVER OUR DRILL →
       </div>
 
       <h3>
-        Kunkwan Indonesia
+        KUNKWAN INDONESIA
       </h3>
 
       <p class="kunkwan-intro">
-        International Online Mandarin Training Centre.
-        Learn Mandarin wherever you are, with flexible
-        scheduling and support designed for long-term learning.
+        Bahasa Mandarin bukan lagi sekadar bahasa asing.
+        <strong>Mandarin adalah bahasa bisnis.</strong>
       </p>
 
-      <div class="kunkwan-highlights">
 
-        <div class="kunkwan-highlight">
-          <strong>532,257+</strong>
-          <span>NON-CHINESE ADULT LEARNERS SINCE 2014</span>
+      <!-- WHY LEARN MANDARIN -->
+
+      <div class="kunkwan-block">
+
+        <div class="kunkwan-block-title">
+          KENAPA BELAJAR MANDARIN?
         </div>
 
-        <div class="kunkwan-highlight">
-          <strong>HSK</strong>
-          <span>OFFICIAL HSK TEST CENTRE PATHWAY</span>
+        <div class="kunkwan-stat-grid">
+
+          <div class="kunkwan-stat kunkwan-stat-wide">
+
+            <strong>
+              US$34.19 BILLION
+            </strong>
+
+            <span>
+              INVESTASI TIONGKOK DI INDONESIA
+            </span>
+
+            <small>
+              2019 — SEPTEMBER 2024
+            </small>
+
+          </div>
+
+
+          <div class="kunkwan-stat">
+
+            <strong>
+              18%
+            </strong>
+
+            <span>
+              DARI TOTAL INVESTASI ASING INDONESIA
+            </span>
+
+            <small>
+              PADA PERIODE TERSEBUT
+            </small>
+
+          </div>
+
+
+          <div class="kunkwan-stat">
+
+            <strong>
+              6,000+
+            </strong>
+
+            <span>
+              LOWONGAN KERJA TERKAIT MANDARIN
+            </span>
+
+            <small>
+              INDONESIA · CURRENT LINKEDIN SEARCH SNAPSHOT*
+            </small>
+
+          </div>
+
         </div>
 
-        <div class="kunkwan-highlight">
-          <strong>LIFELONG</strong>
-          <span>REVISION ACCESS</span>
+        <p class="kunkwan-note">
+          Semakin luas aktivitas bisnis dan investasi Tiongkok
+          di Indonesia, semakin relevan kemampuan Mandarin
+          untuk komunikasi, relasi bisnis, dan dunia kerja.
+        </p>
+
+        <div class="kunkwan-sources">
+          *Data investasi: BKPM, 2019 — September 2024.
+          Lowongan: snapshot pencarian LinkedIn saat halaman ini diperbarui.
         </div>
 
       </div>
 
-      <div class="kunkwan-opportunity">
 
-        <div class="kunkwan-opportunity-title">
-          WHY MANDARIN?
+      <!-- WHY KUNKWAN -->
+
+      <div class="kunkwan-block">
+
+        <div class="kunkwan-block-title">
+          KENAPA KUNKWAN?
+        </div>
+
+
+        <div class="kunkwan-highlights">
+
+
+          <div class="kunkwan-highlight">
+
+            <strong>
+              532,257+
+            </strong>
+
+            <span>
+              PEMBELAJAR DEWASA NON-CHINESE
+            </span>
+
+          </div>
+
+
+          <div class="kunkwan-highlight">
+
+            <strong>
+              HSK
+            </strong>
+
+            <span>
+              SERTIFIKASI BAHASA MANDARIN INTERNASIONAL
+            </span>
+
+            <p>
+              HSK membantu membuktikan kemampuan
+              bahasa Mandarin dan digunakan untuk
+              berbagai kebutuhan pendidikan, karier,
+              dan peluang internasional.
+            </p>
+
+          </div>
+
+
+          <div class="kunkwan-highlight">
+
+            <strong>
+              AKSES SEUMUR HIDUP
+            </strong>
+
+            <span>
+              BELAJAR TIDAK BERAKHIR SAAT KELAS SELESAI
+            </span>
+
+            <p>
+              Akses platform dan materi pembelajaran
+              tetap tersedia sehingga Anda dapat
+              mengulang kembali pelajaran kapan saja.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- CTA -->
+
+      <div class="kunkwan-cta">
+
+        <div class="kunkwan-cta-title">
+          MANDARIN BUKAN HANYA UNTUK HARI INI.
+          <br>
+          INI ADALAH SKILL UNTUK MASA DEPAN.
         </div>
 
         <p>
-          Mandarin is increasingly relevant across
-          business, logistics, operations, sales,
-          engineering and other professional roles
-          connected to China–Indonesia activity.
+          Mulai dari nol. Belajar secara online.
+          Bangun kemampuan yang bisa Anda gunakan
+          dalam kehidupan, pendidikan, perjalanan,
+          dan dunia kerja.
         </p>
 
+        <a
+          href="https://crm.kunkwan.id/joinus/?code=%27MzE4MA==%27"
+          class="partner-btn sponsor-link kunkwan-btn"
+          target="_blank"
+          rel="noopener noreferrer">
+
+          MULAI BELAJAR MANDARIN&nbsp; →
+
+        </a>
+
+        <small>
+          Learn with Kunkwan Indonesia
+        </small>
+
       </div>
-
-      <a
-        href="https://crm.kunkwan.id/joinus/?code=%27MzE4MA==%27"
-        class="partner-btn sponsor-link kunkwan-btn"
-        target="_blank"
-        rel="noopener noreferrer">
-
-        START YOUR MANDARIN JOURNEY&nbsp; →
-
-      </a>
 
     </div>
 
