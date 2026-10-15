@@ -4885,21 +4885,25 @@ DISCOVER OUR DRILL →
   <div class="stats">
 
     <div class="stat-box">
-      <h3>132</h3>
+      <h3 id="activitySessionsHosted">—</h3>
       <p>Sessions Hosted</p>
     </div>
 
     <div class="stat-box">
-      <h3>928</h3>
+      <h3 id="activityPlayerAttendances">—</h3>
       <p>Player Attendances</p>
     </div>
 
     <div class="stat-box">
-      <h3>369</h3>
+      <h3 id="activityCourtHoursPlayed">—</h3>
       <p>Court Hours Played</p>
     </div>
 
   </div>
+
+  <p id="activitySummaryUpdated" style="margin-top:10px;text-align:center;font-size:11px;opacity:.55;">
+    STATISTICS UPDATED DAILY
+  </p>
 
 </section>
 
@@ -8196,6 +8200,88 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 import { db } from "./firebase-config.js";
+
+/* =========================================================
+   ACTIVITY SUMMARY — DAILY CACHED SNAPSHOT
+   The website reads one summary document at most once per
+   WITA calendar day per browser, never scans schedules.
+========================================================= */
+const ACTIVITY_SUMMARY_CACHE_KEY = "gmtcActivitySummaryDailyV1";
+
+function getWitaDateKey() {
+  const parts = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Makassar",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit"
+  }).formatToParts(new Date());
+  const values = Object.fromEntries(parts.map(part => [part.type, part.value]));
+  return `${values.year}-${values.month}-${values.day}`;
+}
+
+function renderActivitySummary(data) {
+  const sessions = document.getElementById("activitySessionsHosted");
+  const attendances = document.getElementById("activityPlayerAttendances");
+  const hours = document.getElementById("activityCourtHoursPlayed");
+  const updated = document.getElementById("activitySummaryUpdated");
+  if (!sessions || !attendances || !hours) return;
+
+  sessions.textContent = Number(data.sessionsHosted || 0).toLocaleString("en-US");
+  attendances.textContent = Number(data.playerAttendances || 0).toLocaleString("en-US");
+  hours.textContent = Number(data.courtHoursPlayed || 0).toLocaleString("en-US", {
+    maximumFractionDigits: 1
+  });
+
+  if (updated) {
+    updated.textContent = data.generatedDateWita
+      ? `LAST UPDATED ${data.generatedDateWita} WITA`
+      : "STATISTICS UPDATED DAILY";
+  }
+}
+
+async function loadActivitySummary() {
+  const todayWita = getWitaDateKey();
+
+  try {
+    const cached = JSON.parse(localStorage.getItem(ACTIVITY_SUMMARY_CACHE_KEY) || "null");
+    if (cached && cached.date === todayWita && cached.data) {
+      renderActivitySummary(cached.data);
+      return;
+    }
+  } catch (error) {
+    // Storage can be unavailable; continue with one Firestore read.
+  }
+
+  try {
+    const summarySnap = await getDoc(doc(db, "websiteStats", "ActivitySummary"));
+    if (!summarySnap.exists()) {
+      throw new Error("Daily Activity Summary has not been generated yet.");
+    }
+
+    const data = summarySnap.data();
+    renderActivitySummary(data);
+
+    try {
+      localStorage.setItem(ACTIVITY_SUMMARY_CACHE_KEY, JSON.stringify({
+        date: todayWita,
+        data: {
+          sessionsHosted: Number(data.sessionsHosted || 0),
+          playerAttendances: Number(data.playerAttendances || 0),
+          courtHoursPlayed: Number(data.courtHoursPlayed || 0),
+          generatedDateWita: data.generatedDateWita || todayWita
+        }
+      }));
+    } catch (error) {
+      // Storage can be unavailable; the rendered data remains usable.
+    }
+  } catch (error) {
+    console.error("Activity Summary load failed:", error);
+    const updated = document.getElementById("activitySummaryUpdated");
+    if (updated) updated.textContent = "DAILY STATISTICS WILL APPEAR AFTER INITIAL BACKEND RUN";
+  }
+}
+
+loadActivitySummary();
 /* =========================================================
    FUN MATCH — FIREBASE SCHEDULE SCREENING
    READ ONLY
