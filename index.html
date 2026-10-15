@@ -8263,7 +8263,7 @@ async function loadActivitySummary() {
 
     try {
       localStorage.setItem(ACTIVITY_SUMMARY_CACHE_KEY, JSON.stringify({
-        date: todayWita,
+        date: data.generatedDateWita || todayWita,
         data: {
           sessionsHosted: Number(data.sessionsHosted || 0),
           playerAttendances: Number(data.playerAttendances || 0),
