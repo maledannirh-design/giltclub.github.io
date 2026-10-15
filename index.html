@@ -4885,24 +4885,24 @@ DISCOVER OUR DRILL →
   <div class="stats">
 
     <div class="stat-box">
-      <h3 id="activitySessionsHosted">—</h3>
+      <h3 id="activitySessionsHosted">132</h3>
       <p>Sessions Hosted</p>
     </div>
 
     <div class="stat-box">
-      <h3 id="activityPlayerAttendances">—</h3>
+      <h3 id="activityPlayerAttendances">928</h3>
       <p>Player Attendances</p>
     </div>
 
     <div class="stat-box">
-      <h3 id="activityCourtHoursPlayed">—</h3>
+      <h3 id="activityCourtHoursPlayed">369</h3>
       <p>Court Hours Played</p>
     </div>
 
   </div>
 
   <p id="activitySummaryUpdated" style="margin-top:10px;text-align:center;font-size:11px;opacity:.55;">
-    STATISTICS UPDATED DAILY
+    LATEST SUMMARY PENDING — SHOWING LAST PUBLISHED FIGURES
   </p>
 
 </section>
@@ -8263,7 +8263,7 @@ async function loadActivitySummary() {
 
     try {
       localStorage.setItem(ACTIVITY_SUMMARY_CACHE_KEY, JSON.stringify({
-        date: data.generatedDateWita || todayWita,
+        date: todayWita,
         data: {
           sessionsHosted: Number(data.sessionsHosted || 0),
           playerAttendances: Number(data.playerAttendances || 0),
@@ -8277,7 +8277,7 @@ async function loadActivitySummary() {
   } catch (error) {
     console.error("Activity Summary load failed:", error);
     const updated = document.getElementById("activitySummaryUpdated");
-    if (updated) updated.textContent = "DAILY STATISTICS WILL APPEAR AFTER INITIAL BACKEND RUN";
+    if (updated) updated.textContent = "LATEST SUMMARY UNAVAILABLE — SHOWING LAST PUBLISHED FIGURES";
   }
 }
 
