@@ -3,9 +3,9 @@
     {
       "country": "Indonesia",
       "countryCode": "ID",
-      "newUsers": 94,
-      "engagementRate": 0.5343915343915344,
-      "eventCount": 2122
+      "newUsers": 96,
+      "engagementRate": 0.5300261096605744,
+      "eventCount": 2138
     },
     {
       "country": "United States",
@@ -99,6 +99,22 @@
       "eventCount": 4
     }
   ],
-  "realtime": [],
-  "generatedAt": "2026-10-21T06:30:25.048Z"
+  "realtime": [
+    {
+      "country": "Indonesia",
+      "countryCode": "ID",
+      "activeUsers": 2
+    },
+    {
+      "country": "United States",
+      "countryCode": "US",
+      "activeUsers": 2
+    },
+    {
+      "country": "Sweden",
+      "countryCode": "SE",
+      "activeUsers": 1
+    }
+  ],
+  "generatedAt": "2026-10-21T12:13:49.363Z"
 }
