@@ -17,9 +17,9 @@
     {
       "country": "India",
       "countryCode": "IN",
-      "newUsers": 11,
+      "newUsers": 19,
       "engagementRate": 0,
-      "eventCount": 33
+      "eventCount": 57
     },
     {
       "country": "Sweden",
@@ -100,5 +100,5 @@
     }
   ],
   "realtime": [],
-  "generatedAt": "2026-10-22T20:37:40.738Z"
+  "generatedAt": "2026-10-22T23:34:34.604Z"
 }
