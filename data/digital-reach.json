@@ -3,16 +3,16 @@
     {
       "country": "Indonesia",
       "countryCode": "ID",
-      "newUsers": 110,
-      "engagementRate": 0.5308641975308642,
-      "eventCount": 2240
+      "newUsers": 114,
+      "engagementRate": 0.530562347188264,
+      "eventCount": 2256
     },
     {
       "country": "United States",
       "countryCode": "US",
-      "newUsers": 22,
-      "engagementRate": 0.09090909090909091,
-      "eventCount": 69
+      "newUsers": 23,
+      "engagementRate": 0.13043478260869565,
+      "eventCount": 73
     },
     {
       "country": "India",
@@ -31,9 +31,9 @@
     {
       "country": "Germany",
       "countryCode": "DE",
-      "newUsers": 4,
-      "engagementRate": 0.25,
-      "eventCount": 14
+      "newUsers": 5,
+      "engagementRate": 0.2,
+      "eventCount": 18
     },
     {
       "country": "Canada",
@@ -100,5 +100,5 @@
     }
   ],
   "realtime": [],
-  "generatedAt": "2026-10-24T06:22:03.387Z"
+  "generatedAt": "2026-10-24T11:17:52.185Z"
 }
