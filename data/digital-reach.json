@@ -50,6 +50,13 @@
       "eventCount": 3
     },
     {
+      "country": "France",
+      "countryCode": "FR",
+      "newUsers": 1,
+      "engagementRate": 0,
+      "eventCount": 4
+    },
+    {
       "country": "Ireland",
       "countryCode": "IE",
       "newUsers": 1,
@@ -100,5 +107,5 @@
     }
   ],
   "realtime": [],
-  "generatedAt": "2026-10-25T01:48:01.643Z"
+  "generatedAt": "2026-10-25T06:57:40.784Z"
 }
