@@ -3772,6 +3772,118 @@ display:block;
   color:#FFFFFF;
 }
 
+/* GMTC PHILOSOPHY MODALS */
+.gmtc-framework-modal{
+  position:fixed;
+  inset:0;
+  z-index:10000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+.gmtc-framework-overlay{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,.82);
+}
+.gmtc-framework-sheet{
+  position:relative;
+  z-index:1;
+  width:min(900px,100%);
+  max-height:90vh;
+  overflow-y:auto;
+  box-sizing:border-box;
+  padding:38px;
+  background:#101010;
+  color:#F4F4F4;
+  border:1px solid #8D7139;
+}
+.gmtc-framework-close{
+  position:sticky;
+  float:right;
+  top:0;
+  border:1px solid #555;
+  background:#181818;
+  color:#FFFFFF;
+  font-size:26px;
+  line-height:1;
+  padding:5px 12px;
+  cursor:pointer;
+}
+.gmtc-framework-eyebrow{
+  color:#E8BE68;
+  font-size:11px;
+  letter-spacing:2px;
+  font-weight:700;
+  margin:8px 48px 12px 0;
+}
+.gmtc-framework-title{
+  color:#FFFFFF;
+  font-size:30px;
+  line-height:1.2;
+  margin:0 45px 12px 0;
+}
+.gmtc-framework-intro{
+  color:#C8C8C8;
+  line-height:1.7;
+  margin-bottom:24px;
+}
+.gmtc-framework-item{
+  border:1px solid #333;
+  background:#151515;
+  padding:20px;
+  margin-top:12px;
+}
+.gmtc-framework-code{
+  color:#E8BE68;
+  font-size:11px;
+  letter-spacing:2px;
+  font-weight:700;
+  margin-bottom:8px;
+}
+.gmtc-framework-item h3{
+  color:#FFFFFF;
+  font-size:19px;
+  margin:0 0 10px;
+}
+.gmtc-framework-item .local-title{
+  color:#E8BE68;
+  font-weight:600;
+  margin-bottom:8px;
+}
+.gmtc-framework-item p{
+  color:#D0D0D0;
+  line-height:1.75;
+  margin:8px 0;
+}
+.gmtc-framework-item .tagline{
+  color:#FFFFFF;
+  font-style:italic;
+  border-left:2px solid #E8BE68;
+  padding-left:12px;
+  margin-top:12px;
+}
+.gmtc-framework-item ul,
+.gmtc-framework-item ol{
+  color:#D0D0D0;
+  line-height:1.75;
+  padding-left:22px;
+}
+@media(max-width:600px){
+  .gmtc-framework-modal{padding:0}
+  .gmtc-framework-sheet{
+    width:100%;
+    height:100%;
+    max-height:none;
+    padding:25px 18px;
+    border-left:0;
+    border-right:0;
+  }
+  .gmtc-framework-title{font-size:24px}
+  .gmtc-framework-item{padding:16px}
+}
+
 
 /* ==========================
    CURRICULUM MODAL
@@ -5093,99 +5205,69 @@ DISCOVER OUR DRILL →
 
   <div class="programs gmtc-framework-grid">
 
-    <!-- COMMUNITY DEVELOPMENT -->
+    <!-- LAYER 01: PHILOSOPHY -->
 
     <div class="card program-card">
 
-      <div class="program-level">
-        LAYER 01
-      </div>
-
-      <h3>
-        Community Development
-      </h3>
-
+      <div class="program-level">LAYER 01</div>
+      <h3>GMTC Philosophy</h3>
       <p>
-        We develop the tennis community through shared play sessions,
-        collaboration with other communities, social activities,
-        and opportunities to meet and play with new people.
+        The principles behind how GMTC designs purposeful tennis learning:
+        clear objectives, adaptable challenges, useful feedback, transfer
+        to the game, enjoyment, simplicity, and player autonomy.
       </p>
+      <div class="program-meta">7 LAWS OF DRILL • 9 METHODS OF LEARNING</div>
 
-      <div class="program-meta">
-        COMMUNITY • CONNECTION • PARTICIPATION
-      </div>
+      <button type="button" class="program-btn" data-framework="laws">
+        7 LAWS OF DRILL →
+      </button>
+
+      <button type="button" class="program-btn" data-framework="methods" style="margin-top:10px;">
+        9 METHODS OF LEARNING →
+      </button>
 
     </div>
 
-    <!-- PHILOSOPHY -->
+    <!-- LAYER 02: LEARNING SYLLABUS -->
 
     <div class="card program-card">
 
-      <div class="program-level">
-        LAYER 02
-      </div>
-
-      <h3>
-        GMTC Philosophy
-      </h3>
-
-      <p>
-        Our learning approach is guided by the 7 Laws of Drill
-        and 9 Methods. They provide principles for clear,
-        adaptable, purposeful, enjoyable, and practical development.
-      </p>
-
-      <div class="program-meta">
-        7 LAWS OF DRILL • 9 METHODS
-      </div>
-
-    </div>
-
-    <!-- LEARNING SYLLABUS -->
-
-    <div class="card program-card">
-
-      <div class="program-level">
-        LAYER 03
-      </div>
-
-      <h3>
-        GMTC Learning Syllabus
-      </h3>
-
+      <div class="program-level">LAYER 02</div>
+      <h3>GMTC Learning Syllabus</h3>
       <p>
         Explore subject-based learning pathways, practical drill options,
         and observable mastery criteria designed for different stages
         of adult recreational tennis development.
       </p>
+      <div class="program-meta">PROGRESSIVE PLAYER PATHWAYS</div>
 
-      <div class="program-meta">
-        PROGRESSIVE PLAYER PATHWAYS
-      </div>
-
-      <button
-        type="button"
-        class="program-btn"
-        data-curriculum="foundation">
-
+      <button type="button" class="program-btn" data-curriculum="foundation">
         CLASS 01 — NEWBIE TO UPPER BEGINNER →
-
       </button>
 
-      <button
-        type="button"
-        class="program-btn"
-        data-curriculum="development"
-        style="margin-top:10px;">
-
+      <button type="button" class="program-btn" data-curriculum="development" style="margin-top:10px;">
         CLASS 02 — BREAKING THE LIMIT →
-
       </button>
 
       <p style="margin-top:12px;font-size:12px;opacity:.75;">
         Class 03: Lower Intermediate to Upper Intermediate.
         Detailed syllabus information will be published as it is finalized.
       </p>
+
+    </div>
+
+    <!-- LAYER 03: COMMUNITY DEVELOPMENT -->
+
+    <div class="card program-card">
+
+      <div class="program-level">LAYER 03</div>
+      <h3>Community Development</h3>
+      <p>
+        We develop the tennis community through shared play sessions,
+        collaboration with other communities, social activities,
+        and opportunities to meet and play with new people.
+      </p>
+      <div class="program-meta">COMMUNITY • CONNECTION • PARTICIPATION</div>
 
     </div>
 
@@ -9535,5 +9617,129 @@ window.loadFunMatchSchedule = loadFunMatchSchedule;
 
 })();
 </script>
+
+
+
+<!-- GMTC PHILOSOPHY: 7 LAWS & 9 METHODS -->
+<script>
+(function(){
+  const frameworkContent = {
+    laws: {
+      eyebrow: "GMTC PHILOSOPHY",
+      title: "GMTC Laws of Drill — LOC",
+      intro: "Seven guiding laws for designing purposeful drills and supporting player development.",
+      items: [
+        {code:"LOC",title:"1. Law of Clarity",local:"Hukum Kejelasan",body:"Setiap drill harus memiliki tujuan yang jelas: apa yang dilatih, mengapa itu penting, dan apa yang diharapkan dari pemain.",tagline:"Know what you train, and why."},
+        {code:"LOY",title:"2. Law of Antonymy",local:"Hukum Kontras dan Penyesuaian",body:"Tujuan drill dapat dipertahankan, tetapi tantangannya disesuaikan dengan kemampuan dan respons pemain—misalnya melalui variasi spin, kecepatan, arah, atau kedalaman feed.",tagline:"Same drill, different challenge."},
+        {code:"LOA",title:"3. Law of Attraction",local:"Hukum Tarik-Menarik Progres",body:"Hasil latihan memicu feedback, feedback mengarahkan penyesuaian, dan penyesuaian menghasilkan percobaan berikutnya. Siklus ini berulang sampai pemain berkembang.",tagline:"Practice → Feedback → Adapt → Progress → Repeat."},
+        {code:"LOT",title:"4. Law of Transfer",local:"Hukum Transfer ke Permainan",body:"Keberhasilan drill bukan tujuan akhir. Keterampilan harus terbawa ke rally dan mabar, ketika bola, lawan, posisi, serta keputusan tidak selalu bisa diprediksi.",tagline:"Train it in the drill. Prove it in the game."},
+        {code:"LOP",title:"5. Law of Pleasure",local:"Hukum Kenikmatan Bermain",body:"Latihan harus menjaga kesenangan, rasa percaya diri, dan keinginan untuk terus bermain, tanpa menghilangkan tantangan dan proses belajar.",tagline:"Challenge the player, preserve the pleasure."},
+        {code:"LOR",title:"6. Law of Razor",local:"Hukum Kesederhanaan yang Efektif",body:"Gunakan instruksi, aturan drill, dan coaching cues sesederhana mungkin selama tetap mencapai tujuan pembelajaran. Hilangkan kompleksitas yang tidak perlu, tetapi jangan menghilangkan tantangan yang memang dibutuhkan.",tagline:"Remove the unnecessary. Keep what matters.",example:true},
+        {code:"LOA",title:"7. Law of Autonomy",local:"Hukum Otonomi Pemain",body:"Pemain memiliki perjalanan perkembangannya sendiri; GMTC membimbing tanpa mengklaim kepemilikan atas pilihan pemain.",tagline:"The freedom to choose, the responsibility to grow.",autonomy:true}
+      ]
+    },
+    methods: {
+      eyebrow: "GMTC PHILOSOPHY",
+      title: "GMTC Coaching Philosophy — Method Framework",
+      intro: "9 Method Domains: six core learning and development methods, followed by three time and learning optimization principles.",
+      groups: [
+        {title:"A. Core Learning & Development Methods",subtitle:"6 domain utama",items:[
+          {code:"01",title:"Applied Tennis Biomechanics",body:"Memahami gerak tubuh, produksi tenaga, keseimbangan, dan efisiensi gerakan dalam tenis."},
+          {code:"02",title:"Advanced Skill Acquisition",body:"Memahami cara keterampilan dipelajari, dipertahankan, dan digunakan dalam permainan."},
+          {code:"03",title:"Adaptive Adult Recreational Coaching",body:"Menyesuaikan drill, tantangan, dan jalur belajar dengan kemampuan serta kebutuhan pemain dewasa."},
+          {code:"04",title:"Perception–Action Coupling",body:"Menghubungkan informasi yang dilihat pemain dengan keputusan dan respons geraknya."},
+          {code:"05",title:"Rally and Game Intelligence",body:"Mengembangkan rally, pemilihan pukulan, positioning, dan pengambilan keputusan saat bermain."},
+          {code:"06",title:"Sustainable Player Development",body:"Membangun perkembangan yang berkelanjutan dan realistis bagi kehidupan pemain dewasa."}
+        ]},
+        {title:"B. Time & Learning Optimization",subtitle:"3 prinsip desain tambahan",items:[
+          {code:"07",title:"Accelerated Learning Design",body:"Setiap menit latihan memiliki fungsi belajar yang jelas. Mengurangi waktu tunggu, antrean panjang, dan repetisi yang tidak produktif."},
+          {code:"08",title:"Compressed Learning Cycles",body:"Memperpendek jarak antara mencoba, menerima informasi, menyesuaikan gerakan, dan mencoba kembali."},
+          {code:"09",title:"Time-Efficient Skill Development",body:"Merancang pembinaan yang realistis bagi pemain dewasa dengan waktu terbatas karena pekerjaan, keluarga, dan tanggung jawab lainnya."}
+        ]}
+      ]
+    }
+  };
+
+  function escapeHTML(value){
+    return String(value).replace(/[&<>"']/g,function(ch){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch];
+    });
+  }
+
+  function openFramework(key){
+    const data=frameworkContent[key];
+    if(!data) return;
+    document.querySelectorAll(".gmtc-framework-modal").forEach(el=>el.remove());
+
+    const modal=document.createElement("div");
+    modal.className="gmtc-framework-modal";
+    const content = key==="laws"
+      ? data.items.map(item=>`
+        <article class="gmtc-framework-item">
+          <div class="gmtc-framework-code">${escapeHTML(item.code)}</div>
+          <h3>${escapeHTML(item.title)}</h3>
+          <div class="local-title">${escapeHTML(item.local)}</div>
+          <p>${escapeHTML(item.body)}</p>
+          <p class="tagline">${escapeHTML(item.tagline)}</p>
+          ${item.example ? `
+            <p><strong>Contoh penerapan Law of Razor — Spacing &amp; Contact Point</strong></p>
+            <ul>
+              <li><strong>Terlalu rumit:</strong> memberi lima instruksi sekaligus tentang posisi kaki, rotasi pinggul, sudut raket, titik kontak, dan follow-through.</li>
+              <li><strong>Lebih sederhana:</strong> berikan feed yang sesuai dan gunakan satu cue: “Beri ruang untuk raket mengayun.”</li>
+            </ul>
+            <p>Tujuannya bukan membuat teknik menjadi dangkal, tetapi membantu peserta fokus pada hal yang paling berguna saat itu.</p>
+          `:""}
+          ${item.autonomy ? `
+            <p><strong>Dimensi Law of Autonomy</strong></p>
+            <ol>
+              <li><strong>Autonomy of Technique:</strong> pemain boleh memiliki preferensi dan gaya bermain sendiri. GMTC memberi arahan dan menjelaskan konsekuensi tanpa memaksakan satu gaya untuk semua orang.</li>
+              <li><strong>Autonomy of Development:</strong> pemain berhak menentukan jalur perkembangannya sendiri, termasuk berlatih di GMTC, belajar di tempat lain, mengikuti komunitas lain, atau tidak mengejar level lebih tinggi.</li>
+              <li><strong>Autonomy of Character:</strong> GMTC membina kerendahan hati, sportivitas, rasa hormat, dan tanggung jawab. Kebebasan bukan alasan untuk merendahkan orang lain; perilaku yang bertentangan dengan nilai komunitas dapat dikenai sanksi, termasuk dikeluarkan dari GMTC.</li>
+            </ol>
+          `:""}
+        </article>
+      `).join("")
+      : data.groups.map(group=>`
+        <section class="gmtc-framework-group">
+          <h3 style="color:#E8BE68;margin:28px 0 4px">${escapeHTML(group.title)}</h3>
+          <p style="color:#AAA;margin:0 0 10px">${escapeHTML(group.subtitle)}</p>
+          ${group.items.map(item=>`
+            <article class="gmtc-framework-item">
+              <div class="gmtc-framework-code">${escapeHTML(item.code)}</div>
+              <h3>${escapeHTML(item.title)}</h3>
+              <p>${escapeHTML(item.body)}</p>
+            </article>
+          `).join("")}
+        </section>
+      `).join("");
+
+    modal.innerHTML=`
+      <div class="gmtc-framework-overlay" data-framework-close></div>
+      <div class="gmtc-framework-sheet" role="dialog" aria-modal="true" aria-label="${escapeHTML(data.title)}">
+        <button type="button" class="gmtc-framework-close" data-framework-close aria-label="Close">×</button>
+        <div class="gmtc-framework-eyebrow">${escapeHTML(data.eyebrow)}</div>
+        <h2 class="gmtc-framework-title">${escapeHTML(data.title)}</h2>
+        <p class="gmtc-framework-intro">${escapeHTML(data.intro)}</p>
+        ${content}
+      </div>`;
+    document.body.appendChild(modal);
+    modal.querySelectorAll("[data-framework-close]").forEach(el=>el.addEventListener("click",()=>modal.remove()));
+    document.addEventListener("keydown",function escHandler(e){
+      if(e.key==="Escape"){
+        modal.remove();
+        document.removeEventListener("keydown",escHandler);
+      }
+    });
+  }
+
+  document.addEventListener("click",function(event){
+    const button=event.target.closest("[data-framework]");
+    if(!button) return;
+    event.preventDefault();
+    openFramework(button.getAttribute("data-framework"));
+  });
+})();
+</script>
+
 </body>
 </html>
