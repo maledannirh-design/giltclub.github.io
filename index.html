@@ -4095,6 +4095,19 @@ display:block;
 /* ==========================
    end of css
 ========================== */
+
+/* Detailed Class 01 syllabus */
+.gmc-syllabus-subject{padding:18px 0;border-bottom:1px solid rgba(255,255,255,.12)}
+.gmc-syllabus-subject .gmc-meet-title{font-size:18px;line-height:1.4;margin:5px 0 10px}
+.gmc-syllabus-focus{color:#E5E5E5;line-height:1.65;margin:8px 0}
+.gmc-syllabus-points{color:#CFCFCF;line-height:1.7;padding-left:22px;margin:8px 0 0}
+.gmc-syllabus-points li{margin:4px 0}
+.gmc-syllabus-threea{margin-top:24px;padding:22px;border:1px solid #8D7139;background:#151515}
+.gmc-syllabus-threea h3{color:#E8BE68;margin:8px 0}
+.gmc-syllabus-threea p,.gmc-syllabus-threea ol{color:#D0D0D0;line-height:1.75}
+.gmc-syllabus-threea ol{padding-left:22px}
+.gmc-syllabus-note{font-style:italic;color:#FFFFFF !important}
+
 </style>
 
   <!-- Google tag (gtag.js) -->
@@ -5316,10 +5329,10 @@ DISCOVER OUR DRILL →
         CLASS 02 — BREAKING THE LIMIT →
       </button>
 
-      <p style="margin-top:12px;font-size:12px;opacity:.75;">
-        Class 03: Lower Intermediate to Upper Intermediate.
-        Detailed syllabus information will be published as it is finalized.
-      </p>
+      <button type="button" class="program-btn" disabled aria-disabled="true"
+        style="margin-top:10px;opacity:.48;cursor:not-allowed;">
+        CLASS 03 — LOWER INTERMEDIATE TO UPPER INTERMEDIATE · COMING SOON
+      </button>
 
     </div>
 
@@ -9237,297 +9250,207 @@ if(productLink){
 
 window.openCurriculum = function(pathway){
 
-  const existing =
-    document.getElementById(
-      "gmcCurriculumModal"
-    );
-
-  if(existing)
-    existing.remove();
-
+  const existing = document.getElementById("gmcCurriculumModal");
+  if(existing) existing.remove();
 
   const foundation = [
-
-    "Tennis Foundations",
-
-    "Coordination & Ball Familiarity",
-
-    "Move Before You Hit",
-
-    "The Contact Point",
-
-    "Forehand & Backhand Fundamentals",
-
-    "7 Laws of Drill Basics",
-
-    "Consistency & Control",
-
-    "Footwork & Body Control",
-
-    "Serve & Return Foundations",
-
-    "From Drill to Rally",
-
-    "From Rally to Game",
-
-    "Becoming a Player — Assessment"
-
+    {
+      title:"Tennis Fundamentals, Court & Racket Introduction",
+      focus:"Orientasi dan pemahaman dasar tenis.",
+      points:[
+        "Pengenalan lapangan, baseline, service line, net, singles dan doubles lines.",
+        "Pengenalan raket, forehand, backhand, serve, volley, dan footwork.",
+        "Memahami contact point dan posisi bola terhadap tubuh.",
+        "Pengenalan konsep 3A dan latihan shadow swing, dilanjutkan feed bola sederhana."
+      ]
+    },
+    {
+      title:"Ball Control & Accuracy",
+      focus:"Membangun koordinasi tangan, mata, raket, dan bola.",
+      points:[
+        "Sweet spot dan kontrol permukaan raket.",
+        "Ball tracking, ball recognition, dan interceptive skills.",
+        "Menangkap bola dengan tangan non-dominan, melempar, dan memukul bola hasil feed.",
+        "Menimbang bola dengan raket, berjalan sambil mengontrol bola, dan variasi koordinasi lainnya.",
+        "Mengenali lintasan bola dan contact point melalui pengalaman langsung."
+      ]
+    },
+    {
+      title:"Footwork & Movement Fundamentals",
+      focus:"Menghubungkan persiapan, gerakan menuju bola, pukulan, dan recovery.",
+      points:[
+        "Spacing, timing, dan contact point.",
+        "Unit turn dan persiapan raket sebelum bergerak.",
+        "Movement approach: melangkah mendekati dan menyesuaikan jarak dengan bola.",
+        "Move before hit, swing mechanics, follow-through, dan recovery.",
+        "Menjaga keseimbangan serta kesiapan menghadapi bola berikutnya."
+      ]
+    },
+    {
+      title:"Basic Rally Building",
+      focus:"Menikmati pengalaman rally dan belajar mengembalikan bola.",
+      points:[
+        "Mini-tennis dan rally dari service line.",
+        "Cooperative hitting dengan feed yang mudah.",
+        "Menyesuaikan tenaga dan arah agar partner dapat mengembalikan bola.",
+        "Rally dengan target kontinuitas, bukan keharusan menghasilkan spin atau pukulan keras."
+      ]
+    },
+    {
+      title:"Forehand Biomechanics & Development",
+      focus:"Mematangkan forehand yang fungsional dan efisien.",
+      points:[
+        "Persiapan, backswing, swing path, contact point, dan follow-through.",
+        "Low-ball dan high-ball forehand.",
+        "Flat, topspin, dan slice sebagai variasi yang diperkenalkan sesuai kesiapan pemain.",
+        "Bodyweight transfer, rotasi tubuh, keseimbangan, dan recovery."
+      ]
+    },
+    {
+      title:"Backhand Biomechanics & Development",
+      focus:"Membangun backhand yang stabil dan dapat digunakan dalam rally.",
+      points:[
+        "Backhand satu tangan atau dua tangan sesuai pilihan pemain.",
+        "Persiapan raket, swing path, contact point, dan follow-through.",
+        "Low-ball dan high-ball backhand.",
+        "Flat, topspin, dan slice sesuai tingkat kesiapan.",
+        "Bodyweight transfer, keseimbangan, dan recovery."
+      ]
+    },
+    {
+      title:"Volley Technique & Net Skills",
+      focus:"Mengontrol bola di dekat net dan bergerak sambil melakukan volley.",
+      points:[
+        "Basic punch volley dan slice volley.",
+        "High volley, low volley, dan overhead.",
+        "Volley sambil bergerak maju, menyamping, dan menyesuaikan posisi.",
+        "Racket control untuk bola rendah di dekat kaki.",
+        "Dribbling dan latihan bola yang naik dari dekat permukaan lapangan, termasuk mengembalikan bola secara lembut saat tidak ada ruang untuk swing besar."
+      ]
+    },
+    {
+      title:"Groundstroke Rally & Movement Integration",
+      focus:"Menggabungkan forehand dan backhand dalam rally tanpa memasukkan volley sebagai keterampilan utama.",
+      points:[
+        "Forehand-backhand rally.",
+        "Bergerak ke depan, mundur, dan menyamping sambil mempertahankan rally.",
+        "Approach dari baseline menuju posisi lebih maju.",
+        "Rally dengan variasi arah dan kedalaman.",
+        "Menghubungkan footwork, contact point, pukulan, dan recovery dalam situasi yang berubah."
+      ]
+    },
+    {
+      title:"Serve, Return & Net Play",
+      focus:"Memulai poin dan memahami permainan dari servis hingga net.",
+      points:[
+        "Serve preparation, ball toss, contact, dan kemampuan memasukkan servis.",
+        "Return of serve dan respons terhadap bola servis.",
+        "Transisi dari baseline ke net.",
+        "Serve-and-return simulations dan partner/group drills.",
+        "Menghubungkan servis, return, approach, dan volley dalam rangkaian permainan sederhana."
+      ]
+    },
+    {
+      title:"Basic Tactics & Recreational Match Play",
+      focus:"Menggunakan keterampilan untuk memainkan poin dan mabar.",
+      points:[
+        "Dasar strategi menyerang dan bertahan.",
+        "Mengarahkan bola ke ruang terbuka dan memahami posisi lawan.",
+        "Lob fundamentals dan penggunaan lob dalam situasi yang tepat.",
+        "Memahami kapan bermain aman, membangun rally, atau mencoba menyerang.",
+        "Simulasi poin, aturan permainan, scoring, dan sportivitas."
+      ]
+    }
   ];
-
 
   const development = [
-
     "Advanced Skill Acquisition",
-
     "Biomechanics",
-
     "Movement Efficiency",
-
     "Tactical Development",
-
     "Athletic Development",
-
     "Match Intelligence",
-
     "Mental Performance",
-
     "Serve & Return Systems",
-
     "Point Construction",
-
     "Pattern Play & Decision Making",
-
     "Competitive Preparation",
-
     "Player Assessment & Development Plan"
-
   ];
 
-
-  const isFoundation =
-    pathway === "foundation";
-
-
-  const meets =
-    isFoundation
-      ? foundation
-      : development;
-
-
-  const title =
-    isFoundation
-      ? "NEWBIE → BEGINNER"
-      : "BEGINNER → INTERMEDIATE";
-
-
-  const pathwayName =
-    isFoundation
-      ? "FOUNDATION PATHWAY"
-      : "DEVELOPMENT PATHWAY";
-
-
-  const description =
-    isFoundation
-
-      ? `
-        <h3>OUR CURRICULUM</h3>
-
-        <p>
-          Our curriculum is not built around simply
-          feeding balls and repeating movements.
-        </p>
-
-        <p>
-          At GMTC, we believe every player learns
-          differently. Your body, movement,
-          coordination, understanding and ability
-          to process the game are different from
-          everyone else's.
-        </p>
-
-        <p>
-          Our training is built around three core
-          development areas:
-        </p>
-
-        <p>
-          <strong>SKILL ACQUISITION</strong><br>
-          Understanding what you are doing,
-          why you are doing it, and how to apply it.
-        </p>
-
-        <p>
-          <strong>BIOMECHANICS</strong><br>
-          Understanding how your body moves,
-          responds and produces the shot.
-        </p>
-
-        <p>
-          <strong>ATHLETIC DEVELOPMENT</strong><br>
-          Learning how to move efficiently,
-          arrive in the right position,
-          and be ready for the next ball.
-        </p>
-
-        <p>
-          <strong>
-            TRAIN WHAT YOU NEED.<br>
-            NOT WHAT EVERY TENNIS PLAYER NEEDS.
-          </strong>
-        </p>
-      `
-
-      : `
-
-        <h3>OUR CURRICULUM</h3>
-
-        <p>
-          Moving from beginner to intermediate is
-          not simply about hitting harder or
-          learning more shots.
-        </p>
-
-        <p>
-          It is about developing the ability to
-          understand the game, make better decisions,
-          move more efficiently, and perform with
-          greater purpose.
-        </p>
-
-        <p>
-          The GMTC Development Pathway combines
-          <strong>
-            skill acquisition, biomechanics,
-            athletic development, tactical
-            understanding and match intelligence
-          </strong>
-          into one progressive learning system.
-        </p>
-
-        <p>
-          We don't train every player the same way.
-        </p>
-
-        <p>
-          <strong>
-            YOUR GAME IS DIFFERENT.<br>
-            YOUR TRAINING SHOULD BE DIFFERENT.
-          </strong>
-        </p>
-
-      `;
-
-
-  const modal =
-    document.createElement("div");
-
-  modal.id =
-    "gmcCurriculumModal";
-
-  modal.className =
-    "gmc-curriculum-modal";
-
-
-  modal.innerHTML = `
-
-    <div
-      class="gmc-curriculum-overlay"
-      id="gmcCurriculumOverlay">
-    </div>
-
-
-    <div class="gmc-curriculum-sheet">
-
-
-      <button
-        type="button"
-        class="gmc-curriculum-close"
-        id="closeCurriculum">
-
-        ×
-
-      </button>
-
-
-      <div class="gmc-curriculum-eyebrow">
-
-        ${pathwayName}
-
-      </div>
-
-
-      <div class="gmc-curriculum-title">
-
-        ${title}
-
-      </div>
-
-
-      <div class="gmc-curriculum-subtitle">
-
-        12 MEETS
-
-      </div>
-
-
-      <div class="gmc-curriculum-list">
-
-        ${meets.map((meet,index) => `
-
-          <div class="gmc-meet">
-
-            <div class="gmc-meet-number">
-
-              MEET ${String(index + 1).padStart(2,"0")}
-
-            </div>
-
-            <div class="gmc-meet-title">
-
-              ${meet}
-
-            </div>
-
-          </div>
-
-        `).join("")}
-
-      </div>
-
-
-      <div class="gmc-curriculum-description">
-
-        ${description}
-
-      </div>
-
-
-    </div>
-
+  const isFoundation = pathway === "foundation";
+  const title = isFoundation
+    ? "CLASS 01 — NEWBIE TO UPPER BEGINNER"
+    : "CLASS 02 — BREAKING THE LIMIT";
+  const pathwayName = isFoundation
+    ? "FOUNDATION PATHWAY"
+    : "DEVELOPMENT PATHWAY";
+
+  const escapeHTML = value => String(value).replace(/[&<>"']/g, ch => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  }[ch]));
+
+  const foundationHTML = foundation.map((item,index) => `
+    <article class="gmc-meet gmc-syllabus-subject">
+      <div class="gmc-meet-number">${String(index+1).padStart(2,"0")}</div>
+      <div class="gmc-meet-title">${escapeHTML(item.title)}</div>
+      <p class="gmc-syllabus-focus"><strong>Fokus:</strong> ${escapeHTML(item.focus)}</p>
+      <ul class="gmc-syllabus-points">
+        ${item.points.map(point=>`<li>${escapeHTML(point)}</li>`).join("")}
+      </ul>
+    </article>
+  `).join("");
+
+  const developmentHTML = development.map((item,index) => `
+    <article class="gmc-meet">
+      <div class="gmc-meet-number">MEET ${String(index+1).padStart(2,"0")}</div>
+      <div class="gmc-meet-title">${escapeHTML(item)}</div>
+    </article>
+  `).join("");
+
+  const threeAHTML = `
+    <section class="gmc-syllabus-threea">
+      <div class="gmc-meet-number">GMTC MOVEMENT CONCEPT</div>
+      <h3>3A (S.E.T.)</h3>
+      <p>Kerangka gerak GMTC yang terdiri dari tiga tahap:</p>
+      <ol>
+        <li><strong>Siap-siap</strong> — persiapan tubuh dan raket sebelum bergerak atau memukul.</li>
+        <li><strong>Eksekusi</strong> — melakukan gerakan dan pukulan sesuai situasi bola.</li>
+        <li><strong>Transisi</strong> — recovery dan bersiap menghadapi bola berikutnya.</li>
+      </ol>
+      <p class="gmc-syllabus-note">Ready. Execute. Transition.</p>
+    </section>
   `;
 
+  const description = isFoundation ? `
+    <h3>ABOUT CLASS 01</h3>
+    <p>Class 01 membangun fondasi tenis dari pengenalan lapangan dan peralatan hingga rally, teknik pukulan, pergerakan, serta permainan rekreasional dasar.</p>
+    <p>Materi diperkenalkan secara progresif dan dapat disesuaikan dengan kesiapan peserta.</p>
+  ` : `
+    <h3>OUR CURRICULUM</h3>
+    <p>Class 02 berfokus pada pengembangan keterampilan, efisiensi gerak, pemahaman taktis, dan pengambilan keputusan untuk membantu pemain berkembang menuju permainan yang lebih lengkap.</p>
+  `;
+
+  const modal = document.createElement("div");
+  modal.id = "gmcCurriculumModal";
+  modal.className = "gmc-curriculum-modal";
+  modal.innerHTML = `
+    <div class="gmc-curriculum-overlay" id="gmcCurriculumOverlay"></div>
+    <div class="gmc-curriculum-sheet">
+      <button type="button" class="gmc-curriculum-close" id="closeCurriculum" aria-label="Close">×</button>
+      <div class="gmc-curriculum-eyebrow">${pathwayName}</div>
+      <div class="gmc-curriculum-title">${title}</div>
+      <div class="gmc-curriculum-subtitle">${isFoundation ? "10 CORE SUBJECTS" : "12 MEETS"}</div>
+      <div class="gmc-curriculum-list">${isFoundation ? foundationHTML : developmentHTML}</div>
+      <div class="gmc-curriculum-description">${description}</div>
+      ${isFoundation ? threeAHTML : ""}
+    </div>
+  `;
 
   document.body.appendChild(modal);
-
-
-  document
-    .getElementById("closeCurriculum")
-    .addEventListener("click", () => {
-
-      modal.remove();
-
-    });
-
-
-  document
-    .getElementById("gmcCurriculumOverlay")
-    .addEventListener("click", () => {
-
-      modal.remove();
-
-    });
-
-}
+  document.getElementById("closeCurriculum").addEventListener("click",()=>modal.remove());
+  document.getElementById("gmcCurriculumOverlay").addEventListener("click",()=>modal.remove());
+};
   // akhir module script
 window.loadFunMatchSchedule = loadFunMatchSchedule;
 </script>
