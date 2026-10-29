@@ -4099,6 +4099,26 @@ display:block;
   background:#151515;
   color:#F4F4F4;
 }
+.gmc-class03-thumb{
+  width:104px;
+  height:80px;
+  object-fit:cover;
+  border-radius:14px;
+  flex:0 0 104px;
+  display:block;
+}
+.gmc-class-subject-content{min-width:0;flex:1}
+.gmc-syllabus-subject:has(.gmc-class03-thumb){
+  display:flex;
+  align-items:flex-start;
+  gap:14px;
+}
+@media(max-width:560px){
+  .gmc-class03-thumb{width:78px;height:72px;flex-basis:78px}
+  .gmc-syllabus-subject:has(.gmc-class03-thumb){gap:10px;padding:14px}
+  .gmc-class-subject-content .gmc-meet-title{font-size:16px}
+}
+
 .gmc-syllabus-subject .gmc-meet-number,
 .gmc-syllabus-threea .gmc-meet-number{
   color:#E8BE68;
@@ -5367,9 +5387,8 @@ DISCOVER OUR DRILL →
         CLASS 02 — BREAK THE LIMITS, INTERMEDIATE ENTRY LEVEL →
       </button>
 
-      <button type="button" class="program-btn" disabled aria-disabled="true"
-        style="margin-top:10px;opacity:.48;cursor:not-allowed;">
-        CLASS 03 — LOWER INTERMEDIATE TO UPPER INTERMEDIATE · COMING SOON
+      <button type="button" class="program-btn" data-curriculum="advanced" style="margin-top:10px;">
+        CLASS 03 — LOWER INTERMEDIATE TO UPPER INTERMEDIATE →
       </button>
 
     </div>
@@ -9512,13 +9531,126 @@ window.openCurriculum = function(pathway){
     }
   ];
 
+  const advanced = [
+    {
+      title:"Advanced Stroke Control & Ball Quality",
+      focus:"Mengembangkan kemampuan menghasilkan kualitas bola yang disengaja, bukan mengulang teknik dasar dari awal.",
+      points:[
+        "Mengubah spin, kecepatan, tinggi lintasan, dan kedalaman.",
+        "Menghasilkan bola berat atau dalam tanpa selalu memukul sekeras mungkin.",
+        "Mengubah kualitas bola sesuai posisi dan tujuan taktis."
+      ],
+      image:"https://images.openai.com/static-rsc-4/AiOMYPjuiMeNeU4TSJ1EDfXGBglOWUi6ow5Oh4Qbcv4d9lTKkvoQl5z0E0XjPi8Bjfwox8WTjNAj4AhFGfKS0CUw7EbuN00ZAT7p79eO-OIIMujFv6m_6PJW0OCkkB_suDfNKz3dEBjp14wcWsFgaabMZNtf4SixQxMsZf_6oxcMyO1oychCyAbXZgq8ZR6B?purpose=inline"
+    },
+    {
+      title:"Advanced Movement & Court Coverage",
+      focus:"Bergerak efisien ketika lawan mulai mengubah arah, kedalaman, dan tempo bola.",
+      points:[
+        "Recovery berdasarkan arah pukulan dan kemungkinan respons lawan.",
+        "Perubahan arah, akselerasi, deselerasi, dan keseimbangan.",
+        "Mengelola jarak agar tidak terlambat atau terlalu jauh dari bola."
+      ],
+      image:"https://images.openai.com/static-rsc-4/XM9MclNtM_yHMI-illHrT2ODycW-aBIMLQ1PQoRgqLtNsHzINnvjlyEEuau0WA_bv9CSCMLiUAe0ZiF0JVfQmlXYSgvmSM7GZ3f29-CZIQXAfuWF5U8V2yKi2IwA6q8moTLCFPyf8SbOjqHfDiQX5skGsWXVl0HqcGE8TOfrw?purpose=inline"
+    },
+    {
+      title:"Tactical Patterns & Point Construction",
+      focus:"Membangun poin dengan rencana, bukan hanya mengembalikan bola.",
+      points:[
+        "Menggunakan cross-court, down-the-line, dan perubahan arah.",
+        "Membuka ruang sebelum menyerang.",
+        "Menghubungkan dua atau tiga pukulan untuk menciptakan peluang.",
+        "Mengenali kapan mempertahankan rally dan kapan mengambil risiko."
+      ],
+      image:"https://images.openai.com/static-rsc-4/D5Ar5axtbkla8aKtZgR8lRh5IuS9Fg176V4ZmlBC1UAY-zRmIh1FJ6v7h5Q1zkgJsCHM6yZlbbjOcV7H3ffiuP5kYKNtkKeUBwJR0-YlhyZJmyVO24mcVya8urp_iOYfNJksefrymVSj6aI1MnBYKtDgHU6CVWnZPrO21l2MjW8?purpose=inline"
+    },
+    {
+      title:"Serve Plus One & Return Plus One",
+      focus:"Mengembangkan pola pukulan pertama setelah servis dan return.",
+      points:[
+        "Menghubungkan penempatan servis dengan pukulan berikutnya.",
+        "Membaca return lawan dan menyiapkan bola ketiga.",
+        "Menghadapi servis yang bervariasi.",
+        "Membangun pola yang dapat diulang tanpa menjadi mudah ditebak."
+      ],
+      image:"https://images.openai.com/static-rsc-4/Nkzm9LL-ruJSjhRufYuDj_z_-M1vfMuuxrbKxJkPCDepUqj9uyBKkSjpAQM7IGdFLj107KrqsRXFhx4HHDQIJLgsGhUqvZfGqCn5udEEThnv3z83OL8UamzKtZm9nUmHPYKn-phAbWGI2CEWJXFuUO9xO4htZjQmT-kXWHzZGDo?purpose=inline"
+    },
+    {
+      title:"Transition Play & Net Finishing",
+      focus:"Bergerak dari posisi netral ke posisi menyerang dan menyelesaikan peluang.",
+      points:[
+        "Memilih bola yang tepat untuk approach.",
+        "Mengatur split step dan jarak terhadap bola saat mendekati net.",
+        "Menyelesaikan volley dan overhead dari situasi yang berubah.",
+        "Menghadapi passing shot dan lob."
+      ],
+      image:"https://images.openai.com/static-rsc-4/wQaZNaLQVi6bVZG-fyP5phjDSD0w6C0Agp19RsX0ylXEAqWkFVYbF7YXWkLJYFd6CHZdsDrAz_TlLt9riOCNLUhGau5dZ1z-S14oXfAMW8xj0gC8FS0USCQ06-XZpLgaRRZhIaMN8bEhjaAs5ohnk7BnnV0RLeF0jTB7rW2aM_Q?purpose=inline"
+    },
+    {
+      title:"Defensive Skills & Counterattacking",
+      focus:"Tetap mampu bertahan ketika kehilangan posisi, kemudian kembali membangun serangan.",
+      points:[
+        "Mengembalikan bola saat terdesak ke sisi lapangan.",
+        "Menggunakan tinggi dan kedalaman untuk mendapatkan waktu recovery.",
+        "Mengubah situasi bertahan menjadi rally netral atau serangan balik.",
+        "Memilih respons yang realistis ketika berada di bawah tekanan."
+      ],
+      image:"https://images.openai.com/static-rsc-4/uw71-S9W4G1ssp7YuCU7z498SQEbIUdNs1RLBU6GTCAT6JrFWZWjalyR6WKOCffGPG3sd-lMu9Tyf6d5Xv1MzPTsDCCkxcHOLvO70BkTVa7Q1sIwJRipeMK-iTAH3t4ZA284mECLfvCNLfSWZosCV46l2UppvCL5O8iyVTD4ZkA?purpose=inline"
+    },
+    {
+      title:"Variation, Disguise & Tempo Control",
+      focus:"Mengganggu kenyamanan lawan melalui variasi yang terkontrol.",
+      points:[
+        "Mengubah tempo, tinggi, kedalaman, dan spin.",
+        "Menggunakan slice, drop shot, dan lob secara situasional.",
+        "Menyembunyikan arah atau jenis pukulan tanpa mengorbankan kontrol.",
+        "Mengenali kapan variasi membantu dan kapan justru menciptakan kesalahan sendiri."
+      ],
+      image:"https://images.openai.com/static-rsc-4/bezoSWXg62b-WURv6THEW4IyjLiUNssayoh-LZu3NplrUclU0iXNhjwD1T6HWcUYcPhWUgT2jefWa0fINokDxAE2Vo1s2pITLt2cQ1K1U6SO8Cr_mI-9VgoxZBIYIWnFpgF6JtFNTqfHMSQNlAjBu51STnwR3yavhuyvhKcKVBw?purpose=inline"
+    },
+    {
+      title:"Pressure, Decision-Making & Error Management",
+      focus:"Mempertahankan kualitas keputusan ketika skor, tempo, dan tekanan meningkat.",
+      points:[
+        "Memilih target yang realistis berdasarkan situasi.",
+        "Mengelola risiko saat unggul atau tertinggal.",
+        "Mengurangi kesalahan akibat terburu-buru.",
+        "Mengatur ulang fokus setelah kehilangan poin."
+      ]
+    },
+    {
+      title:"Advanced Doubles Tactics & Team Coordination",
+      focus:"Mengembangkan permainan ganda yang lebih terstruktur.",
+      points:[
+        "Posisi dan pergerakan pasangan secara bersamaan.",
+        "Poaching, covering, switching, dan komunikasi.",
+        "Membaca peluang menyerang berdasarkan posisi keempat pemain.",
+        "Menghubungkan servis, return, volley, dan positioning sebagai satu strategi tim."
+      ]
+    },
+    {
+      title:"Match Adaptation & Performance Analysis",
+      focus:"Menggunakan pengalaman bermain untuk menyesuaikan strategi dan meningkatkan kualitas permainan.",
+      points:[
+        "Mengenali pola lawan selama pertandingan.",
+        "Mengidentifikasi kelemahan dan kebiasaan yang dapat dieksploitasi.",
+        "Mengubah strategi ketika pendekatan awal tidak berhasil.",
+        "Mengevaluasi pola kesalahan dan menentukan area perkembangan berikutnya."
+      ]
+    }
+  ];
+
   const isFoundation = pathway === "foundation";
+  const isAdvanced = pathway === "advanced";
   const title = isFoundation
     ? "CLASS 01 — NEWBIE TO UPPER BEGINNER"
-    : "BREAK THE LIMITS — INTERMEDIATE ENTRY LEVEL";
+    : isAdvanced
+      ? "CLASS 03 — LOWER INTERMEDIATE TO UPPER INTERMEDIATE"
+      : "BREAK THE LIMITS — INTERMEDIATE ENTRY LEVEL";
   const pathwayName = isFoundation
     ? "FOUNDATION PATHWAY"
-    : "DEVELOPMENT PATHWAY";
+    : isAdvanced
+      ? "ADVANCED DEVELOPMENT PATHWAY"
+      : "DEVELOPMENT PATHWAY";
 
   const escapeHTML = value => String(value).replace(/[&<>"']/g, ch => ({
     "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
@@ -9537,12 +9669,15 @@ window.openCurriculum = function(pathway){
 
   const developmentHTML = development.map((item,index) => `
     <article class="gmc-meet gmc-syllabus-subject">
-      <div class="gmc-meet-number">${String(index+1).padStart(2,"0")}</div>
-      <div class="gmc-meet-title">${escapeHTML(item.title)}</div>
-      <p class="gmc-syllabus-focus"><strong>Fokus:</strong> ${escapeHTML(item.focus)}</p>
-      <ul class="gmc-syllabus-points">
-        ${item.points.map(point=>`<li>${escapeHTML(point)}`).join("</li>")}
-      </ul>
+      ${isAdvanced && item.image ? `<img class="gmc-class03-thumb" src="${escapeHTML(item.image)}" alt="" loading="lazy">` : ""}
+      <div class="gmc-class-subject-content">
+        <div class="gmc-meet-number">${String(index+1).padStart(2,"0")}</div>
+        <div class="gmc-meet-title">${escapeHTML(item.title)}</div>
+        <p class="gmc-syllabus-focus"><strong>Fokus:</strong> ${escapeHTML(item.focus)}</p>
+        <ul class="gmc-syllabus-points">
+          ${item.points.map(point=>`<li>${escapeHTML(point)}</li>`).join("")}
+        </ul>
+      </div>
     </article>
   `).join("");
 
@@ -9568,6 +9703,13 @@ window.openCurriculum = function(pathway){
     <p>Materi diperkenalkan secara progresif dan dapat disesuaikan dengan kesiapan peserta.</p>
     <h3>WHAT MAKES CLASS 01 DIFFERENT?</h3>
     <p><strong>Class 01 — Newbie to Upper Beginner:</strong> Bagaimana saya bisa memukul bola, rally, dan bermain tenis?</p>
+  ` : isAdvanced ? `
+    <h3>DRAFT — ABOUT CLASS 03</h3>
+    <p>Draft eksplorasi subject untuk menguji ruang perkembangan setelah Class 02. Materi ini belum final dan akan ditinjau kembali.</p>
+    <h3>WHAT MAKES CLASS 03 DIFFERENT?</h3>
+    <p><strong>Class 01:</strong> Bagaimana saya bisa memukul bola, rally, dan bermain tenis?</p>
+    <p><strong>Class 02:</strong> Bagaimana saya bisa lebih konsisten, mengontrol bola, dan mulai membangun poin?</p>
+    <p><strong>Class 03 — Lower Intermediate to Upper Intermediate:</strong> Bagaimana saya bisa mengendalikan pola permainan, beradaptasi terhadap lawan, dan membuat keputusan lebih baik di bawah tekanan?</p>
   ` : `
     <h3>ABOUT CLASS 02</h3>
     <p>Class 02 membantu pemain bergerak dari kemampuan rally dasar menuju permainan yang lebih konsisten, terarah, dan adaptif.</p>
@@ -9587,7 +9729,7 @@ window.openCurriculum = function(pathway){
       <button type="button" class="gmc-curriculum-close" id="closeCurriculum" aria-label="Close">×</button>
       <div class="gmc-curriculum-eyebrow">${pathwayName}</div>
       <div class="gmc-curriculum-title">${title}</div>
-      <div class="gmc-curriculum-subtitle">${isFoundation ? "10 CORE SUBJECTS" : "10 CORE SUBJECTS"}</div>
+      <div class="gmc-curriculum-subtitle">${isFoundation ? "10 CORE SUBJECTS" : isAdvanced ? "10 DRAFT SUBJECTS · NOT FINAL" : "10 CORE SUBJECTS"}</div>
       <div class="gmc-curriculum-list">${isFoundation ? foundationHTML : developmentHTML}</div>
       <div class="gmc-curriculum-description">${description}</div>
       ${isFoundation ? threeAHTML : ""}
