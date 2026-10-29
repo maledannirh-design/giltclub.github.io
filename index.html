@@ -3863,6 +3863,13 @@ display:block;
   opacity:1;
   transition:opacity .35s ease;
 }
+.gmtc-community-slideshow:focus-visible{
+  outline:2px solid #E8BE68;
+  outline-offset:3px;
+}
+.gmtc-community-slideshow:hover img{
+  filter:brightness(1.04);
+}
 .gmtc-community-slide-overlay{
   position:absolute;
   inset:auto 0 0;
@@ -9814,83 +9821,144 @@ window.loadFunMatchSchedule = loadFunMatchSchedule;
 
 
 
-<!-- Dynamic GMTC community events slideshow: refreshes image list from assets/events -->
+<!-- Dynamic GMTC community events slideshow with click-to-enlarge -->
 <script>
 (function(){
   const container=document.getElementById("gmtcCommunitySlideshow");
   if(!container) return;
 
+  const directoryAPI="https://api.github.com/repos/maledannirh-design/giltclub.github.io/contents/assets/events?ref=main";
+  const basePath="./assets/events/";
+  const supported=/\.(avif|gif|jpe?g|png|webp)$/i;
+
+  // Known files provide an immediate fallback; GitHub's directory listing adds future files.
+  let images=["turnament2.webp","mandarin1.webp","promotennispilates1.webp"];
+  let current=0;
+  let rotation=null;
+  let refresh=null;
+  let renderToken=0;
+
+  container.innerHTML="";
+  container.style.cursor="zoom-in";
+  container.setAttribute("role","button");
+  container.setAttribute("tabindex","0");
+  container.setAttribute("aria-label","Open GMTC community event image");
+
   const image=document.createElement("img");
   image.className="gmtc-community-slide is-active";
   image.alt="GMTC community event";
-  image.loading="lazy";
-  image.src="./assets/events/turnament2.webp";
+  image.loading="eager";
   image.style.cssText="display:block;width:100%;height:100%;object-fit:cover;transition:opacity .35s ease;";
-  container.replaceChildren(image);
+  container.appendChild(image);
 
   const overlay=document.createElement("div");
   overlay.className="gmtc-community-slide-overlay";
   overlay.innerHTML='<span class="gmtc-community-slide-kicker">GMTC COMMUNITY</span><span class="gmtc-community-slide-caption">Events • Collaboration • Community</span>';
+  overlay.style.pointerEvents="none";
   container.appendChild(overlay);
 
-  let images=["turnament2.webp"];
-  let current=0;
-  let timer=null;
-  const extensions=/\.(avif|gif|jpe?g|png|webp)$/i;
+  const hint=document.createElement("span");
+  hint.textContent="CLICK TO ENLARGE";
+  hint.style.cssText="position:absolute;top:9px;right:9px;background:rgba(0,0,0,.72);color:#fff;padding:5px 8px;font-size:9px;letter-spacing:1px;font-weight:700;pointer-events:none;";
+  container.appendChild(hint);
+
+  let lightbox=null;
+  function imageURL(name){return basePath+encodeURIComponent(name).replace(/%2F/gi,"/");}
+
+  function showImage(index){
+    if(!images.length) return;
+    current=(index+images.length)%images.length;
+    const token=++renderToken;
+    const file=images[current];
+    const src=imageURL(file);
+    const preloader=new Image();
+    preloader.onload=function(){
+      if(token!==renderToken) return;
+      image.style.opacity="0";
+      window.setTimeout(function(){
+        if(token!==renderToken) return;
+        image.src=src;
+        image.alt="GMTC community event: "+file.replace(/\.[^.]+$/,"").replace(/[-_]/g," ");
+        image.style.opacity="1";
+        container.dataset.currentImage=file;
+        if(lightbox && lightbox.isConnected) updateLightboxImage();
+      },160);
+    };
+    preloader.onerror=function(){
+      if(images.length>1) showImage(current+1);
+    };
+    preloader.src=src;
+  }
+
+  function updateLightboxImage(){
+    const name=images[current];
+    const large=lightbox && lightbox.querySelector(".gmtc-event-lightbox-image");
+    const counter=lightbox && lightbox.querySelector(".gmtc-event-lightbox-counter");
+    if(large){large.src=imageURL(name);large.alt=name;}
+    if(counter) counter.textContent=(current+1)+" / "+images.length+" · "+name;
+  }
+
+  function closeLightbox(){
+    if(lightbox){lightbox.remove();lightbox=null;}
+    document.removeEventListener("keydown",lightboxKeyHandler);
+  }
+  function lightboxKeyHandler(event){
+    if(event.key==="Escape") closeLightbox();
+    if(event.key==="ArrowRight") showImage(current+1);
+    if(event.key==="ArrowLeft") showImage(current-1);
+  }
+
+  function openLightbox(){
+    if(lightbox) return;
+    lightbox=document.createElement("div");
+    lightbox.style.cssText="position:fixed;inset:0;z-index:10050;background:rgba(0,0,0,.94);display:flex;align-items:center;justify-content:center;padding:24px;box-sizing:border-box;";
+    lightbox.innerHTML=`
+      <button type="button" aria-label="Close image" class="gmtc-event-lightbox-close" style="position:absolute;top:18px;right:20px;background:#181818;border:1px solid #777;color:#fff;font-size:30px;line-height:1;padding:4px 12px;cursor:pointer;">×</button>
+      <button type="button" aria-label="Previous image" class="gmtc-event-lightbox-prev" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);background:#181818;border:1px solid #777;color:#fff;font-size:28px;padding:8px 13px;cursor:pointer;">‹</button>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:12px;max-width:100%;max-height:100%;">
+        <img class="gmtc-event-lightbox-image" alt="" style="max-width: min(1100px, 88vw);max-height:78vh;object-fit:contain;">
+        <div class="gmtc-event-lightbox-counter" style="color:#eee;font-size:12px;text-align:center;"></div>
+      </div>
+      <button type="button" aria-label="Next image" class="gmtc-event-lightbox-next" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:#181818;border:1px solid #777;color:#fff;font-size:28px;padding:8px 13px;cursor:pointer;">›</button>`;
+    lightbox.addEventListener("click",function(event){if(event.target===lightbox) closeLightbox();});
+    lightbox.querySelector(".gmtc-event-lightbox-close").addEventListener("click",closeLightbox);
+    lightbox.querySelector(".gmtc-event-lightbox-prev").addEventListener("click",function(){showImage(current-1);});
+    lightbox.querySelector(".gmtc-event-lightbox-next").addEventListener("click",function(){showImage(current+1);});
+    document.body.appendChild(lightbox);
+    document.addEventListener("keydown",lightboxKeyHandler);
+    updateLightboxImage();
+  }
+
+  container.addEventListener("click",openLightbox);
+  container.addEventListener("keydown",function(event){
+    if(event.key==="Enter"||event.key===" "){event.preventDefault();openLightbox();}
+  });
 
   async function discoverImages(){
     try{
-      const response=await fetch("https://api.github.com/repos/maledannirh-design/giltclub.github.io/contents/assets/events?ref=main",{cache:"no-store"});
+      const response=await fetch(directoryAPI,{cache:"no-store"});
       if(!response.ok) throw new Error("GitHub directory listing unavailable");
       const files=await response.json();
       const discovered=files
-        .filter(file=>file.type==="file"&&extensions.test(file.name))
+        .filter(file=>file.type==="file"&&supported.test(file.name))
         .map(file=>file.name)
         .sort((a,b)=>a.localeCompare(b,undefined,{numeric:true,sensitivity:"base"}));
       if(discovered.length){
+        const currentName=images[current];
         images=discovered;
-        if(current>=images.length) current=0;
-        showImage();
-        if(timer) clearInterval(timer);
-        timer=setInterval(nextImage,1500);
+        const preservedIndex=images.indexOf(currentName);
+        current=preservedIndex>=0?preservedIndex:0;
+        showImage(current);
       }
     }catch(error){
-      // Keep the known event image available if the directory API is unavailable.
-      images=["turnament2.webp"];
+      // Keep the three known images rotating if the GitHub API is temporarily unavailable.
     }
   }
 
-  function showImage(){
-    const file=images[current];
-    if(!file) return;
-    const nextSrc="./assets/events/"+encodeURIComponent(file).replace(/%2F/gi,"/");
-    const preloader=new Image();
-    preloader.onload=function(){
-      image.style.opacity="0";
-      window.setTimeout(function(){
-        image.src=nextSrc;
-        image.alt="GMTC community event: "+file.replace(/\.[^.]+$/,"").replace(/[-_]/g," ");
-        image.style.opacity="1";
-      },180);
-    };
-    preloader.onerror=function(){
-      // Skip a file that cannot load and continue the carousel.
-      nextImage();
-    };
-    preloader.src=nextSrc;
-  }
-
-  function nextImage(){
-    if(images.length<2) return;
-    current=(current+1)%images.length;
-    showImage();
-  }
-
+  showImage(current);
+  rotation=window.setInterval(function(){showImage(current+1);},1500);
   discoverImages();
-  if(timer) clearInterval(timer);
-  timer=setInterval(nextImage,1500);
-  // Refresh the directory periodically so new files added later are discovered automatically.
-  window.setInterval(discoverImages,60000);
+  refresh=window.setInterval(discoverImages,60000);
 })();
 </script>
 
