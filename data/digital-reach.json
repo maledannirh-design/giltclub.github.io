@@ -106,6 +106,12 @@
       "eventCount": 4
     }
   ],
-  "realtime": [],
-  "generatedAt": "2026-10-28T23:32:53.398Z"
+  "realtime": [
+    {
+      "country": "Indonesia",
+      "countryCode": "ID",
+      "activeUsers": 1
+    }
+  ],
+  "generatedAt": "2026-10-29T02:45:10.118Z"
 }
