@@ -4096,17 +4096,60 @@ display:block;
    end of css
 ========================== */
 
-/* Detailed Class 01 syllabus */
-.gmc-syllabus-subject{padding:18px 0;border-bottom:1px solid rgba(255,255,255,.12)}
-.gmc-syllabus-subject .gmc-meet-title{font-size:18px;line-height:1.4;margin:5px 0 10px}
-.gmc-syllabus-focus{color:#E5E5E5;line-height:1.65;margin:8px 0}
-.gmc-syllabus-points{color:#CFCFCF;line-height:1.7;padding-left:22px;margin:8px 0 0}
+/* Detailed Class 01 syllabus — match GMTC Laws of Drill modal styling */
+.gmc-syllabus-subject{
+  padding:20px;
+  margin-top:12px;
+  border:1px solid #333;
+  background:#151515;
+  color:#F4F4F4;
+}
+.gmc-syllabus-subject .gmc-meet-number,
+.gmc-syllabus-threea .gmc-meet-number{
+  color:#E8BE68;
+  font-size:11px;
+  letter-spacing:2px;
+  font-weight:700;
+  margin-bottom:8px;
+}
+.gmc-syllabus-subject .gmc-meet-title{
+  color:#FFFFFF;
+  font-size:19px;
+  line-height:1.35;
+  margin:0 0 10px;
+}
+.gmc-syllabus-focus{
+  color:#D0D0D0;
+  line-height:1.75;
+  margin:8px 0;
+}
+.gmc-syllabus-focus strong{color:#E8BE68}
+.gmc-syllabus-points{
+  color:#D0D0D0;
+  line-height:1.75;
+  padding-left:22px;
+  margin:8px 0 0;
+}
 .gmc-syllabus-points li{margin:4px 0}
-.gmc-syllabus-threea{margin-top:24px;padding:22px;border:1px solid #8D7139;background:#151515}
-.gmc-syllabus-threea h3{color:#E8BE68;margin:8px 0}
-.gmc-syllabus-threea p,.gmc-syllabus-threea ol{color:#D0D0D0;line-height:1.75}
+.gmc-syllabus-threea{
+  margin-top:20px;
+  padding:22px;
+  border:1px solid #8D7139;
+  background:#151515;
+  color:#F4F4F4;
+}
+.gmc-syllabus-threea h3{color:#FFFFFF;margin:8px 0}
+.gmc-syllabus-threea p,
+.gmc-syllabus-threea ol{color:#D0D0D0;line-height:1.75}
 .gmc-syllabus-threea ol{padding-left:22px}
-.gmc-syllabus-note{font-style:italic;color:#FFFFFF !important}
+.gmc-syllabus-threea li{margin:7px 0}
+.gmc-syllabus-threea strong{color:#E8BE68}
+.gmc-syllabus-note{
+  color:#FFFFFF !important;
+  font-style:italic;
+  border-left:2px solid #E8BE68;
+  padding-left:12px;
+}
 
 </style>
 
@@ -9411,14 +9454,15 @@ window.openCurriculum = function(pathway){
   const threeAHTML = `
     <section class="gmc-syllabus-threea">
       <div class="gmc-meet-number">GMTC MOVEMENT CONCEPT</div>
-      <h3>3A (S.E.T.)</h3>
-      <p>Kerangka gerak GMTC yang terdiri dari tiga tahap:</p>
+      <h3>3A — S.E.T. Movement Sequence</h3>
+      <p><strong>3A</strong> adalah kerangka gerak GMTC yang terdiri dari tiga tahap berurutan. <strong>S.E.T.</strong> adalah singkatan yang digunakan untuk mengingat nama ketiga tahap tersebut dalam versi Bahasa Indonesia:</p>
       <ol>
-        <li><strong>Siap-siap</strong> — persiapan tubuh dan raket sebelum bergerak atau memukul.</li>
-        <li><strong>Eksekusi</strong> — melakukan gerakan dan pukulan sesuai situasi bola.</li>
-        <li><strong>Transisi</strong> — recovery dan bersiap menghadapi bola berikutnya.</li>
+        <li><strong>S — Siap-siap:</strong> siapkan tubuh, posisi, dan raket; baca situasi bola sebelum bergerak atau memukul.</li>
+        <li><strong>E — Eksekusi:</strong> lakukan gerakan dan pukulan sesuai posisi tubuh, contact point, dan situasi bola.</li>
+        <li><strong>T — Transisi:</strong> pulihkan posisi setelah pukulan dan bersiap menghadapi bola berikutnya.</li>
       </ol>
-      <p class="gmc-syllabus-note">Ready. Execute. Transition.</p>
+      <p class="gmc-syllabus-note">Siap-siap → Eksekusi → Transisi</p>
+      <p>Ketiga tahap ini juga dapat dijelaskan sebagai persiapan, pelaksanaan pukulan, dan recovery menuju aksi berikutnya. Istilah penjelas tersebut membantu memperjelas proses yang sama, bukan konsep atau sistem yang berbeda.</p>
     </section>
   `;
 
