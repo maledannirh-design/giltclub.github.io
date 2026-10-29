@@ -9676,15 +9676,12 @@ window.openCurriculum = function(pathway){
 
   const advancedHTML = advanced.map((item,index) => `
     <article class="gmc-meet gmc-syllabus-subject">
-      ${item.image ? `<img class="gmc-class03-thumb" src="${escapeHTML(item.image)}" alt="Serve Plus One & Return Plus One tennis training" loading="lazy">` : ""}
-      <div class="gmc-class-subject-content">
-        <div class="gmc-meet-number">${String(index+1).padStart(2,"0")}</div>
-        <div class="gmc-meet-title">${escapeHTML(item.title)}</div>
-        <p class="gmc-syllabus-focus"><strong>Fokus:</strong> ${escapeHTML(item.focus)}</p>
-        <ul class="gmc-syllabus-points">
-          ${item.points.map(point=>`<li>${escapeHTML(point)}</li>`).join("")}
-        </ul>
-      </div>
+      <div class="gmc-meet-number">${String(index+1).padStart(2,"0")}</div>
+      <div class="gmc-meet-title">${escapeHTML(item.title)}</div>
+      <p class="gmc-syllabus-focus"><strong>Fokus:</strong> ${escapeHTML(item.focus)}</p>
+      <ul class="gmc-syllabus-points">
+        ${item.points.map(point=>`<li>${escapeHTML(point)}</li>`).join("")}
+      </ul>
     </article>
   `).join("");
 
