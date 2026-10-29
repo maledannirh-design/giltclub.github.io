@@ -9402,18 +9402,114 @@ window.openCurriculum = function(pathway){
   ];
 
   const development = [
-    "Advanced Skill Acquisition",
-    "Biomechanics",
-    "Movement Efficiency",
-    "Tactical Development",
-    "Athletic Development",
-    "Match Intelligence",
-    "Mental Performance",
-    "Serve & Return Systems",
-    "Point Construction",
-    "Pattern Play & Decision Making",
-    "Competitive Preparation",
-    "Player Assessment & Development Plan"
+    {
+      title:"Stroke Refinement & Contact Quality",
+      focus:"Meningkatkan kualitas kontak bola dan efisiensi pukulan yang sudah dikuasai.",
+      points:[
+        "Memperbaiki timing, spacing, dan contact point dalam situasi bola yang bervariasi.",
+        "Mengembangkan kontrol arah, tinggi lintasan, dan kedalaman bola.",
+        "Mengurangi gerakan yang tidak efisien, termasuk backswing berlebihan dan persiapan terlambat.",
+        "Meningkatkan kualitas pukulan tanpa selalu mengandalkan tenaga lebih besar."
+      ]
+    },
+    {
+      title:"Biomechanics & Efficient Stroke Production",
+      focus:"Mengembangkan pukulan yang lebih efisien melalui koordinasi tubuh dan raket.",
+      points:[
+        "Body rotation, weight transfer, dan keseimbangan saat memukul.",
+        "Menghubungkan persiapan tubuh, swing, contact point, dan follow-through.",
+        "Mengembangkan penggunaan tenaga sesuai kebutuhan pukulan.",
+        "Meningkatkan efisiensi forehand dan backhand tanpa memaksakan satu gaya teknik untuk semua pemain."
+      ]
+    },
+    {
+      title:"Dynamic Footwork, Spacing & Recovery",
+      focus:"Bergerak lebih efektif sebelum, selama, dan setelah pukulan.",
+      points:[
+        "Split step, adjustment steps, dan perubahan arah.",
+        "Menyesuaikan posisi terhadap bola yang pendek, dalam, melebar, atau menuju tubuh.",
+        "Mengatur spacing dan timing ketika bergerak.",
+        "Recovery menuju posisi siap setelah pukulan.",
+        "Menghubungkan movement, swing, dan transisi dalam rally."
+      ]
+    },
+    {
+      title:"Consistency & Rally Tolerance",
+      focus:"Mempertahankan rally lebih lama dengan kontrol dan kualitas bola yang stabil.",
+      points:[
+        "Membangun rally forehand dan backhand dengan target kontinuitas.",
+        "Menjaga margin di atas net dan kedalaman bola.",
+        "Mengontrol tempo dan tenaga agar partner dapat melanjutkan rally.",
+        "Mempertahankan kualitas pukulan ketika arah dan posisi bola berubah.",
+        "Mengurangi unforced errors dalam situasi rally yang dapat dikendalikan."
+      ]
+    },
+    {
+      title:"Direction, Depth & Spin Control",
+      focus:"Mengembangkan variasi kontrol bola untuk menciptakan rally yang lebih efektif.",
+      points:[
+        "Mengarahkan bola cross-court dan down-the-line.",
+        "Mengembangkan kontrol bola pendek, menengah, dan dalam.",
+        "Memperkenalkan topspin, flat, dan slice sesuai kebutuhan permainan.",
+        "Memahami hubungan antara lintasan bola, margin di atas net, dan kedalaman.",
+        "Mengubah arah atau karakter bola tanpa kehilangan kontrol dasar."
+      ]
+    },
+    {
+      title:"Serve Development & First-Ball Patterns",
+      focus:"Meningkatkan kualitas servis dan mempersiapkan pukulan berikutnya.",
+      points:[
+        "Mengembangkan konsistensi servis pertama dan kedua sesuai kemampuan pemain.",
+        "Memperbaiki ball toss, ritme gerakan, kontak, dan arah servis.",
+        "Memahami variasi penempatan servis.",
+        "Menghubungkan servis dengan pukulan pertama setelah servis.",
+        "Mengembangkan pola sederhana untuk memulai poin dengan lebih terencana."
+      ]
+    },
+    {
+      title:"Return of Serve & Neutralizing the Point",
+      focus:"Menghadapi servis lawan dengan respons yang stabil dan terarah.",
+      points:[
+        "Memperbaiki posisi siap dan persiapan return.",
+        "Membaca arah serta karakter servis.",
+        "Mengembangkan return dengan kontrol dan margin yang memadai.",
+        "Menghadapi servis dengan kecepatan atau penempatan yang berbeda.",
+        "Mengembalikan permainan ke situasi rally yang dapat dikendalikan."
+      ]
+    },
+    {
+      title:"Net Skills, Approach & Transition Play",
+      focus:"Menghubungkan permainan baseline dengan permainan di area depan lapangan.",
+      points:[
+        "Memilih bola yang sesuai untuk approach.",
+        "Bergerak maju setelah pukulan approach.",
+        "Mengembangkan volley dalam situasi yang lebih dinamis.",
+        "Menghadapi passing ball dan lob dasar.",
+        "Melakukan transisi antara baseline, mid-court, dan net dengan keseimbangan serta kesiapan yang baik."
+      ]
+    },
+    {
+      title:"Point Construction & Shot Selection",
+      focus:"Menggunakan pukulan berdasarkan situasi, posisi, dan tujuan permainan.",
+      points:[
+        "Mengenali kesempatan menyerang dan kebutuhan bertahan.",
+        "Mengarahkan bola ke ruang terbuka dan menjauhi posisi lawan.",
+        "Menggunakan kedalaman, arah, dan variasi tempo untuk membangun poin.",
+        "Memilih antara rally netral, approach, passing shot, dan lob sesuai situasi.",
+        "Memahami kapan mempertahankan rally lebih baik daripada memaksakan winner."
+      ]
+    },
+    {
+      title:"Match Play, Tactical Awareness & Competitive Readiness",
+      focus:"Menerapkan kemampuan teknis dan taktis dalam permainan nyata.",
+      points:[
+        "Memainkan poin dengan servis, return, rally, dan penyelesaian poin.",
+        "Menerapkan strategi dasar dalam singles dan doubles.",
+        "Memahami positioning, komunikasi pasangan, dan tanggung jawab area lapangan.",
+        "Mengelola kesalahan dan menyesuaikan keputusan selama permainan.",
+        "Mempersiapkan diri untuk mabar yang lebih kompetitif dan turnamen lokal tingkat pemula hingga menengah sesuai kesiapan pemain."
+      ]
+    }
   ];
 
   const isFoundation = pathway === "foundation";
@@ -9440,9 +9536,13 @@ window.openCurriculum = function(pathway){
   `).join("");
 
   const developmentHTML = development.map((item,index) => `
-    <article class="gmc-meet">
-      <div class="gmc-meet-number">MEET ${String(index+1).padStart(2,"0")}</div>
-      <div class="gmc-meet-title">${escapeHTML(item)}</div>
+    <article class="gmc-meet gmc-syllabus-subject">
+      <div class="gmc-meet-number">${String(index+1).padStart(2,"0")}</div>
+      <div class="gmc-meet-title">${escapeHTML(item.title)}</div>
+      <p class="gmc-syllabus-focus"><strong>Fokus:</strong> ${escapeHTML(item.focus)}</p>
+      <ul class="gmc-syllabus-points">
+        ${item.points.map(point=>`<li>${escapeHTML(point)}`).join("</li>")}
+      </ul>
     </article>
   `).join("");
 
@@ -9466,9 +9566,16 @@ window.openCurriculum = function(pathway){
     <h3>ABOUT CLASS 01</h3>
     <p>Class 01 membangun fondasi tenis dari pengenalan lapangan dan peralatan hingga rally, teknik pukulan, pergerakan, serta permainan rekreasional dasar.</p>
     <p>Materi diperkenalkan secara progresif dan dapat disesuaikan dengan kesiapan peserta.</p>
+    <h3>WHAT MAKES CLASS 01 DIFFERENT?</h3>
+    <p><strong>Class 01 — Newbie to Upper Beginner:</strong> Bagaimana saya bisa memukul bola, rally, dan bermain tenis?</p>
   ` : `
-    <h3>OUR CURRICULUM</h3>
-    <p>Class 02 berfokus pada pengembangan keterampilan, efisiensi gerak, pemahaman taktis, dan pengambilan keputusan untuk membantu pemain berkembang menuju permainan yang lebih lengkap.</p>
+    <h3>ABOUT CLASS 02</h3>
+    <p>Class 02 membantu pemain bergerak dari kemampuan rally dasar menuju permainan yang lebih konsisten, terarah, dan adaptif.</p>
+    <p>Fokus pembinaan tidak hanya pada kualitas pukulan, tetapi juga pada efisiensi gerakan, pengambilan keputusan, konstruksi poin, dan kemampuan menerapkan keterampilan dalam situasi permainan yang berubah.</p>
+    <p>Materi diperkenalkan secara progresif dan dapat disesuaikan dengan kesiapan setiap peserta.</p>
+    <h3>WHAT MAKES CLASS 02 DIFFERENT?</h3>
+    <p><strong>Class 01 — Newbie to Upper Beginner:</strong> Bagaimana saya bisa memukul bola, rally, dan bermain tenis?</p>
+    <p><strong>Class 02 — Break the Limits, Intermediate Entry Level:</strong> Bagaimana saya bisa lebih konsisten, mengontrol bola, dan mulai membangun poin?</p>
   `;
 
   const modal = document.createElement("div");
@@ -9480,7 +9587,7 @@ window.openCurriculum = function(pathway){
       <button type="button" class="gmc-curriculum-close" id="closeCurriculum" aria-label="Close">×</button>
       <div class="gmc-curriculum-eyebrow">${pathwayName}</div>
       <div class="gmc-curriculum-title">${title}</div>
-      <div class="gmc-curriculum-subtitle">${isFoundation ? "10 CORE SUBJECTS" : "12 MEETS"}</div>
+      <div class="gmc-curriculum-subtitle">${isFoundation ? "10 CORE SUBJECTS" : "10 CORE SUBJECTS"}</div>
       <div class="gmc-curriculum-list">${isFoundation ? foundationHTML : developmentHTML}</div>
       <div class="gmc-curriculum-description">${description}</div>
       ${isFoundation ? threeAHTML : ""}
