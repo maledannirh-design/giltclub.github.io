@@ -9663,7 +9663,20 @@ window.openCurriculum = function(pathway){
 
   const developmentHTML = development.map((item,index) => `
     <article class="gmc-meet gmc-syllabus-subject">
-      ${isAdvanced && item.image ? `<img class="gmc-class03-thumb" src="${escapeHTML(item.image)}" alt="" loading="lazy">` : ""}
+      <div class="gmc-class-subject-content">
+        <div class="gmc-meet-number">${String(index+1).padStart(2,"0")}</div>
+        <div class="gmc-meet-title">${escapeHTML(item.title)}</div>
+        <p class="gmc-syllabus-focus"><strong>Fokus:</strong> ${escapeHTML(item.focus)}</p>
+        <ul class="gmc-syllabus-points">
+          ${item.points.map(point=>`<li>${escapeHTML(point)}</li>`).join("")}
+        </ul>
+      </div>
+    </article>
+  `).join("");
+
+  const advancedHTML = advanced.map((item,index) => `
+    <article class="gmc-meet gmc-syllabus-subject">
+      ${item.image ? `<img class="gmc-class03-thumb" src="${escapeHTML(item.image)}" alt="Serve Plus One & Return Plus One tennis training" loading="lazy">` : ""}
       <div class="gmc-class-subject-content">
         <div class="gmc-meet-number">${String(index+1).padStart(2,"0")}</div>
         <div class="gmc-meet-title">${escapeHTML(item.title)}</div>
@@ -9698,7 +9711,7 @@ window.openCurriculum = function(pathway){
     <h3>WHAT MAKES CLASS 01 DIFFERENT?</h3>
     <p><strong>Class 01 — Newbie to Upper Beginner:</strong> Bagaimana saya bisa memukul bola, rally, dan bermain tenis?</p>
   ` : isAdvanced ? `
-    <h3>DRAFT — ABOUT CLASS 03</h3>
+    <h3>ABOUT CLASS 03</h3>
     <p>Class 03 mengembangkan kemampuan pemain untuk mengendalikan kualitas bola, membangun pola taktis, beradaptasi terhadap lawan, dan mengambil keputusan dalam situasi permainan yang lebih menantang.</p>
     <h3>WHAT MAKES CLASS 03 DIFFERENT?</h3>
     <p><strong>Class 01:</strong> Bagaimana saya bisa memukul bola, rally, dan bermain tenis?</p>
@@ -9724,7 +9737,7 @@ window.openCurriculum = function(pathway){
       <div class="gmc-curriculum-eyebrow">${pathwayName}</div>
       <div class="gmc-curriculum-title">${title}</div>
       <div class="gmc-curriculum-subtitle">${isFoundation ? "10 CORE SUBJECTS" : isAdvanced ? "10 CORE SUBJECTS" : "10 CORE SUBJECTS"}</div>
-      <div class="gmc-curriculum-list">${isFoundation ? foundationHTML : developmentHTML}</div>
+      <div class="gmc-curriculum-list">${isFoundation ? foundationHTML : isAdvanced ? advancedHTML : developmentHTML}</div>
       <div class="gmc-curriculum-description">${description}</div>
       ${isFoundation ? threeAHTML : ""}
     </div>
