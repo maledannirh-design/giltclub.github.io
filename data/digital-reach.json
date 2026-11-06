@@ -10,9 +10,9 @@
     {
       "country": "United States",
       "countryCode": "US",
-      "newUsers": 23,
-      "engagementRate": 0.13043478260869565,
-      "eventCount": 73
+      "newUsers": 25,
+      "engagementRate": 0.12,
+      "eventCount": 79
     },
     {
       "country": "India",
@@ -107,5 +107,5 @@
     }
   ],
   "realtime": [],
-  "generatedAt": "2026-11-06T03:52:38.750Z"
+  "generatedAt": "2026-11-06T11:37:47.213Z"
 }
