@@ -4,8 +4,8 @@
       "country": "Indonesia",
       "countryCode": "ID",
       "newUsers": 139,
-      "engagementRate": 0.5301724137931034,
-      "eventCount": 2584
+      "engagementRate": 0.5278969957081545,
+      "eventCount": 2589
     },
     {
       "country": "United States",
@@ -36,18 +36,18 @@
       "eventCount": 18
     },
     {
+      "country": "China",
+      "countryCode": "CN",
+      "newUsers": 2,
+      "engagementRate": 0,
+      "eventCount": 7
+    },
+    {
       "country": "Canada",
       "countryCode": "CA",
       "newUsers": 1,
       "engagementRate": 1,
       "eventCount": 11
-    },
-    {
-      "country": "China",
-      "countryCode": "CN",
-      "newUsers": 1,
-      "engagementRate": 0,
-      "eventCount": 3
     },
     {
       "country": "France",
@@ -106,12 +106,6 @@
       "eventCount": 4
     }
   ],
-  "realtime": [
-    {
-      "country": "China",
-      "countryCode": "CN",
-      "activeUsers": 1
-    }
-  ],
-  "generatedAt": "2026-11-16T01:33:05.278Z"
+  "realtime": [],
+  "generatedAt": "2026-11-16T08:31:30.136Z"
 }
