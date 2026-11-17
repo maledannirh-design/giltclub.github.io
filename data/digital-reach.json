@@ -5,7 +5,7 @@
       "countryCode": "ID",
       "newUsers": 141,
       "engagementRate": 0.5287846481876333,
-      "eventCount": 2601
+      "eventCount": 2603
     },
     {
       "country": "United States",
@@ -107,5 +107,5 @@
     }
   ],
   "realtime": [],
-  "generatedAt": "2026-11-17T10:37:57.033Z"
+  "generatedAt": "2026-11-17T19:21:28.655Z"
 }
