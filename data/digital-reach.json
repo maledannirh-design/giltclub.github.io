@@ -24,9 +24,9 @@
     {
       "country": "Sweden",
       "countryCode": "SE",
-      "newUsers": 7,
-      "engagementRate": 0.14285714285714285,
-      "eventCount": 23
+      "newUsers": 8,
+      "engagementRate": 0.125,
+      "eventCount": 26
     },
     {
       "country": "Germany",
@@ -106,12 +106,6 @@
       "eventCount": 4
     }
   ],
-  "realtime": [
-    {
-      "country": "Sweden",
-      "countryCode": "SE",
-      "activeUsers": 1
-    }
-  ],
-  "generatedAt": "2026-11-22T08:45:06.645Z"
+  "realtime": [],
+  "generatedAt": "2026-11-22T16:39:33.861Z"
 }
