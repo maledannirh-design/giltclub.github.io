@@ -4146,6 +4146,30 @@ display:block;
   padding-left:12px;
 }
 
+/* GMTC TRAINING REGISTRATION */
+.training-modal{position:fixed;inset:0;z-index:10020;display:none;align-items:center;justify-content:center;padding:16px}
+.training-modal.active{display:flex}
+.training-overlay{position:absolute;inset:0;background:rgba(0,0,0,.78);backdrop-filter:blur(7px)}
+.training-sheet{position:relative;z-index:2;width:min(94vw,560px);max-height:92vh;overflow:auto;background:#F2E8D5;color:#23352A;border-radius:22px;padding:26px 20px;box-shadow:0 24px 80px rgba(0,0,0,.4)}
+.training-close{position:absolute;right:14px;top:12px;border:0;border-radius:50%;width:38px;height:38px;background:#fff;color:#2E5D3A;font-size:25px;cursor:pointer}
+.training-eyebrow{font-size:11px;letter-spacing:2px;font-weight:700;color:#2E5D3A;text-align:center}
+.training-title{font-size:25px;text-align:center;color:#2E5D3A;margin:8px 38px 6px}
+.training-subtitle{text-align:center;font-size:13px;color:#647166;margin-bottom:20px}
+.training-class-list{display:grid;gap:10px}
+.training-class-option{display:block;width:100%;padding:16px;text-align:left;border:1px solid #d8c9ad;border-radius:14px;background:#fffaf0;color:#26392c;cursor:pointer}
+.training-class-option strong{display:block;color:#2E5D3A;margin-bottom:5px}
+.training-class-option span{font-size:12px;line-height:1.5;color:#667267}
+.training-facts{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:16px 0}
+.training-fact{padding:12px;background:#eadfc9;border-radius:10px;font-size:12px}
+.training-form{display:grid;gap:12px;margin-top:16px}
+.training-form label{display:grid;gap:6px;font-size:12px;font-weight:700;color:#38513d}
+.training-form input{width:100%;padding:13px;border:1px solid #d4c5a8;border-radius:10px;background:#fff;color:#202820;font:inherit}
+.training-submit{border:0;border-radius:12px;background:#2E7D49;color:#fff;font-weight:700;padding:14px;cursor:pointer}
+.training-submit:disabled{opacity:.6;cursor:wait}
+.training-back{border:0;background:transparent;color:#2E5D3A;font-weight:700;padding:8px 0;cursor:pointer}
+.training-note{font-size:12px;line-height:1.6;color:#59685c;background:#f8f3e8;border-radius:10px;padding:12px;margin-top:12px}
+.training-status{font-size:13px;line-height:1.6;margin-top:12px}
+@media(max-width:520px){.training-sheet{width:100%;max-height:96vh;border-radius:18px;padding:24px 16px}.training-title{font-size:22px}}
 </style>
 
   <!-- Google tag (gtag.js) -->
@@ -4277,6 +4301,15 @@ DISCOVER OUR DRILL →
 
 </div>
 
+</a>
+
+<a href="javascript:void(0);" class="experience-card" id="trainingPackageTrigger">
+  <img src="images/drill-session-cover.webp" alt="GMTC Training Packages">
+  <div class="experience-content">
+    <h3>📘 Training Packages</h3>
+    <p>Structured tennis learning pathways for adult recreational players. Choose Class 01, Class 02, or Class 03 and register for your learning journey.</p>
+    <span>EXPLORE TRAINING →</span>
+  </div>
 </a>
 
 </div>
@@ -8441,10 +8474,224 @@ import {
   collection,
   getDocs,
   query,
-  where
+  where,
+  writeBatch
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 import { db } from "./firebase-config.js";
+
+/* =========================================================
+   GMTC TRAINING PACKAGE REGISTRATION + FIREBASE TRIGGER EMAIL
+========================================================= */
+const GMTC_TRAINING_PRICE = 1400000;
+const GMTC_TRAINING_CLASSES = {
+  class01: {
+    label: "CLASS 01",
+    title: "NEWBIE TO UPPER BEGINNER",
+    summary: "Build tennis foundations, rally skills, fundamental strokes, movement, and recreational match play."
+  },
+  class02: {
+    label: "CLASS 02",
+    title: "BREAK THE LIMITS — INTERMEDIATE ENTRY LEVEL",
+    summary: "Develop consistency, ball control, movement efficiency, point construction, and better decisions."
+  },
+  class03: {
+    label: "CLASS 03",
+    title: "LOWER INTERMEDIATE TO UPPER INTERMEDIATE",
+    summary: "Develop advanced ball quality, tactical patterns, match adaptation, and decision-making under pressure."
+  }
+};
+
+function trainingEscape(value){
+  return String(value).replace(/[&<>"']/g, ch => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  }[ch]));
+}
+
+function trainingDateLocal(date){
+  const y=date.getFullYear();
+  const m=String(date.getMonth()+1).padStart(2,"0");
+  const d=String(date.getDate()).padStart(2,"0");
+  return y+"-"+m+"-"+d;
+}
+
+function openTrainingPackageModal(){
+  document.getElementById("gmcTrainingModal")?.remove();
+  const modal=document.createElement("div");
+  modal.id="gmcTrainingModal";
+  modal.className="training-modal active";
+  modal.innerHTML=`
+    <div class="training-overlay" data-training-close></div>
+    <section class="training-sheet" role="dialog" aria-modal="true" aria-labelledby="trainingModalTitle">
+      <button type="button" class="training-close" aria-label="Close" data-training-close>×</button>
+      <div class="training-eyebrow">GMTC COMMUNITY LEARNING &amp; DEVELOPMENT</div>
+      <h2 class="training-title" id="trainingModalTitle">TRAINING PACKAGES</h2>
+      <p class="training-subtitle">Choose your learning pathway</p>
+      <div id="trainingClassPicker" class="training-class-list">
+        ${Object.entries(GMTC_TRAINING_CLASSES).map(([id,item])=>`
+          <button type="button" class="training-class-option" data-training-class="${id}">
+            <strong>${item.label} — ${item.title}</strong>
+            <span>${item.summary}</span>
+          </button>
+        `).join("")}
+      </div>
+      <div id="trainingRegistrationArea"></div>
+    </section>
+  `;
+  document.body.appendChild(modal);
+  document.body.style.overflow="hidden";
+  const close=()=>{
+    modal.remove();
+    document.body.style.overflow="";
+  };
+  modal.querySelectorAll("[data-training-close]").forEach(el=>el.addEventListener("click",close));
+  modal.querySelectorAll("[data-training-class]").forEach(button=>{
+    button.addEventListener("click",()=>{
+      const classId=button.dataset.trainingClass;
+      const item=GMTC_TRAINING_CLASSES[classId];
+      const today=new Date();
+      const maxDate=new Date(today);
+      maxDate.setDate(maxDate.getDate()+10);
+      const min=trainingDateLocal(today);
+      const max=trainingDateLocal(maxDate);
+      const area=modal.querySelector("#trainingRegistrationArea");
+      area.innerHTML=`
+        <button type="button" class="training-back" id="trainingBackToClasses">← CHOOSE ANOTHER CLASS</button>
+        <div class="training-note">
+          <strong>${item.label} — ${item.title}</strong><br>
+          ${item.summary}
+        </div>
+        <div class="training-facts">
+          <div class="training-fact"><strong>Investment</strong><br>Rp 1.400.000</div>
+          <div class="training-fact"><strong>Class capacity</strong><br>4 participants</div>
+          <div class="training-fact"><strong>Session duration</strong><br>2 hours per session</div>
+          <div class="training-fact"><strong>Learning material</strong><br>Module for every session</div>
+        </div>
+        <form class="training-form" id="trainingRegistrationForm">
+          <label>Full name<input name="fullName" type="text" autocomplete="name" required maxlength="100" placeholder="Your full name"></label>
+          <label>Email address<input name="email" type="email" autocomplete="email" required maxlength="160" placeholder="name@example.com"></label>
+          <label>Mobile number / WhatsApp<input name="phone" type="tel" autocomplete="tel" required maxlength="25" placeholder="+62..."></label>
+          <label>Payment due date
+            <input name="paymentDueDate" type="date" min="${min}" max="${max}" required>
+          </label>
+          <p class="training-note">Choose a payment date from today until the next 10 days. After registration, GMTC will email your invoice and payment due date. The admin will invite you to the class group after registration.</p>
+          <button class="training-submit" type="submit">REGISTER &amp; SEND INVOICE</button>
+          <div class="training-status" id="trainingRegistrationStatus" aria-live="polite"></div>
+        </form>
+      `;
+      modal.querySelector("#trainingBackToClasses").addEventListener("click",()=>{
+        area.innerHTML="";
+      });
+      modal.querySelector("#trainingRegistrationForm").addEventListener("submit",async event=>{
+        event.preventDefault();
+        const form=event.currentTarget;
+        const submit=form.querySelector("button[type=submit]");
+        const status=modal.querySelector("#trainingRegistrationStatus");
+        const values=new FormData(form);
+        const fullName=String(values.get("fullName")||"").trim();
+        const email=String(values.get("email")||"").trim();
+        const phone=String(values.get("phone")||"").trim();
+        const dueDate=String(values.get("paymentDueDate")||"");
+        const now=new Date();
+        const selected=new Date(dueDate+"T00:00:00");
+        const today=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+        const last=new Date(today);
+        last.setDate(last.getDate()+10);
+        if(!fullName||!email||!phone||!dueDate){
+          status.textContent="Please complete all fields.";
+          return;
+        }
+        if(Number.isNaN(selected.getTime())||selected<today||selected>last){
+          status.textContent="Payment due date must be between today and the next 10 days.";
+          return;
+        }
+        submit.disabled=true;
+        submit.textContent="PROCESSING...";
+        status.textContent="Submitting your registration...";
+        const registrationId=doc(collection(db,"trainingRegistrations")).id;
+        const registrationRef=doc(db,"trainingRegistrations",registrationId);
+        const mailRef=doc(collection(db,"mail"));
+        const safeName=trainingEscape(fullName);
+        const safeClass=trainingEscape(item.label+" — "+item.title);
+        const safeDue=trainingEscape(new Date(dueDate+"T00:00:00").toLocaleDateString("id-ID",{day:"numeric",month:"long",year:"numeric"}));
+        const amount=GMTC_TRAINING_PRICE.toLocaleString("id-ID");
+        const subject="GMTC Training Registration & Invoice — "+item.label;
+        const textBody=
+          "Hello "+fullName+",\n\n"+
+          "You have successfully registered for "+item.label+" — "+item.title+".\n"+
+          "Invoice amount: Rp "+amount+"\n"+
+          "Payment due date: "+safeDue+"\n\n"+
+          "Each class has a maximum of 4 participants. Each session lasts 2 hours and participants receive a learning module for every session.\n\n"+
+          "After registration, a GMTC admin will invite you to the class group.\n\n"+
+          "Thank you,\nGMTC — Community Learning & Development";
+        const htmlBody=`
+          <div style="font-family:Arial,Helvetica,sans-serif;color:#24372b;max-width:600px;margin:auto;line-height:1.6">
+            <div style="background:#245b38;color:#fff;padding:24px;text-align:center">
+              <div style="font-size:12px;letter-spacing:2px">GMTC COMMUNITY LEARNING &amp; DEVELOPMENT</div>
+              <h1 style="margin:8px 0 0;font-size:24px">REGISTRATION CONFIRMED</h1>
+            </div>
+            <div style="padding:24px;border:1px solid #e6dfd1">
+              <p>Hello <strong>${safeName}</strong>,</p>
+              <p>You have successfully registered as a participant in:</p>
+              <h2 style="color:#245b38">${safeClass}</h2>
+              <div style="background:#f6f0e4;padding:18px;border-radius:10px">
+                <div style="font-size:12px;color:#687469">TRAINING INVOICE</div>
+                <div style="font-size:28px;font-weight:bold;color:#245b38">Rp ${amount}</div>
+                <p style="margin-bottom:0"><strong>Payment due date:</strong> ${safeDue}</p>
+              </div>
+              <h3>Training package information</h3>
+              <ul>
+                <li>Maximum 4 participants in each class</li>
+                <li>Each session lasts 2 hours</li>
+                <li>A learning module is provided for every session</li>
+              </ul>
+              <p>After your registration, a GMTC admin will contact you and invite you to the class group.</p>
+              <p>Please complete your payment by the due date stated above. Keep this email as your registration and invoice record.</p>
+              <p>Thank you,<br><strong>GMTC — Community Learning &amp; Development</strong></p>
+            </div>
+            <div style="padding:14px;text-align:center;color:#899187;font-size:11px">This is an automated email. Please do not reply.</div>
+          </div>`;
+        try{
+          const batch=writeBatch(db);
+          batch.set(registrationRef,{
+            registrationId,
+            fullName,
+            email,
+            phone,
+            classId,
+            classLabel:item.label,
+            classTitle:item.title,
+            amount:GMTC_TRAINING_PRICE,
+            currency:"IDR",
+            paymentDueDate:dueDate,
+            status:"PENDING_PAYMENT",
+            source:"main_website",
+            createdAt:serverTimestamp()
+          });
+          batch.set(mailRef,{
+            to:email,
+            message:{subject, text:textBody, html:htmlBody}
+          });
+          await batch.commit();
+          status.innerHTML="<strong>Registration submitted.</strong><br>Your invoice has been queued for email delivery. Please check your inbox and spam folder.";
+          submit.textContent="REGISTRATION SUBMITTED";
+        }catch(error){
+          console.error("GMTC training registration failed:",error);
+          status.textContent="Registration could not be submitted. Please try again or contact GMTC admin.";
+          submit.disabled=false;
+          submit.textContent="TRY AGAIN";
+        }
+      });
+    });
+  });
+}
+
+document.addEventListener("click",event=>{
+  const trigger=event.target.closest("#trainingPackageTrigger");
+  if(!trigger)return;
+  event.preventDefault();
+  openTrainingPackageModal();
+});
 
 /* =========================================================
    ACTIVITY SUMMARY — SHARED FIRESTORE SNAPSHOT
