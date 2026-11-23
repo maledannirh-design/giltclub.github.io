@@ -4177,6 +4177,15 @@ display:block;
 .training-form input{width:100%;padding:13px;border:1px solid #bcbcbc;border-radius:10px;background:#fff;color:#202820;font:inherit}
 .training-submit{border:0;border-radius:12px;background:#2E7D49;color:#fff;font-weight:700;padding:14px;cursor:pointer}
 .training-submit:disabled{opacity:.6;cursor:wait}
+.training-submit:disabled,.training-pay-now:disabled,.training-pay-later:disabled{opacity:.6;cursor:wait}
+.training-payment-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.training-pay-now,.training-pay-later{border:0;border-radius:12px;padding:14px 12px;font-size:12px;font-weight:800;cursor:pointer}
+.training-pay-now{background:#2E7D49;color:#fff}
+.training-pay-later{background:#e8dfcf;color:#26392c}
+.training-pay-later-area{margin-top:10px}
+#trainingPayLaterArea{display:grid;gap:12px;margin-top:14px}
+#trainingPayLaterArea[hidden]{display:none}
+
 .training-back{border:0;background:transparent;color:#a7c9ad;font-weight:700;padding:8px 0;cursor:pointer}
 .training-note{font-size:12px;line-height:1.6;color:#425346;background:#f2eadb;border-radius:10px;padding:12px;margin-top:12px}
 .training-status{font-size:13px;line-height:1.6;margin-top:12px;color:#d9f2dc}
@@ -8618,11 +8627,17 @@ function openTrainingPackageModal(){
             <label>Full name<input name="fullName" type="text" autocomplete="name" required maxlength="100" placeholder="Your full name"></label>
             <label>Email address<input name="email" type="email" autocomplete="email" required maxlength="160" placeholder="name@example.com"></label>
             <label>Mobile number / WhatsApp<input name="phone" type="tel" autocomplete="tel" required maxlength="25" placeholder="+62..."></label>
-            <label>Payment due date
-              <input name="paymentDueDate" type="date" min="${min}" max="${max}" required>
-            </label>
-            <p class="training-note">Choose a payment date from today until the next 10 days. Your invoice will be sent automatically after successful registration. A GMTC admin will invite you to the class group.</p>
-            <button class="training-submit" type="submit">REGISTER &amp; SEND INVOICE</button>
+            <div class="training-note"><strong>Choose your payment option</strong><br>Pay now to request the payment link through GMTC Concierge, or pay later by choosing your preferred payment date.</div>
+            <div class="training-payment-actions">
+              <button class="training-pay-now" type="button" id="trainingPayNow">PAY NOW → WHATSAPP CONCIERGE</button>
+              <button class="training-pay-later" type="button" id="trainingPayLater">PAY LATER — CHOOSE DATE</button>
+            </div>
+            <div id="trainingPayLaterArea" hidden>
+              <label>Payment due date
+                <input name="paymentDueDate" id="trainingPaymentDueDate" type="date" min="${min}" max="${max}">
+              </label>
+              <button class="training-submit" type="button" id="trainingConfirmPayLater">CONFIRM &amp; SEND INVOICE</button>
+            </div>
             <div class="training-status" id="trainingRegistrationStatus" aria-live="polite"></div>
           </form>
         </div>
@@ -8630,44 +8645,88 @@ function openTrainingPackageModal(){
       modal.querySelector("#trainingBackToPackages").addEventListener("click",()=>{
         area.innerHTML="";
       });
-      modal.querySelector("#trainingRegistrationForm").addEventListener("submit",async event=>{
-        event.preventDefault();
-        const form=event.currentTarget;
-        const submit=form.querySelector("button[type=submit]");
-        const status=modal.querySelector("#trainingRegistrationStatus");
+      const form=modal.querySelector("#trainingRegistrationForm");
+      const status=modal.querySelector("#trainingRegistrationStatus");
+      const payNow=modal.querySelector("#trainingPayNow");
+      const payLater=modal.querySelector("#trainingPayLater");
+      const payLaterArea=modal.querySelector("#trainingPayLaterArea");
+      const confirmPayLater=modal.querySelector("#trainingConfirmPayLater");
+      const collectDetails=()=>{
         const values=new FormData(form);
-        const fullName=String(values.get("fullName")||"").trim();
-        const email=String(values.get("email")||"").trim();
-        const phone=String(values.get("phone")||"").trim();
-        const dueDate=String(values.get("paymentDueDate")||"");
-        const selected=new Date(dueDate+"T00:00:00");
-        const todayDate=new Date();
-        const today=new Date(todayDate.getFullYear(),todayDate.getMonth(),todayDate.getDate());
-        const last=new Date(today);
-        last.setDate(last.getDate()+10);
-        if(!fullName||!email||!phone||!dueDate){
-          status.textContent="Please complete all fields.";
-          return;
+        return {
+          fullName:String(values.get("fullName")||"").trim(),
+          email:String(values.get("email")||"").trim(),
+          phone:String(values.get("phone")||"").trim()
+        };
+      };
+      const validateDetails=()=>{
+        if(!form.reportValidity())return null;
+        return collectDetails();
+      };
+      const setBusy=(busy,label)=>{
+        [payNow,payLater,confirmPayLater].forEach(button=>{
+          if(button)button.disabled=busy;
+        });
+        if(busy)status.textContent=label||"Submitting your registration...";
+      };
+      const saveRegistration=async(paymentMethod,dueDate)=>{
+        const details=validateDetails();
+        if(!details)return false;
+        if(paymentMethod==="PAY_LATER"){
+          const dueInput=modal.querySelector("#trainingPaymentDueDate");
+          if(!dueInput.value){
+            dueInput.reportValidity();
+            status.textContent="Please select your payment due date.";
+            return false;
+          }
+          const selected=new Date(dueInput.value+"T00:00:00");
+          const now=new Date();
+          const today=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+          const last=new Date(today);
+          last.setDate(last.getDate()+10);
+          if(Number.isNaN(selected.getTime())||selected<today||selected>last){
+            status.textContent="Payment due date must be between today and the next 10 days.";
+            return false;
+          }
+          dueDate=dueInput.value;
         }
-        if(Number.isNaN(selected.getTime())||selected<today||selected>last){
-          status.textContent="Payment due date must be between today and the next 10 days.";
-          return;
+        let waWindow=null;
+        if(paymentMethod==="PAY_NOW"){
+          waWindow=window.open("about:blank","_blank");
         }
-        submit.disabled=true;
-        submit.textContent="PROCESSING...";
-        status.textContent="Submitting your registration...";
+        setBusy(true,"Submitting your registration...");
         try{
           await registerTrainingParticipant({
-            fullName,
-            email,
-            phone,
+            ...details,
             classId,
             packageId,
-            paymentDueDate:dueDate
+            paymentMethod,
+            paymentDueDate:dueDate||""
           });
-          status.innerHTML="<strong>Registration submitted.</strong><br>Your package invoice email has been queued. Please check your inbox and spam folder.";
-          submit.textContent="REGISTRATION SUBMITTED";
+          if(paymentMethod==="PAY_NOW"){
+            const message=[
+              "Hello GMTC Admin / Concierge,",
+              "I have registered for a GMTC Training Package and would like to request the payment link.",
+              "",
+              "Name: "+details.fullName,
+              "Class: "+item.label+" — "+item.title,
+              "Package: "+selectedPackage.label,
+              "Program: "+selectedPackage.meets+" meets",
+              "Amount: Rp "+selectedPackage.amount.toLocaleString("id-ID"),
+              "",
+              "Please share the payment instructions. Thank you."
+            ].join("\n");
+            const waUrl="https://wa.me/"+GMTC_ADMIN_WA+"?text="+encodeURIComponent(message);
+            if(waWindow)waWindow.location.href=waUrl;
+            else window.location.href=waUrl;
+            status.innerHTML="<strong>Registration saved.</strong><br>Continue in WhatsApp to request your payment link.";
+            return true;
+          }
+          status.innerHTML="<strong>Thank you for registering!</strong><br>Your invoice has been sent to your email. Please make payment on the date you selected and check your inbox or spam folder. A GMTC admin will invite you to the class group.";
+          confirmPayLater.textContent="INVOICE EMAIL QUEUED";
+          return true;
         }catch(error){
+          if(waWindow)waWindow.close();
           console.error("GMTC training registration failed:",error);
           const code=error?.code||"";
           status.textContent=code.includes("resource-exhausted")
@@ -8675,10 +8734,17 @@ function openTrainingPackageModal(){
             :code.includes("already-exists")
               ?"This email is already registered for this class."
               :"Registration could not be submitted. Please try again or contact GMTC admin.";
-          submit.disabled=false;
-          submit.textContent="TRY AGAIN";
+          setBusy(false);
+          return false;
         }
+      };
+      payNow.addEventListener("click",()=>saveRegistration("PAY_NOW",""));
+      payLater.addEventListener("click",()=>{
+        payLaterArea.hidden=false;
+        modal.querySelector("#trainingPaymentDueDate").focus();
+        status.textContent="Choose your payment date (today through the next 10 days), then confirm.";
       });
+      confirmPayLater.addEventListener("click",()=>saveRegistration("PAY_LATER",""));
     });
   });
 }
