@@ -8594,6 +8594,16 @@ const GMTC_TRAINING_CLASSES = {
   }
 };
 
+function trainingEscape(value){
+  return String(value??"").replace(/[&<>"']/g,char=>({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#39;"
+  })[char]);
+}
+
 function trainingDateLocal(date){
   const y=date.getFullYear();
   const m=String(date.getMonth()+1).padStart(2,"0");
@@ -8714,7 +8724,6 @@ function openTrainingPackageModal(){
     const invoiceDate=now.toLocaleDateString("id-ID",{day:"2-digit",month:"long",year:"numeric"});
     const invoiceNumber="GMTC-TRN-"+now.getFullYear()+String(now.getMonth()+1).padStart(2,"0")+String(now.getDate()).padStart(2,"0")+"-"+Math.random().toString(36).slice(2,7).toUpperCase();
     const invoice={number:invoiceNumber,date:invoiceDate};
-    setProgress(3);
     stage.innerHTML=`
       <div class="training-step-panel">
         <div class="training-invoice">
@@ -8747,6 +8756,7 @@ function openTrainingPackageModal(){
           <div class="training-status" id="trainingInvoiceStatus"></div>
         </div>
       </div>`;
+    setProgress(3);
     modal.querySelector("#trainingInvoicePayNow").addEventListener("click",()=>openTrainingQr(details,invoice,item,pkg));
     const duePanel=modal.querySelector("#trainingDuePanel");
     modal.querySelector("#trainingInvoicePayLater").addEventListener("click",()=>{
