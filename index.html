@@ -8474,11 +8474,13 @@ import {
   collection,
   getDocs,
   query,
-  where,
-  writeBatch
+  where
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 import { db } from "./firebase-config.js";
+import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-functions.js";
+const trainingFunctions = getFunctions(undefined, "asia-southeast1");
+const registerTrainingParticipant = httpsCallable(trainingFunctions, "registerTrainingParticipant");
 
 /* =========================================================
    GMTC TRAINING PACKAGE REGISTRATION + FIREBASE TRIGGER EMAIL
@@ -8608,72 +8610,15 @@ function openTrainingPackageModal(){
         submit.disabled=true;
         submit.textContent="PROCESSING...";
         status.textContent="Submitting your registration...";
-        const registrationId=doc(collection(db,"trainingRegistrations")).id;
-        const registrationRef=doc(db,"trainingRegistrations",registrationId);
-        const mailRef=doc(collection(db,"mail"));
-        const safeName=trainingEscape(fullName);
-        const safeClass=trainingEscape(item.label+" — "+item.title);
-        const safeDue=trainingEscape(new Date(dueDate+"T00:00:00").toLocaleDateString("id-ID",{day:"numeric",month:"long",year:"numeric"}));
-        const amount=GMTC_TRAINING_PRICE.toLocaleString("id-ID");
-        const subject="GMTC Training Registration & Invoice — "+item.label;
-        const textBody=
-          "Hello "+fullName+",\n\n"+
-          "You have successfully registered for "+item.label+" — "+item.title+".\n"+
-          "Invoice amount: Rp "+amount+"\n"+
-          "Payment due date: "+safeDue+"\n\n"+
-          "Each class has a maximum of 4 participants. Each session lasts 2 hours and participants receive a learning module for every session.\n\n"+
-          "After registration, a GMTC admin will invite you to the class group.\n\n"+
-          "Thank you,\nGMTC — Community Learning & Development";
-        const htmlBody=`
-          <div style="font-family:Arial,Helvetica,sans-serif;color:#24372b;max-width:600px;margin:auto;line-height:1.6">
-            <div style="background:#245b38;color:#fff;padding:24px;text-align:center">
-              <div style="font-size:12px;letter-spacing:2px">GMTC COMMUNITY LEARNING &amp; DEVELOPMENT</div>
-              <h1 style="margin:8px 0 0;font-size:24px">REGISTRATION CONFIRMED</h1>
-            </div>
-            <div style="padding:24px;border:1px solid #e6dfd1">
-              <p>Hello <strong>${safeName}</strong>,</p>
-              <p>You have successfully registered as a participant in:</p>
-              <h2 style="color:#245b38">${safeClass}</h2>
-              <div style="background:#f6f0e4;padding:18px;border-radius:10px">
-                <div style="font-size:12px;color:#687469">TRAINING INVOICE</div>
-                <div style="font-size:28px;font-weight:bold;color:#245b38">Rp ${amount}</div>
-                <p style="margin-bottom:0"><strong>Payment due date:</strong> ${safeDue}</p>
-              </div>
-              <h3>Training package information</h3>
-              <ul>
-                <li>Maximum 4 participants in each class</li>
-                <li>Each session lasts 2 hours</li>
-                <li>A learning module is provided for every session</li>
-              </ul>
-              <p>After your registration, a GMTC admin will contact you and invite you to the class group.</p>
-              <p>Please complete your payment by the due date stated above. Keep this email as your registration and invoice record.</p>
-              <p>Thank you,<br><strong>GMTC — Community Learning &amp; Development</strong></p>
-            </div>
-            <div style="padding:14px;text-align:center;color:#899187;font-size:11px">This is an automated email. Please do not reply.</div>
-          </div>`;
         try{
-          const batch=writeBatch(db);
-          batch.set(registrationRef,{
-            registrationId,
+          const result=await registerTrainingParticipant({
             fullName,
             email,
             phone,
             classId,
-            classLabel:item.label,
-            classTitle:item.title,
-            amount:GMTC_TRAINING_PRICE,
-            currency:"IDR",
-            paymentDueDate:dueDate,
-            status:"PENDING_PAYMENT",
-            source:"main_website",
-            createdAt:serverTimestamp()
+            paymentDueDate:dueDate
           });
-          batch.set(mailRef,{
-            to:email,
-            message:{subject, text:textBody, html:htmlBody}
-          });
-          await batch.commit();
-          status.innerHTML="<strong>Registration submitted.</strong><br>Your invoice has been queued for email delivery. Please check your inbox and spam folder.";
+          status.innerHTML="<strong>Registration submitted.</strong><br>Your invoice email has been queued. Please check your inbox and spam folder.";
           submit.textContent="REGISTRATION SUBMITTED";
         }catch(error){
           console.error("GMTC training registration failed:",error);
