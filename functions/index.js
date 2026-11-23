@@ -205,7 +205,7 @@ exports.registerTrainingParticipant = onCall(
     if (!fullName || fullName.length > 100) {
       throw new HttpsError("invalid-argument", "Please enter a valid full name.");
     }
-    if (!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email) || email.length > 160) {
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 160) {
       throw new HttpsError("invalid-argument", "Please enter a valid email address.");
     }
     if (!phone || phone.length > 25) {
@@ -219,7 +219,7 @@ exports.registerTrainingParticipant = onCall(
     if (!selectedPackage) {
       throw new HttpsError("invalid-argument", "Please select a valid package for this class.");
     }
-    if (!/^\\d{4}-\\d{2}-\\d{2}$/.test(paymentDueDate)) {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(paymentDueDate)) {
       throw new HttpsError("invalid-argument", "Please select a valid payment due date.");
     }
 
@@ -267,15 +267,15 @@ exports.registerTrainingParticipant = onCall(
       const amountLabel = "Rp " + amount.toLocaleString("id-ID");
       const subject = "GMTC Training Registration & Invoice — " + selectedClass.label + " (" + selectedPackage.label + ")";
       const textBody =
-        "Hello " + fullName + ",\\n\\n" +
-        "You have successfully registered for " + selectedClass.label + " — " + selectedClass.title + ".\\n" +
-        "Selected package: " + selectedPackage.label + "\\n" +
-        "Program: " + meetCount + " meets\\n" +
-        "Invoice amount: " + amountLabel + "\\n" +
-        "Payment due date: " + dueLabel + "\\n\\n" +
-        "Each class has a maximum of 4 participants. Each meet lasts 2 hours and participants receive a learning module for every meet.\\n\\n" +
-        "After registration, a GMTC admin will invite you to the class group.\\n\\n" +
-        "Thank you,\\nGMTC — Community Learning & Development";
+        "Hello " + fullName + ",\n\n" +
+        "You have successfully registered for " + selectedClass.label + " — " + selectedClass.title + ".\n" +
+        "Selected package: " + selectedPackage.label + "\n" +
+        "Program: " + meetCount + " meets\n" +
+        "Invoice amount: " + amountLabel + "\n" +
+        "Payment due date: " + dueLabel + "\n\n" +
+        "Each class has a maximum of 4 participants. Each meet lasts 2 hours and participants receive a learning module for every meet.\n\n" +
+        "After registration, a GMTC admin will invite you to the class group.\n\n" +
+        "Thank you,\nGMTC — Community Learning & Development";
       const htmlBody = `
         <div style="font-family:Arial,Helvetica,sans-serif;color:#24372b;max-width:600px;margin:auto;line-height:1.6">
           <div style="background:#245b38;color:#fff;padding:24px;text-align:center">
