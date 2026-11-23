@@ -8727,10 +8727,13 @@ function openTrainingPackageModal(){
           <div class="training-invoice-value"><strong>${trainingEscape(details.fullName)}</strong><br>${trainingEscape(details.address)}<br>${trainingEscape(details.email)}<br>${trainingEscape(details.phone)}</div>
           <table class="training-invoice-table">
             <thead><tr><th>Description</th><th>Qty</th><th style="text-align:right">Amount</th></tr></thead>
-            <tbody><tr><td><strong>${item.label}</strong><br>${item.title}<br>${pkg.label}<br><span style="font-size:10px;color:#6b776d">${pkg.meets} meets · 2 hours per meet · learning module each meet</span></td><td>${pkg.meets} meets</td><td style="text-align:right">Rp ${pkg.amount.toLocaleString("id-ID")}</td></tr></tbody>
+            <tbody>
+              <tr><td><strong>${item.label}</strong><br>${item.title}<br>${pkg.label}<br><span style="font-size:10px;color:#6b776d">${pkg.meets} meets · 2 hours per meet · learning module each meet</span></td><td>${pkg.meets} meets</td><td style="text-align:right">Rp ${pkg.amount.toLocaleString("id-ID")}</td></tr>
+              <tr><td>GMTC Club Jersey Bonus <span style="font-size:10px;color:#6b776d">(Pay Now option only)</span></td><td>1</td><td style="text-align:right">FREE*</td></tr>
+            </tbody>
           </table>
           <div class="training-invoice-total"><strong>TOTAL PAYMENT</strong><strong>Rp ${pkg.amount.toLocaleString("id-ID")}</strong></div>
-          <div class="training-invoice-foot">Maximum 4 participants per class. A GMTC admin will contact you regarding payment confirmation and class group invitation. This is a registration invoice / payment request, not a tax invoice.</div>
+          <div class="training-invoice-foot">*Free club jersey is a bonus for the Pay Now option only. Maximum 4 participants per class. A GMTC admin will contact you regarding payment confirmation and class group invitation. This is a registration invoice / payment request, not a tax invoice.</div>
         </div>
         <div class="training-invoice-actions">
           <button type="button" class="training-invoice-paynow" id="trainingInvoicePayNow">PAY NOW · FREE CLUB JERSEY</button>
@@ -8789,6 +8792,7 @@ function openTrainingPackageModal(){
         <div class="training-qr-amount">Rp ${pkg.amount.toLocaleString("id-ID")}</div>
         <div class="training-qr-timer">PAYMENT EXPIRES IN <strong id="trainingQrTimer">15:00</strong></div>
         <img class="training-qr-code" src="https://raw.githubusercontent.com/maledannirh-design/giltclub-mobile/main/app/image/qris_deposit.webp" alt="GMTC QRIS payment">
+        <div style="font-size:10px;color:#66756a;margin:-4px 0 10px">If your banking app asks for an amount, enter the exact total shown above.</div>
         <div class="training-jersey-box">
           <div class="training-jersey-title">FREE GMTC CLUB JERSEY</div>
           <div class="training-jersey-images">
@@ -8846,7 +8850,7 @@ function openTrainingPackageModal(){
       window.open(url,"_blank");
       popup.querySelector("#trainingQrStatus").textContent="WhatsApp opened. Please press Send to contact GMTC admin.";
     };
-    popup.querySelector("#trainingQrConfirm").addEventListener("click",()=>contactAdmin(true));
+    popup.querySelector("#trainingQrConfirm").addEventListener("click",()=>{setProgress(4);contactAdmin(true);});
     popup.querySelector("#trainingQrAdmin").addEventListener("click",()=>contactAdmin(false));
   };
 
