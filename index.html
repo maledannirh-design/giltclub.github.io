@@ -4196,6 +4196,60 @@ display:block;
 .training-status{font-size:13px;line-height:1.6;margin-top:12px;color:#d9f2dc}
 .training-form-wrap{max-width:640px;margin:12px auto 0}
 .training-form-title{font-size:22px;color:#fff;margin:12px 0}
+
+.training-progress{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:18px auto 24px;max-width:760px}
+.training-progress-step{position:relative;text-align:center;color:#818181;font-size:11px;font-weight:700}
+.training-progress-step:before{content:attr(data-number);display:grid;place-items:center;width:28px;height:28px;border-radius:50%;margin:0 auto 7px;background:#343434;color:#bbb;border:1px solid #555}
+.training-progress-step:after{content:"";position:absolute;height:2px;background:#454545;top:13px;left:calc(50% + 19px);width:calc(100% - 38px)}
+.training-progress-step:last-child:after{display:none}
+.training-progress-step.active,.training-progress-step.done{color:#d8f0dd}
+.training-progress-step.active:before,.training-progress-step.done:before{background:#2e7d49;color:#fff;border-color:#55a66d}
+.training-progress-step.done:before{content:"✓"}
+.training-step-panel{max-width:760px;margin:0 auto}
+.training-join-card{background:#202020;border:1px solid #444;border-radius:18px;padding:24px}
+.training-join-card h3{font-size:22px;margin:0 0 8px;color:#fff}
+.training-join-card p{color:#c7c7c7;font-size:13px;line-height:1.6}
+.training-invoice{background:#fff;color:#202820;border-radius:12px;padding:28px;max-width:760px;margin:12px auto 0}
+.training-invoice-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;border-bottom:2px solid #2e6a43;padding-bottom:18px}
+.training-invoice-brand{font-size:20px;font-weight:900;color:#245b38}
+.training-invoice-meta{text-align:right;font-size:11px;line-height:1.7;color:#59665c}
+.training-invoice-title{font-size:24px;font-weight:900;letter-spacing:1px;margin:20px 0 4px;color:#245b38}
+.training-invoice-value{font-size:12px;line-height:1.55;color:#25352a;overflow-wrap:anywhere}
+.training-invoice-table{width:100%;border-collapse:collapse;margin:18px 0}
+.training-invoice-table th,.training-invoice-table td{padding:11px 8px;border-bottom:1px solid #e4e9e3;text-align:left;font-size:12px}
+.training-invoice-table th{font-size:10px;color:#68776c;text-transform:uppercase}
+.training-invoice-total{display:flex;justify-content:space-between;align-items:center;background:#eef4ee;border-radius:10px;padding:16px;margin-top:14px;color:#214e31}
+.training-invoice-total strong:last-child{font-size:21px}
+.training-invoice-foot{font-size:10px;line-height:1.6;color:#6b776d;margin-top:20px;border-top:1px solid #e4e9e3;padding-top:12px}
+.training-invoice-actions{max-width:760px;margin:16px auto 0;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.training-invoice-paynow,.training-invoice-paylater{border:0;border-radius:12px;padding:15px 12px;font-size:12px;font-weight:900;cursor:pointer}
+.training-invoice-paynow{background:#2e7d49;color:white}
+.training-invoice-paylater{background:#eee5d6;color:#294432}
+.training-due-panel{max-width:760px;margin:12px auto 0;background:#eee5d6;padding:16px;border-radius:12px;color:#26392c}
+.training-due-panel label{display:grid;gap:8px;font-size:12px;font-weight:800}
+.training-due-panel input{padding:12px;border:1px solid #c8c1b3;border-radius:9px;background:#fff;color:#222}
+.training-qr-overlay{position:fixed;inset:0;z-index:10040;background:rgba(0,0,0,.78);display:flex;align-items:center;justify-content:center;padding:14px}
+.training-qr-sheet{position:relative;background:#fff;color:#24452f;border-radius:20px;width:min(100%,390px);max-height:94vh;overflow:auto;padding:22px 18px;text-align:center}
+.training-qr-close{position:absolute;right:10px;top:10px;border:0;border-radius:50%;width:32px;height:32px;background:#eee5d6;color:#245b38;font-size:20px;cursor:pointer}
+.training-qr-eyebrow{font-size:10px;letter-spacing:2px;font-weight:900;color:#47734f}
+.training-qr-title{font-size:23px;font-weight:900;margin:8px 0}
+.training-qr-amount{font-size:30px;font-weight:900;margin:10px 0;color:#245b38}
+.training-qr-timer{background:#f2eadb;border-radius:10px;padding:9px;font-size:10px;font-weight:800;display:flex;justify-content:space-between;margin:12px 0}
+.training-qr-code{width:190px;height:230px;object-fit:contain;border:1px solid #ddd;border-radius:14px;padding:8px;margin:4px auto 12px;display:block}
+.training-jersey-box{background:#f7f3eb;border-radius:12px;padding:12px;margin:10px 0;text-align:left}
+.training-jersey-images{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.training-jersey-images img{width:100%;height:116px;object-fit:contain;background:#fff;border-radius:8px;padding:5px}
+.training-jersey-title{font-size:12px;font-weight:900;color:#245b38;margin-bottom:4px}
+.training-jersey-sizes{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:10px}
+.training-jersey-size{display:flex;align-items:center;gap:6px;background:#fff;border:1px solid #d8d8d8;border-radius:8px;padding:8px;font-size:11px;font-weight:800;color:#26392c}
+.training-jersey-size input{accent-color:#2e7d49}
+.training-qr-actions{display:grid;gap:8px;margin-top:12px}
+.training-qr-confirm,.training-qr-admin{border:0;border-radius:10px;padding:13px;font-size:11px;font-weight:900;cursor:pointer}
+.training-qr-confirm{background:#2e6a43;color:#fff}
+.training-qr-admin{background:#f0e6d5;color:#285638}
+.training-qr-status{font-size:11px;line-height:1.5;margin-top:10px;color:#49644f}
+@media(max-width:600px){.training-invoice{padding:18px}.training-invoice-head{flex-direction:column}.training-invoice-meta{text-align:left}.training-invoice-actions{grid-template-columns:1fr}.training-progress{gap:2px}.training-progress-step{font-size:9px}.training-join-card{padding:17px}}
+
 @media(max-width:800px){.training-class-list{grid-template-columns:1fr}.training-plan-card{padding:18px}.training-plan-level,.training-plan-desc{min-height:0}.training-sheet{width:100%;max-height:96vh;padding:24px 16px}.training-title{font-size:24px}.training-modal{padding:8px}}
 </style>
 
@@ -8565,7 +8619,36 @@ function openTrainingPackageModal(){
       <div class="training-eyebrow">GMTC COMMUNITY LEARNING &amp; DEVELOPMENT</div>
       <h2 class="training-title" id="trainingModalTitle">CHOOSE YOUR CLASS PACKAGE</h2>
       <p class="training-subtitle">Structured tennis development · Small class · Maximum 4 participants</p>
-      <div id="trainingClassPicker" class="training-class-list">
+      <div class="training-progress" id="trainingProgress">
+        <div class="training-progress-step active" data-number="1">Pilih Paket</div>
+        <div class="training-progress-step" data-number="2">Isi Data</div>
+        <div class="training-progress-step" data-number="3">Atur Payment</div>
+        <div class="training-progress-step" data-number="4">Selesai</div>
+      </div>
+      <div id="trainingStageContent"></div>
+    </section>`;
+  document.body.appendChild(modal);
+  document.body.style.overflow="hidden";
+
+  const close=()=>{
+    modal.remove();
+    document.body.style.overflow="";
+    document.getElementById("trainingQrPopup")?.remove();
+  };
+  modal.querySelectorAll("[data-training-close]").forEach(el=>el.addEventListener("click",close));
+
+  const setProgress=(step)=>{
+    modal.querySelectorAll(".training-progress-step").forEach((el,index)=>{
+      el.classList.toggle("active",index+1===step);
+      el.classList.toggle("done",index+1<step);
+    });
+  };
+  const stage=modal.querySelector("#trainingStageContent");
+
+  const renderPackages=()=>{
+    setProgress(1);
+    stage.innerHTML=`
+      <div class="training-class-list">
         ${Object.entries(GMTC_TRAINING_CLASSES).map(([classId,item],index)=>`
           <article class="training-plan-card ${index===1?"featured":""} ${classId==="class03"?"class03-green":""}">
             <div class="training-plan-name">${item.label}</div>
@@ -8578,155 +8661,197 @@ function openTrainingPackageModal(){
                   <span class="training-package-price">Rp ${pkg.amount.toLocaleString("id-ID")}</span>
                   <span class="training-package-meets">${pkg.meets} × MEET</span>
                   <span class="training-package-choose">SELECT PACKAGE →</span>
-                </button>
-              `).join("")}
+                </button>`).join("")}
             </div>
-            <ul class="training-plan-features">
-              <li>Maximum 4 participants</li>
-              <li>2 hours per meet</li>
-              <li>Learning module every meet</li>
-            </ul>
-          </article>
-        `).join("")}
-      </div>
-      <div id="trainingRegistrationArea"></div>
-    </section>
-  `;
-  document.body.appendChild(modal);
-  document.body.style.overflow="hidden";
-
-  const close=()=>{
-    modal.remove();
-    document.body.style.overflow="";
+            <ul class="training-plan-features"><li>Maximum 4 participants</li><li>2 hours per meet</li><li>Learning module every meet</li></ul>
+          </article>`).join("")}
+      </div>`;
+    stage.querySelectorAll("[data-training-package]").forEach(button=>{
+      button.addEventListener("click",()=>renderJoin(button.dataset.trainingClass,button.dataset.trainingPackage));
+    });
   };
-  modal.querySelectorAll("[data-training-close]").forEach(el=>el.addEventListener("click",close));
 
-  modal.querySelectorAll("[data-training-package]").forEach(button=>{
-    button.addEventListener("click",()=>{
-      const classId=button.dataset.trainingClass;
-      const packageId=button.dataset.trainingPackage;
-      const item=GMTC_TRAINING_CLASSES[classId];
-      const selectedPackage=item?.packages.find(pkg=>pkg.id===packageId);
-      if(!selectedPackage)return;
-
-      const today=new Date();
-      const maxDate=new Date(today);
-      maxDate.setDate(maxDate.getDate()+10);
-      const min=trainingDateLocal(today);
-      const max=trainingDateLocal(maxDate);
-      const area=modal.querySelector("#trainingRegistrationArea");
-
-      area.innerHTML=`
-        <div class="training-form-wrap">
-          <button type="button" class="training-back" id="trainingBackToPackages">← BACK TO PACKAGES</button>
-          <div class="training-note">
-            <strong>${item.label} — ${item.title}</strong><br>
-            ${selectedPackage.label} · ${selectedPackage.meets} meets · Rp ${selectedPackage.amount.toLocaleString("id-ID")}<br>
-            ${item.summary}
-          </div>
-          <div class="training-facts">
-            <div class="training-fact"><strong>Package fee</strong><br>Rp ${selectedPackage.amount.toLocaleString("id-ID")}</div>
-            <div class="training-fact"><strong>Program duration</strong><br>${selectedPackage.meets} meets</div>
-            <div class="training-fact"><strong>Class capacity</strong><br>Maximum 4 participants</div>
-            <div class="training-fact"><strong>Meet duration</strong><br>2 hours per meet</div>
-            <div class="training-fact"><strong>Learning material</strong><br>Module every meet</div>
-          </div>
-          <form class="training-form" id="trainingRegistrationForm">
+  const renderJoin=(classId,packageId)=>{
+    const item=GMTC_TRAINING_CLASSES[classId];
+    const pkg=item?.packages.find(x=>x.id===packageId);
+    if(!pkg)return;
+    setProgress(2);
+    stage.innerHTML=`
+      <div class="training-step-panel">
+        <button type="button" class="training-back" id="trainingBackPackages">← BACK TO PACKAGES</button>
+        <div class="training-join-card">
+          <div class="training-eyebrow" style="text-align:left">STEP 2 · PARTICIPANT INFORMATION</div>
+          <h3>JOIN ${item.label}</h3>
+          <p>${item.title}<br>${pkg.label} · ${pkg.meets} meets · Rp ${pkg.amount.toLocaleString("id-ID")}</p>
+          <p>${item.summary}</p>
+          <form class="training-form" id="trainingJoinForm">
             <label>Full name<input name="fullName" type="text" autocomplete="name" required maxlength="100" placeholder="Your full name"></label>
+            <label>Address<input name="address" type="text" autocomplete="street-address" required maxlength="220" placeholder="Street, city, province"></label>
             <label>Email address<input name="email" type="email" autocomplete="email" required maxlength="160" placeholder="name@example.com"></label>
             <label>Mobile number / WhatsApp<input name="phone" type="tel" autocomplete="tel" required maxlength="25" placeholder="+62..."></label>
-            <div class="training-note"><strong>Registration &amp; payment status</strong><br>Choose whether you have already paid or want to submit your planned payment date. GMTC Concierge will follow up manually.</div>
-            <div class="training-payment-actions">
-              <button class="training-pay-now" type="button" id="trainingPayNow">ALREADY PAID — SUBMIT</button>
-              <button class="training-pay-later" type="button" id="trainingPayLater">PAY LATER — CHOOSE DATE</button>
-            </div>
-            <div id="trainingPayLaterArea" hidden>
-              <label>Planned payment date
-                <input name="paymentDueDate" id="trainingPaymentDueDate" type="date" min="${min}" max="${max}">
-              </label>
-              <button class="training-submit" type="button" id="trainingConfirmPayLater">SUBMIT REGISTRATION → WHATSAPP</button>
-            </div>
-            <div class="training-status" id="trainingRegistrationStatus" aria-live="polite"></div>
+            <button class="training-submit" type="submit">DAFTAR / JOIN US →</button>
           </form>
         </div>
-      `;
-
-      modal.querySelector("#trainingBackToPackages").addEventListener("click",()=>{area.innerHTML="";});
-      const form=modal.querySelector("#trainingRegistrationForm");
-      const status=modal.querySelector("#trainingRegistrationStatus");
-      const payNow=modal.querySelector("#trainingPayNow");
-      const payLater=modal.querySelector("#trainingPayLater");
-      const payLaterArea=modal.querySelector("#trainingPayLaterArea");
-      const confirmPayLater=modal.querySelector("#trainingConfirmPayLater");
-
-      const collectDetails=()=>{
-        const values=new FormData(form);
-        return {
-          fullName:String(values.get("fullName")||"").trim(),
-          email:String(values.get("email")||"").trim(),
-          phone:String(values.get("phone")||"").trim()
-        };
+      </div>`;
+    modal.querySelector("#trainingBackPackages").addEventListener("click",renderPackages);
+    modal.querySelector("#trainingJoinForm").addEventListener("submit",event=>{
+      event.preventDefault();
+      const form=event.currentTarget;
+      if(!form.reportValidity())return;
+      const values=new FormData(form);
+      const details={
+        fullName:String(values.get("fullName")||"").trim(),
+        address:String(values.get("address")||"").trim(),
+        email:String(values.get("email")||"").trim(),
+        phone:String(values.get("phone")||"").trim()
       };
-
-      const openConcierge=(paymentMethod,dueDate)=>{
-        if(!form.reportValidity())return;
-        const details=collectDetails();
-        if(paymentMethod==="PAY_LATER"){
-          const dueInput=modal.querySelector("#trainingPaymentDueDate");
-          if(!dueInput.value){
-            dueInput.reportValidity();
-            status.textContent="Please select your planned payment date.";
-            return;
-          }
-          const selected=new Date(dueInput.value+"T00:00:00");
-          const now=new Date();
-          const todayDate=new Date(now.getFullYear(),now.getMonth(),now.getDate());
-          const lastDate=new Date(todayDate);
-          lastDate.setDate(lastDate.getDate()+10);
-          if(Number.isNaN(selected.getTime())||selected<todayDate||selected>lastDate){
-            status.textContent="Please choose a date between today and the next 10 days.";
-            return;
-          }
-          dueDate=dueInput.value;
-        }
-
-        const message=[
-          "Halo GMTC Concierge,",
-          "",
-          "Saya sudah mendaftar untuk program Training Package GMTC.",
-          "",
-          "DATA PENDAFTARAN",
-          "Nama: "+details.fullName,
-          "Email: "+details.email,
-          "Nomor HP: "+details.phone,
-          "Program: "+item.label+" — "+item.title,
-          "Paket: "+selectedPackage.label,
-          "Jumlah pertemuan: "+selectedPackage.meets+" meets",
-          "Total biaya: Rp "+selectedPackage.amount.toLocaleString("id-ID"),
-          "Status pembayaran: "+(paymentMethod==="PAY_NOW"?"SUDAH BAYAR":"BELUM BAYAR — PAY LATER"),
-          "Tanggal rencana pembayaran: "+(paymentMethod==="PAY_LATER"?trainingDateLabel(dueDate):"-"),
-          "",
-          "Mohon konfirmasi pendaftaran dan informasi selanjutnya.",
-          "Terima kasih."
-        ].join("\n");
-
-        const waUrl="https://wa.me/"+GMTC_ADMIN_WA+"?text="+encodeURIComponent(message);
-        status.textContent="Membuka WhatsApp Concierge. Tekan Send di WhatsApp untuk mengirim pendaftaran.";
-        const waWindow=window.open(waUrl,"_blank");
-        if(!waWindow)window.location.href=waUrl;
-      };
-
-      payNow.addEventListener("click",()=>openConcierge("PAY_NOW",""));
-      payLater.addEventListener("click",()=>{
-        payLaterArea.hidden=false;
-        modal.querySelector("#trainingPaymentDueDate").focus();
-        status.textContent="Choose your planned payment date, then submit to WhatsApp Concierge.";
-      });
-      confirmPayLater.addEventListener("click",()=>openConcierge("PAY_LATER",""));
+      renderInvoice(details,item,pkg);
     });
-  });
-}
+  };
 
+  const renderInvoice=(details,item,pkg)=>{
+    const now=new Date();
+    const invoiceDate=now.toLocaleDateString("id-ID",{day:"2-digit",month:"long",year:"numeric"});
+    const invoiceNumber="GMTC-TRN-"+now.getFullYear()+String(now.getMonth()+1).padStart(2,"0")+String(now.getDate()).padStart(2,"0")+"-"+Math.random().toString(36).slice(2,7).toUpperCase();
+    const invoice={number:invoiceNumber,date:invoiceDate};
+    setProgress(3);
+    stage.innerHTML=`
+      <div class="training-step-panel">
+        <div class="training-invoice">
+          <div class="training-invoice-head">
+            <div><div class="training-invoice-brand">GMTC TENNIS CLUB</div><div style="font-size:10px;color:#657469">COMMUNITY LEARNING &amp; DEVELOPMENT</div></div>
+            <div class="training-invoice-meta"><strong>REGISTRATION INVOICE</strong><br>Invoice No: ${invoice.number}<br>Invoice Date: ${invoice.date}<br>Status: UNPAID</div>
+          </div>
+          <div class="training-invoice-title">INVOICE</div>
+          <div style="font-size:11px;color:#657469">BILL TO</div>
+          <div class="training-invoice-value"><strong>${trainingEscape(details.fullName)}</strong><br>${trainingEscape(details.address)}<br>${trainingEscape(details.email)}<br>${trainingEscape(details.phone)}</div>
+          <table class="training-invoice-table">
+            <thead><tr><th>Description</th><th>Qty</th><th style="text-align:right">Amount</th></tr></thead>
+            <tbody><tr><td><strong>${item.label}</strong><br>${item.title}<br>${pkg.label}<br><span style="font-size:10px;color:#6b776d">${pkg.meets} meets · 2 hours per meet · learning module each meet</span></td><td>${pkg.meets} meets</td><td style="text-align:right">Rp ${pkg.amount.toLocaleString("id-ID")}</td></tr></tbody>
+          </table>
+          <div class="training-invoice-total"><strong>TOTAL PAYMENT</strong><strong>Rp ${pkg.amount.toLocaleString("id-ID")}</strong></div>
+          <div class="training-invoice-foot">Maximum 4 participants per class. A GMTC admin will contact you regarding payment confirmation and class group invitation. This is a registration invoice / payment request, not a tax invoice.</div>
+        </div>
+        <div class="training-invoice-actions">
+          <button type="button" class="training-invoice-paynow" id="trainingInvoicePayNow">PAY NOW · FREE CLUB JERSEY</button>
+          <button type="button" class="training-invoice-paylater" id="trainingInvoicePayLater">PAY LATER</button>
+        </div>
+        <div class="training-due-panel" id="trainingDuePanel" hidden>
+          <label>Choose your payment date (today to H+10)
+            <input type="date" id="trainingInvoiceDueDate" min="${trainingDateLocal(new Date())}" max="${trainingDateLocal(new Date(Date.now()+10*86400000))}">
+          </label>
+          <button type="button" class="training-submit" id="trainingInvoiceSubmitLater" style="width:100%;margin-top:12px">SUBMIT REGISTRATION → WHATSAPP</button>
+          <div class="training-status" id="trainingInvoiceStatus"></div>
+        </div>
+      </div>`;
+    modal.querySelector("#trainingInvoicePayNow").addEventListener("click",()=>openTrainingQr(details,invoice,item,pkg));
+    const duePanel=modal.querySelector("#trainingDuePanel");
+    modal.querySelector("#trainingInvoicePayLater").addEventListener("click",()=>{
+      duePanel.hidden=false;
+      modal.querySelector("#trainingInvoiceDueDate").focus();
+    });
+    modal.querySelector("#trainingInvoiceSubmitLater").addEventListener("click",()=>{
+      const due=modal.querySelector("#trainingInvoiceDueDate").value;
+      const status=modal.querySelector("#trainingInvoiceStatus");
+      if(!due){status.textContent="Please choose your planned payment date.";return;}
+      const chosen=new Date(due+"T00:00:00");
+      const today=new Date();today.setHours(0,0,0,0);
+      const max=new Date(today);max.setDate(max.getDate()+10);
+      if(Number.isNaN(chosen.getTime())||chosen<today||chosen>max){
+        status.textContent="Please choose a date from today through the next 10 days.";
+        return;
+      }
+      const message=[
+        "Halo GMTC Concierge,","","Saya ingin mengonfirmasi pendaftaran Complete Class Drill GMTC dengan pembayaran terjadwal.","",
+        "INVOICE: "+invoice.number,"Tanggal invoice: "+invoice.date,"Nama: "+details.fullName,"Alamat: "+details.address,
+        "Email: "+details.email,"Nomor HP: "+details.phone,"Kelas: "+item.label+" — "+item.title,
+        "Paket: "+pkg.label,"Jumlah meet: "+pkg.meets,"Total pembayaran: Rp "+pkg.amount.toLocaleString("id-ID"),
+        "Tanggal rencana pembayaran: "+trainingDateLabel(due),"Status: BELUM BAYAR — PAY LATER","",
+        "Mohon konfirmasi pendaftaran saya dan informasi selanjutnya. Terima kasih."
+      ].join("\\n");
+      const url="https://wa.me/"+GMTC_ADMIN_WA+"?text="+encodeURIComponent(message);
+      setProgress(4);
+      status.textContent="Opening WhatsApp Concierge. Please press Send to submit your registration.";
+      window.open(url,"_blank");
+    });
+  };
+
+  const openTrainingQr=(details,invoice,item,pkg)=>{
+    document.getElementById("trainingQrPopup")?.remove();
+    const popup=document.createElement("div");
+    popup.id="trainingQrPopup";
+    popup.className="training-qr-overlay";
+    popup.innerHTML=`
+      <section class="training-qr-sheet" role="dialog" aria-modal="true" aria-label="GMTC Training payment">
+        <button type="button" class="training-qr-close" id="trainingQrClose">×</button>
+        <div class="training-qr-eyebrow">GMTC PAYMENT</div>
+        <div class="training-qr-title">COMPLETE PAYMENT</div>
+        <div class="training-qr-amount">Rp ${pkg.amount.toLocaleString("id-ID")}</div>
+        <div class="training-qr-timer">PAYMENT EXPIRES IN <strong id="trainingQrTimer">15:00</strong></div>
+        <img class="training-qr-code" src="https://raw.githubusercontent.com/maledannirh-design/giltclub-mobile/main/app/image/qris_deposit.webp" alt="GMTC QRIS payment">
+        <div class="training-jersey-box">
+          <div class="training-jersey-title">FREE GMTC CLUB JERSEY</div>
+          <div class="training-jersey-images">
+            <img src="products/malejersey.webp" alt="GMTC club jersey">
+            <img src="products/femalejersey.webp" alt="GMTC club jersey">
+          </div>
+          <div style="font-size:10px;color:#59685c;margin-top:8px">Select one jersey size to claim your free club jersey.</div>
+          <div class="training-jersey-sizes">
+            ${["S","M","L","XL","XXL","XXXL"].map(size=>`
+              <label class="training-jersey-size"><input type="checkbox" name="trainingJerseySize" value="${size}"> ${size}</label>
+            `).join("")}
+          </div>
+        </div>
+        <div class="training-qr-actions">
+          <button type="button" class="training-qr-confirm" id="trainingQrConfirm">I HAVE MADE THE PAYMENT</button>
+          <button type="button" class="training-qr-admin" id="trainingQrAdmin">CONTACT ADMIN</button>
+        </div>
+        <div class="training-qr-status" id="trainingQrStatus">Please pay the exact invoice amount using the QRIS above. Payment is verified manually by GMTC admin.</div>
+      </section>`;
+    document.body.appendChild(popup);
+    let seconds=15*60;
+    const timerEl=popup.querySelector("#trainingQrTimer");
+    const interval=setInterval(()=>{
+      seconds=Math.max(0,seconds-1);
+      timerEl.textContent=String(Math.floor(seconds/60)).padStart(2,"0")+":"+String(seconds%60).padStart(2,"0");
+      if(seconds<=0)clearInterval(interval);
+    },1000);
+    const closeQr=()=>{clearInterval(interval);popup.remove();};
+    popup.querySelector("#trainingQrClose").addEventListener("click",closeQr);
+    popup.addEventListener("click",event=>{if(event.target===popup)closeQr();});
+    const getSize=()=>{
+      const checked=[...popup.querySelectorAll('input[name="trainingJerseySize"]:checked')];
+      if(checked.length!==1){
+        popup.querySelector("#trainingQrStatus").textContent="Please select exactly one jersey size.";
+        return "";
+      }
+      return checked[0].value;
+    };
+    popup.querySelectorAll('input[name="trainingJerseySize"]').forEach(input=>{
+      input.addEventListener("change",()=>{
+        if(input.checked)popup.querySelectorAll('input[name="trainingJerseySize"]').forEach(other=>{if(other!==input)other.checked=false;});
+      });
+    });
+    const contactAdmin=(isPaid)=>{
+      const size=getSize();
+      if(!size)return;
+      const message=[
+        "Halo GMTC Admin / Concierge,","",
+        isPaid?"Saya sudah melakukan pembayaran Training Package GMTC. Mohon bantu verifikasi pembayaran saya.":"Saya membutuhkan bantuan terkait pembayaran Training Package GMTC.","",
+        "INVOICE: "+invoice.number,"Nama: "+details.fullName,"Alamat: "+details.address,"Email: "+details.email,
+        "Nomor HP: "+details.phone,"Kelas: "+item.label+" — "+item.title,"Paket: "+pkg.label,
+        "Jumlah meet: "+pkg.meets,"Total: Rp "+pkg.amount.toLocaleString("id-ID"),"Free jersey size: "+size,"","Terima kasih."
+      ].join("\\n");
+      const url="https://wa.me/"+GMTC_ADMIN_WA+"?text="+encodeURIComponent(message);
+      window.open(url,"_blank");
+      popup.querySelector("#trainingQrStatus").textContent="WhatsApp opened. Please press Send to contact GMTC admin.";
+    };
+    popup.querySelector("#trainingQrConfirm").addEventListener("click",()=>contactAdmin(true));
+    popup.querySelector("#trainingQrAdmin").addEventListener("click",()=>contactAdmin(false));
+  };
+
+  renderPackages();
+}
 document.addEventListener("click",event=>{
   const trigger=event.target.closest("#trainingPackageTrigger");
   if(!trigger)return;
