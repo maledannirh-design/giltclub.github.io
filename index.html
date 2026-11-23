@@ -8771,7 +8771,7 @@ function openTrainingPackageModal(){
         "Paket: "+pkg.label,"Jumlah meet: "+pkg.meets,"Total pembayaran: Rp "+pkg.amount.toLocaleString("id-ID"),
         "Tanggal rencana pembayaran: "+trainingDateLabel(due),"Status: BELUM BAYAR — PAY LATER","",
         "Mohon konfirmasi pendaftaran saya dan informasi selanjutnya. Terima kasih."
-      ].join("\\n");
+      ].join("\n");
       const url="https://wa.me/"+GMTC_ADMIN_WA+"?text="+encodeURIComponent(message);
       setProgress(4);
       status.textContent="Opening WhatsApp Concierge. Please press Send to submit your registration.";
@@ -8845,7 +8845,7 @@ function openTrainingPackageModal(){
         "INVOICE: "+invoice.number,"Nama: "+details.fullName,"Alamat: "+details.address,"Email: "+details.email,
         "Nomor HP: "+details.phone,"Kelas: "+item.label+" — "+item.title,"Paket: "+pkg.label,
         "Jumlah meet: "+pkg.meets,"Total: Rp "+pkg.amount.toLocaleString("id-ID"),"Free jersey size: "+size,"","Terima kasih."
-      ].join("\\n");
+      ].join("\n");
       const url="https://wa.me/"+GMTC_ADMIN_WA+"?text="+encodeURIComponent(message);
       window.open(url,"_blank");
       popup.querySelector("#trainingQrStatus").textContent="WhatsApp opened. Please press Send to contact GMTC admin.";
