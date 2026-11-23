@@ -4238,7 +4238,11 @@ display:block;
 .training-qr-code{width:190px;height:230px;object-fit:contain;border:1px solid #ddd;border-radius:14px;padding:8px;margin:4px auto 12px;display:block}
 .training-jersey-box{background:#f7f3eb;border-radius:12px;padding:12px;margin:10px 0;text-align:left}
 .training-jersey-images{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.training-jersey-choice{display:block;cursor:pointer}
 .training-jersey-images img{width:100%;height:116px;object-fit:contain;background:#fff;border-radius:8px;padding:5px}
+.training-jersey-choice span{display:flex;align-items:center;justify-content:center;gap:5px;margin-top:5px;font-size:11px;font-weight:800;color:#26392c}
+.training-jersey-choice input{accent-color:#2e7d49}
+.training-qr-admin:disabled{opacity:.45;cursor:not-allowed}
 .training-jersey-title{font-size:12px;font-weight:900;color:#245b38;margin-bottom:4px}
 .training-jersey-sizes{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:10px}
 .training-jersey-size{display:flex;align-items:center;gap:6px;background:#fff;border:1px solid #d8d8d8;border-radius:8px;padding:8px;font-size:11px;font-weight:800;color:#26392c}
@@ -8806,10 +8810,10 @@ function openTrainingPackageModal(){
         <div class="training-jersey-box">
           <div class="training-jersey-title">FREE GMTC CLUB JERSEY</div>
           <div class="training-jersey-images">
-            <img src="products/malejersey.webp" alt="GMTC club jersey">
-            <img src="products/femalejersey.webp" alt="GMTC club jersey">
+            <label class="training-jersey-choice"><img src="products/malejersey.webp" alt="GMTC men's club jersey"><span><input type="radio" name="trainingJerseyType" value="Men's jersey"> Men's</span></label>
+            <label class="training-jersey-choice"><img src="products/femalejersey.webp" alt="GMTC women's club jersey"><span><input type="radio" name="trainingJerseyType" value="Women's jersey"> Women's</span></label>
           </div>
-          <div style="font-size:10px;color:#59685c;margin-top:8px">Select one jersey size to claim your free club jersey.</div>
+          <div style="font-size:10px;color:#59685c;margin-top:8px">Choose jersey type and select one size.</div>
           <div class="training-jersey-sizes">
             ${["S","M","L","XL","XXL","XXXL"].map(size=>`
               <label class="training-jersey-size"><input type="checkbox" name="trainingJerseySize" value="${size}"> ${size}</label>
@@ -8818,7 +8822,7 @@ function openTrainingPackageModal(){
         </div>
         <div class="training-qr-actions">
           <button type="button" class="training-qr-confirm" id="trainingQrConfirm">I HAVE MADE THE PAYMENT</button>
-          <button type="button" class="training-qr-admin" id="trainingQrAdmin">CONTACT ADMIN</button>
+          <button type="button" class="training-qr-admin" id="trainingQrAdmin" disabled>CONTACT ADMIN</button>
         </div>
         <div class="training-qr-status" id="trainingQrStatus">Please pay the exact invoice amount using the QRIS above. Payment is verified manually by GMTC admin.</div>
       </section>`;
@@ -8833,35 +8837,49 @@ function openTrainingPackageModal(){
     const closeQr=()=>{clearInterval(interval);popup.remove();};
     popup.querySelector("#trainingQrClose").addEventListener("click",closeQr);
     popup.addEventListener("click",event=>{if(event.target===popup)closeQr();});
-    const getSize=()=>{
-      const checked=[...popup.querySelectorAll('input[name="trainingJerseySize"]:checked')];
-      if(checked.length!==1){
-        popup.querySelector("#trainingQrStatus").textContent="Please select exactly one jersey size.";
-        return "";
+    const getJerseySelection=()=>{
+      const type=popup.querySelector('input[name="trainingJerseyType"]:checked')?.value||"";
+      const size=popup.querySelector('input[name="trainingJerseySize"]:checked')?.value||"";
+      if(!type){
+        popup.querySelector("#trainingQrStatus").textContent="Please choose Men's or Women's jersey.";
+        return null;
       }
-      return checked[0].value;
+      if(!size){
+        popup.querySelector("#trainingQrStatus").textContent="Please select one jersey size.";
+        return null;
+      }
+      return {type,size};
     };
     popup.querySelectorAll('input[name="trainingJerseySize"]').forEach(input=>{
       input.addEventListener("change",()=>{
         if(input.checked)popup.querySelectorAll('input[name="trainingJerseySize"]').forEach(other=>{if(other!==input)other.checked=false;});
       });
     });
-    const contactAdmin=(isPaid)=>{
-      const size=getSize();
-      if(!size)return;
+    const contactAdmin=()=>{
+      const jersey=getJerseySelection();
+      if(!jersey)return;
       const message=[
         "Halo GMTC Admin / Concierge,","",
-        isPaid?"Saya sudah melakukan pembayaran Training Package GMTC. Mohon bantu verifikasi pembayaran saya.":"Saya membutuhkan bantuan terkait pembayaran Training Package GMTC.","",
+        "Saya sudah membayar lunas Training Package GMTC. Mohon bantu verifikasi pembayaran saya.","",
         "INVOICE: "+invoice.number,"Nama: "+details.fullName,"Alamat: "+details.address,"Email: "+details.email,
         "Nomor HP: "+details.phone,"Kelas: "+item.label+" — "+item.title,"Paket: "+pkg.label,
-        "Jumlah meet: "+pkg.meets,"Total: Rp "+pkg.amount.toLocaleString("id-ID"),"Free jersey size: "+size,"","Terima kasih."
+        "Jumlah meet: "+pkg.meets,"Total dibayar: Rp "+pkg.amount.toLocaleString("id-ID"),
+        "Bonus jersey: "+jersey.type,"Ukuran jersey: "+jersey.size,"",
+        "Mohon konfirmasi pembayaran dan pendaftaran saya. Terima kasih."
       ].join("\n");
       const url="https://wa.me/"+GMTC_ADMIN_WA+"?text="+encodeURIComponent(message);
       window.open(url,"_blank");
       popup.querySelector("#trainingQrStatus").textContent="WhatsApp opened. Please press Send to contact GMTC admin.";
     };
-    popup.querySelector("#trainingQrConfirm").addEventListener("click",()=>{setProgress(4);contactAdmin(true);});
-    popup.querySelector("#trainingQrAdmin").addEventListener("click",()=>contactAdmin(false));
+    popup.querySelector("#trainingQrConfirm").addEventListener("click",()=>{
+      if(!getJerseySelection())return;
+      popup.querySelector("#trainingQrAdmin").disabled=false;
+      popup.querySelector("#trainingQrConfirm").disabled=true;
+      popup.querySelector("#trainingQrConfirm").textContent="PAYMENT DECLARED";
+      setProgress(4);
+      popup.querySelector("#trainingQrStatus").textContent="Thank you. Your payment declaration is ready. Please contact GMTC admin to submit your payment confirmation.";
+    });
+    popup.querySelector("#trainingQrAdmin").addEventListener("click",contactAdmin);
   };
 
   renderPackages();
