@@ -10479,7 +10479,7 @@ window.loadFunMatchSchedule = loadFunMatchSchedule;
   const container=document.getElementById("gmtcCommunitySlideshow");
   if(!container) return;
 
-  const directoryAPI="https://api.github.com/repos/maledannirh-design/giltclub.github.io/contents/assets/events?ref=main";
+  // Use a local image manifest to avoid GitHub API rate limits on public page visits.
   const basePath="./assets/events/";
   const supported=/\.(avif|gif|jpe?g|png|webp)$/i;
 
@@ -10586,31 +10586,8 @@ window.loadFunMatchSchedule = loadFunMatchSchedule;
     if(event.key==="Enter"||event.key===" "){event.preventDefault();openLightbox();}
   });
 
-  async function discoverImages(){
-    try{
-      const response=await fetch(directoryAPI,{cache:"no-store"});
-      if(!response.ok) throw new Error("GitHub directory listing unavailable");
-      const files=await response.json();
-      const discovered=files
-        .filter(file=>file.type==="file"&&supported.test(file.name))
-        .map(file=>file.name)
-        .sort((a,b)=>a.localeCompare(b,undefined,{numeric:true,sensitivity:"base"}));
-      if(discovered.length){
-        const currentName=images[current];
-        images=discovered;
-        const preservedIndex=images.indexOf(currentName);
-        current=preservedIndex>=0?preservedIndex:0;
-        showImage(current);
-      }
-    }catch(error){
-      // Keep the three known images rotating if the GitHub API is temporarily unavailable.
-    }
-  }
-
   showImage(current);
   rotation=window.setInterval(function(){showImage(current+1);},1500);
-  discoverImages();
-  refresh=window.setInterval(discoverImages,60000);
 })();
 </script>
 
