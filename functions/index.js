@@ -170,23 +170,35 @@ exports.registerTrainingParticipant = onCall(
     const email = String(data.email || "").trim().toLowerCase();
     const phone = String(data.phone || "").trim();
     const classId = String(data.classId || "").trim();
+    const packageId = String(data.packageId || "").trim();
     const paymentDueDate = String(data.paymentDueDate || "").trim();
 
     const classes = {
       class01: {
         label: "CLASS 01",
         title: "NEWBIE TO UPPER BEGINNER",
-        summary: "Build tennis foundations, rally skills, fundamental strokes, movement, and recreational match play."
+        summary: "Build tennis foundations, rally skills, fundamental strokes, movement, and recreational match play.",
+        packages: {
+          class01_standard: { label: "STANDARD PACKAGE", amount: 1400000, meets: 8 },
+          class01_extended: { label: "EXTENDED + REMEDIAL CLASS", amount: 1750000, meets: 10 }
+        }
       },
       class02: {
         label: "CLASS 02",
         title: "BREAK THE LIMITS — INTERMEDIATE ENTRY LEVEL",
-        summary: "Develop consistency, ball control, movement efficiency, point construction, and better decisions."
+        summary: "Develop consistency, ball control, movement efficiency, point construction, and better decisions.",
+        packages: {
+          class02_standard: { label: "STANDARD PACKAGE", amount: 1780000, meets: 8 },
+          class02_extended: { label: "EXTENDED + REMEDIAL CLASS", amount: 2250000, meets: 10 }
+        }
       },
       class03: {
         label: "CLASS 03",
         title: "LOWER INTERMEDIATE TO UPPER INTERMEDIATE",
-        summary: "Develop advanced ball quality, tactical patterns, match adaptation, and decision-making under pressure."
+        summary: "Develop advanced ball quality, tactical patterns, match adaptation, and decision-making under pressure.",
+        packages: {
+          class03_standard: { label: "CLASS 03 PACKAGE", amount: 3700000, meets: 12 }
+        }
       }
     };
 
@@ -202,6 +214,11 @@ exports.registerTrainingParticipant = onCall(
     if (!classes[classId]) {
       throw new HttpsError("invalid-argument", "Please select a valid training class.");
     }
+    const selectedClass = classes[classId];
+    const selectedPackage = selectedClass.packages[packageId];
+    if (!selectedPackage) {
+      throw new HttpsError("invalid-argument", "Please select a valid package for this class.");
+    }
     if (!/^\\d{4}-\\d{2}-\\d{2}$/.test(paymentDueDate)) {
       throw new HttpsError("invalid-argument", "Please select a valid payment due date.");
     }
@@ -214,7 +231,6 @@ exports.registerTrainingParticipant = onCall(
       throw new HttpsError("invalid-argument", "Payment due date must be within 10 days from today (WITA).");
     }
 
-    const selectedClass = classes[classId];
     const registrationRef = trainingDb.collection("trainingRegistrations").doc();
     const mailRef = trainingDb.collection("mail").doc();
     const classQuery = trainingDb.collection("trainingRegistrations")
@@ -235,7 +251,7 @@ exports.registerTrainingParticipant = onCall(
         throw new HttpsError("already-exists", "This email is already registered for this class.");
       }
 
-      const amount = 1400000;
+      const amount = selectedPackage.amount;
       const dueLabel = new Date(paymentDueDate + "T00:00:00+08:00")
         .toLocaleDateString("id-ID", {
           timeZone: "Asia/Makassar",
@@ -245,15 +261,19 @@ exports.registerTrainingParticipant = onCall(
         });
       const safeName = escapeTrainingHtml(fullName);
       const safeClass = escapeTrainingHtml(selectedClass.label + " — " + selectedClass.title);
+      const safePackage = escapeTrainingHtml(selectedPackage.label);
+      const meetCount = selectedPackage.meets;
       const safeDue = escapeTrainingHtml(dueLabel);
       const amountLabel = "Rp " + amount.toLocaleString("id-ID");
-      const subject = "GMTC Training Registration & Invoice — " + selectedClass.label;
+      const subject = "GMTC Training Registration & Invoice — " + selectedClass.label + " (" + selectedPackage.label + ")";
       const textBody =
         "Hello " + fullName + ",\\n\\n" +
         "You have successfully registered for " + selectedClass.label + " — " + selectedClass.title + ".\\n" +
+        "Selected package: " + selectedPackage.label + "\\n" +
+        "Program: " + meetCount + " meets\\n" +
         "Invoice amount: " + amountLabel + "\\n" +
         "Payment due date: " + dueLabel + "\\n\\n" +
-        "Each class has a maximum of 4 participants. Each session lasts 2 hours and participants receive a learning module for every session.\\n\\n" +
+        "Each class has a maximum of 4 participants. Each meet lasts 2 hours and participants receive a learning module for every meet.\\n\\n" +
         "After registration, a GMTC admin will invite you to the class group.\\n\\n" +
         "Thank you,\\nGMTC — Community Learning & Development";
       const htmlBody = `
@@ -269,13 +289,16 @@ exports.registerTrainingParticipant = onCall(
             <div style="background:#f6f0e4;padding:18px;border-radius:10px">
               <div style="font-size:12px;color:#687469">TRAINING INVOICE</div>
               <div style="font-size:28px;font-weight:bold;color:#245b38">${amountLabel}</div>
+              <p><strong>Selected package:</strong> ${safePackage}</p>
+              <p><strong>Program duration:</strong> ${meetCount} meets</p>
               <p style="margin-bottom:0"><strong>Payment due date:</strong> ${safeDue}</p>
             </div>
             <h3>Training package information</h3>
             <ul>
               <li>Maximum 4 participants in each class</li>
-              <li>Each session lasts 2 hours</li>
-              <li>A learning module is provided for every session</li>
+              <li>${meetCount} meets in this package</li>
+              <li>Each meet lasts 2 hours</li>
+              <li>A learning module is provided for every meet</li>
             </ul>
             <p>After your registration, a GMTC admin will contact you and invite you to the class group.</p>
             <p>Please complete your payment by the due date stated above. Keep this email as your registration and invoice record.</p>
@@ -292,6 +315,9 @@ exports.registerTrainingParticipant = onCall(
         classId,
         classLabel: selectedClass.label,
         classTitle: selectedClass.title,
+        packageId,
+        packageLabel: selectedPackage.label,
+        meetCount,
         amount,
         currency: "IDR",
         paymentDueDate,
