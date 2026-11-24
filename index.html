@@ -4167,12 +4167,18 @@ display:block;
 .training-plan-level{font-size:22px;font-weight:700;line-height:1.25;min-height:58px}
 .training-plan-desc{font-size:13px;color:#c5c5c5;line-height:1.55;min-height:62px;margin:10px 0 16px}
 .training-plan-options{display:grid;gap:10px;margin-top:auto}
-.training-package-option{border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.16);border-radius:14px;padding:14px;text-align:left;color:#fff;cursor:pointer;transition:.2s}
-.training-package-option:hover{border-color:#77b6ff;background:rgba(57,127,205,.18)}
-.training-package-option strong{display:block;font-size:13px;line-height:1.4}
-.training-package-price{display:block;font-size:25px;font-weight:700;margin:8px 0 2px}
-.training-package-meets{display:block;font-size:12px;color:#c6d5e4}
-.training-package-choose{display:block;font-size:11px;font-weight:700;letter-spacing:.5px;margin-top:12px;color:#9bc8ff}
+.training-package-option{border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.16);border-radius:14px;padding:12px;text-align:left;color:#fff}
+.training-package-option>strong{display:block;font-size:13px;line-height:1.4;margin-bottom:10px}
+.training-package-venue-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.training-venue-choice{min-width:0;border:1px solid rgba(255,255,255,.18);border-radius:10px;background:rgba(0,0,0,.22);color:#fff;padding:10px 8px;text-align:left;cursor:pointer;transition:.2s}
+.training-venue-choice:hover{border-color:#77b6ff;background:rgba(57,127,205,.2);transform:translateY(-1px)}
+.training-venue-choice span,.training-venue-choice b,.training-venue-choice small{display:block}
+.training-venue-choice span{font-size:10px;font-weight:800;letter-spacing:.7px;color:#b9cbdc}
+.training-venue-choice b{font-size:17px;line-height:1.25;margin:5px 0;white-space:nowrap}
+.training-venue-choice small{font-size:9px;font-weight:700;letter-spacing:.4px;color:#9bc8ff}
+.training-package-meets{display:block;font-size:11px;color:#c6d5e4;margin-top:9px}
+.training-plan-card.class03-green .training-venue-choice:hover{border-color:#86d49b;background:rgba(55,135,75,.22)}
+.training-plan-card.class03-green .training-venue-choice small{color:#a7e7b5}
 .training-plan-features{list-style:none;padding:0;margin:18px 0 0;display:grid;gap:9px;font-size:12px;color:#dedede}
 .training-plan-features li:before{content:"✓";color:#8ec4ff;font-weight:700;margin-right:9px}
 .training-facts{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:16px 0}
@@ -8575,8 +8581,8 @@ const GMTC_TRAINING_CLASSES = {
     title: "NEWBIE TO UPPER BEGINNER",
     summary: "Build tennis foundations, rally skills, fundamental strokes, movement, and recreational match play.",
     packages: [
-      { id: "class01_standard", label: "STANDARD PACKAGE", amount: 1400000, meets: 8 },
-      { id: "class01_extended", label: "EXTENDED + REMEDIAL CLASS", amount: 1750000, meets: 10 }
+      { id: "class01_standard", label: "STANDARD PACKAGE", amount: 1400000, indoorAmount: 1664000, meets: 8 },
+      { id: "class01_extended", label: "EXTENDED + REMEDIAL CLASS", amount: 1750000, indoorAmount: 2080000, meets: 10 }
     ]
   },
   class02: {
@@ -8584,8 +8590,8 @@ const GMTC_TRAINING_CLASSES = {
     title: "BREAK THE LIMITS — INTERMEDIATE ENTRY LEVEL",
     summary: "Develop consistency, ball control, movement efficiency, point construction, and better decisions.",
     packages: [
-      { id: "class02_standard", label: "STANDARD PACKAGE", amount: 1780000, meets: 8 },
-      { id: "class02_extended", label: "EXTENDED + REMEDIAL CLASS", amount: 2250000, meets: 10 }
+      { id: "class02_standard", label: "STANDARD PACKAGE", amount: 1780000, indoorAmount: 2040000, meets: 8 },
+      { id: "class02_extended", label: "EXTENDED + REMEDIAL CLASS", amount: 2250000, indoorAmount: 2550000, meets: 10 }
     ]
   },
   class03: {
@@ -8593,7 +8599,7 @@ const GMTC_TRAINING_CLASSES = {
     title: "LOWER INTERMEDIATE TO UPPER INTERMEDIATE",
     summary: "Develop advanced ball quality, tactical patterns, match adaptation, and decision-making under pressure.",
     packages: [
-      { id: "class03_standard", label: "CLASS 03 PACKAGE", amount: 3700000, meets: 12 }
+      { id: "class03_standard", label: "CLASS 03 PACKAGE", amount: 3700000, indoorAmount: 2116000, meets: 12 }
     ]
   }
 };
@@ -8670,25 +8676,33 @@ function openTrainingPackageModal(){
             <p class="training-plan-desc">${item.summary}</p>
             <div class="training-plan-options">
               ${item.packages.map(pkg=>`
-                <button type="button" class="training-package-option" data-training-class="${classId}" data-training-package="${pkg.id}">
+                <div class="training-package-option">
                   <strong>${pkg.label}</strong>
-                  <span class="training-package-price">Rp ${pkg.amount.toLocaleString("id-ID")}</span>
+                  <div class="training-package-venue-grid">
+                    <button type="button" class="training-venue-choice" data-training-class="${classId}" data-training-package="${pkg.id}" data-training-venue="outdoor">
+                      <span>OUTDOOR</span><b>Rp ${pkg.amount.toLocaleString("id-ID")}</b><small>SELECT →</small>
+                    </button>
+                    <button type="button" class="training-venue-choice" data-training-class="${classId}" data-training-package="${pkg.id}" data-training-venue="indoor">
+                      <span>INDOOR</span><b>Rp ${pkg.indoorAmount.toLocaleString("id-ID")}</b><small>SELECT →</small>
+                    </button>
+                  </div>
                   <span class="training-package-meets">${pkg.meets} × MEET</span>
-                  <span class="training-package-choose">SELECT PACKAGE →</span>
-                </button>`).join("")}
+                </div>`).join("")}
             </div>
             <ul class="training-plan-features"><li>Maximum 4 participants</li><li>2 hours per meet</li><li>Learning module every meet</li></ul>
           </article>`).join("")}
       </div>`;
-    stage.querySelectorAll("[data-training-package]").forEach(button=>{
-      button.addEventListener("click",()=>renderJoin(button.dataset.trainingClass,button.dataset.trainingPackage));
+    stage.querySelectorAll("[data-training-package][data-training-venue]").forEach(button=>{
+      button.addEventListener("click",()=>renderJoin(button.dataset.trainingClass,button.dataset.trainingPackage,button.dataset.trainingVenue));
     });
   };
 
-  const renderJoin=(classId,packageId)=>{
+  const renderJoin=(classId,packageId,venue)=>{
     const item=GMTC_TRAINING_CLASSES[classId];
-    const pkg=item?.packages.find(x=>x.id===packageId);
-    if(!pkg)return;
+    const basePackage=item?.packages.find(x=>x.id===packageId);
+    if(!basePackage||!["outdoor","indoor"].includes(venue))return;
+    const pkg={...basePackage,venue,venueLabel:venue==="indoor"?"INDOOR":"OUTDOOR",
+      amount:venue==="indoor"?basePackage.indoorAmount:basePackage.amount};
     setProgress(2);
     stage.innerHTML=`
       <div class="training-step-panel">
@@ -8696,7 +8710,7 @@ function openTrainingPackageModal(){
         <div class="training-join-card">
           <div class="training-eyebrow" style="text-align:left">STEP 2 · PARTICIPANT INFORMATION</div>
           <h3>JOIN ${item.label}</h3>
-          <p>${item.title}<br>${pkg.label} · ${pkg.meets} meets · Rp ${pkg.amount.toLocaleString("id-ID")}</p>
+          <p>${item.title}<br>${pkg.label} · ${pkg.venueLabel} · ${pkg.meets} meets · Rp ${pkg.amount.toLocaleString("id-ID")}</p>
           <p>${item.summary}</p>
           <form class="training-form" id="trainingJoinForm">
             <label>Full name<input name="fullName" type="text" autocomplete="name" required maxlength="100" placeholder="Your full name"></label>
@@ -8741,7 +8755,7 @@ function openTrainingPackageModal(){
           <table class="training-invoice-table">
             <thead><tr><th>Description</th><th>Qty</th><th style="text-align:right">Amount</th></tr></thead>
             <tbody>
-              <tr><td><strong>${item.label}</strong><br>${item.title}<br>${pkg.label}<br><span style="font-size:10px;color:#6b776d">${pkg.meets} meets · 2 hours per meet · learning module each meet</span></td><td>${pkg.meets} meets</td><td style="text-align:right">Rp ${pkg.amount.toLocaleString("id-ID")}</td></tr>
+              <tr><td><strong>${item.label}</strong><br>${item.title}<br>${pkg.label}<br><strong>Venue: ${pkg.venueLabel}</strong><br><span style="font-size:10px;color:#6b776d">${pkg.meets} meets · 2 hours per meet · learning module each meet</span></td><td>${pkg.meets} meets</td><td style="text-align:right">Rp ${pkg.amount.toLocaleString("id-ID")}</td></tr>
               <tr><td>GMTC Club Jersey Bonus <span style="font-size:10px;color:#6b776d">(Pay Now option only)</span></td><td>1</td><td style="text-align:right;white-space:nowrap"><del style="color:#78847b;font-size:11px">Rp 275.000</del><br><strong style="color:#237345">FREE*</strong></td></tr>
             </tbody>
           </table>
@@ -8782,7 +8796,7 @@ function openTrainingPackageModal(){
         "Halo GMTC Concierge,","","Saya ingin mengonfirmasi pendaftaran Complete Class Drill GMTC dengan pembayaran terjadwal.","",
         "INVOICE: "+invoice.number,"Tanggal invoice: "+invoice.date,"Nama: "+details.fullName,"Alamat: "+details.address,
         "Email: "+details.email,"Nomor HP: "+details.phone,"Kelas: "+item.label+" — "+item.title,
-        "Paket: "+pkg.label,"Jumlah meet: "+pkg.meets,"Total pembayaran: Rp "+pkg.amount.toLocaleString("id-ID"),
+        "Paket: "+pkg.label,"Venue: "+pkg.venueLabel,"Jumlah meet: "+pkg.meets,"Total pembayaran: Rp "+pkg.amount.toLocaleString("id-ID"),
         "Tanggal rencana pembayaran: "+trainingDateLabel(due),"Status: BELUM BAYAR — PAY LATER","",
         "Mohon konfirmasi pendaftaran saya dan informasi selanjutnya. Terima kasih."
       ].join("\n");
@@ -8862,7 +8876,7 @@ function openTrainingPackageModal(){
         "Halo GMTC Admin / Concierge,","",
         "Saya sudah membayar lunas Training Package GMTC. Mohon bantu verifikasi pembayaran saya.","",
         "INVOICE: "+invoice.number,"Nama: "+details.fullName,"Alamat: "+details.address,"Email: "+details.email,
-        "Nomor HP: "+details.phone,"Kelas: "+item.label+" — "+item.title,"Paket: "+pkg.label,
+        "Nomor HP: "+details.phone,"Kelas: "+item.label+" — "+item.title,"Paket: "+pkg.label,"Venue: "+pkg.venueLabel,
         "Jumlah meet: "+pkg.meets,"Total dibayar: Rp "+pkg.amount.toLocaleString("id-ID"),
         "Bonus jersey: "+jersey.type,"Ukuran jersey: "+jersey.size,"",
         "Mohon konfirmasi pembayaran dan pendaftaran saya. Terima kasih."
