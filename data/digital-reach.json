@@ -3,9 +3,9 @@
     {
       "country": "Indonesia",
       "countryCode": "ID",
-      "newUsers": 158,
-      "engagementRate": 0.5277246653919694,
-      "eventCount": 2863
+      "newUsers": 159,
+      "engagementRate": 0.5295238095238095,
+      "eventCount": 2878
     },
     {
       "country": "United States",
@@ -107,5 +107,5 @@
     }
   ],
   "realtime": [],
-  "generatedAt": "2026-11-26T11:30:09.946Z"
+  "generatedAt": "2026-11-26T20:26:57.176Z"
 }
