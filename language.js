@@ -6,46 +6,69 @@ try{lang=localStorage.getItem(key)==="en"?"en":"id"}catch(e){}
 const titles={id:"Tenis Balikpapan & Tennis Club | GMTC Mabar dan Drill",en:"Tennis Club Balikpapan | GMTC Fun Match & Drill Sessions"};
 const descriptions={id:"Cari klub tenis di Balikpapan? GMTC menghadirkan komunitas tennis, sesi mabar tenis, dan drill tennis. Lihat pilihan sesi, arena, dan cara bergabung.",en:"Looking for a tennis club in Balikpapan? GMTC brings together a tennis community, social Fun Match sessions and tennis drills. Explore sessions, courts and ways to join."};
 const skipSelector="script,style,noscript,textarea,code,pre,[data-no-translate]";
-let observer=null, queued=new Set(), framePending=false, applying=false;
-function translateTextNode(node,map){
- if(!node||node.nodeType!==3)return;
- const value=node.nodeValue, trimmed=value.trim();
- if(!trimmed||!Object.prototype.hasOwnProperty.call(map,trimmed))return;
- const start=value.indexOf(trimmed),end=start+trimmed.length;
- node.nodeValue=value.slice(0,start)+map[trimmed]+value.slice(end);
+const indexed=[],seen=new WeakSet(),pending=new Set();
+let observer=null,flushScheduled=false,muted=false;
+function pairFor(value){
+ const trimmed=value.trim();if(!trimmed)return null;
+ if(Object.prototype.hasOwnProperty.call(dict.en,trimmed))return {id:trimmed,en:dict.en[trimmed]};
+ if(Object.prototype.hasOwnProperty.call(dict.id,trimmed))return {id:dict.id[trimmed],en:trimmed};
+ return null;
 }
-function translateElement(root,map){
+function addEntry(node,kind,name,value){
+ const pair=pairFor(value);if(!pair)return;
+ const trimmed=value.trim(),start=value.indexOf(trimmed);
+ indexed.push({node,kind,name,id:pair.id,en:pair.en,before:value.slice(0,start),after:value.slice(start+trimmed.length)});
+}
+function indexSubtree(root){
  if(!root)return;
- if(root.nodeType===3){translateTextNode(root,map);return}
- if(root.nodeType!==1&&root.nodeType!==9&&root.nodeType!==11)return;
  if(root.nodeType===1&&root.matches(skipSelector))return;
- if(root.nodeType===1){
-  for(const attr of ["placeholder","title","aria-label","alt"]){
-   if(root.hasAttribute(attr)){
-    const value=root.getAttribute(attr),trimmed=value.trim();
-    if(Object.prototype.hasOwnProperty.call(map,trimmed))root.setAttribute(attr,value.replace(trimmed,map[trimmed]));
-   }
-  }
+ if(root.nodeType===3){
+  if(!seen.has(root)){seen.add(root);addEntry(root,"text",null,root.nodeValue)}
+  return;
  }
- const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{
+ if(root.nodeType!==1&&root.nodeType!==9&&root.nodeType!==11)return;
+ const walker=document.createTreeWalker(root,NodeFilter.SHOW_ELEMENT|NodeFilter.SHOW_TEXT,{
   acceptNode(node){
-   const parent=node.parentElement;
-   if(!parent||parent.closest(skipSelector))return NodeFilter.FILTER_REJECT;
+   if(node.nodeType===1&&node.matches(skipSelector))return NodeFilter.FILTER_REJECT;
    return NodeFilter.FILTER_ACCEPT;
   }
  });
- let node;
- while((node=walker.nextNode()))translateTextNode(node,map);
+ let node=root.nodeType===1?root:null;
+ while(node){
+  if(node.nodeType===1){
+   if(!seen.has(node)){
+    seen.add(node);
+    for(const attr of ["placeholder","title","aria-label","alt"])if(node.hasAttribute(attr))addEntry(node,"attr",attr,node.getAttribute(attr));
+   }
+  }else if(node.nodeType===3&&!seen.has(node)){
+   seen.add(node);addEntry(node,"text",null,node.nodeValue);
+  }
+  node=walker.nextNode();
+ }
 }
-function flushQueued(){
- framePending=false;
- const pending=Array.from(queued);queued.clear();
- for(const node of pending)if(node.isConnected)translateElement(node,dict[lang]);
+function applyEntries(entries){
+ muted=true;
+ for(const item of entries){
+  const node=item.node;if(!node.isConnected)continue;
+  const target=lang==="en"?item.en:item.id;
+  const value=item.before+target+item.after;
+  if(item.kind==="text"){if(node.nodeValue!==value)node.nodeValue=value}
+  else if(node.getAttribute(item.name)!==value)node.setAttribute(item.name,value);
+ }
+ muted=false;
 }
-function scheduleNode(node){
- if(!node||node.nodeType===1&&node.matches(skipSelector))return;
- queued.add(node);
- if(!framePending){framePending=true;requestAnimationFrame(flushQueued)}
+function applyIndex(){
+ for(let i=indexed.length-1;i>=0;i--)if(!indexed[i].node.isConnected)indexed.splice(i,1);
+ applyEntries(indexed);
+}
+function scheduleIndex(node){
+ pending.add(node);
+ if(!flushScheduled){flushScheduled=true;requestAnimationFrame(()=>{
+  flushScheduled=false;const batch=Array.from(pending);pending.clear();
+  const start=indexed.length;
+  for(const item of batch)indexSubtree(item);
+  if(indexed.length>start)applyEntries(indexed.slice(start));
+ })}
 }
 function mount(){
  if(document.getElementById("gmtcLanguageSwitch"))return;
@@ -59,25 +82,23 @@ function mount(){
 }
 function set(next){
  lang=next==="en"?"en":"id";
- if(observer)observer.disconnect();
- queued.clear();framePending=false;applying=true;
  document.documentElement.lang=lang;document.title=titles[lang];
  const meta=document.querySelector('meta[name="description"]');if(meta)meta.content=descriptions[lang];
- translateElement(document.body,dict[lang]);
+ applyIndex();
  document.querySelectorAll("#gmtcLanguageSwitch button").forEach(button=>button.setAttribute("aria-pressed",String(button.dataset.lang===lang)));
  try{localStorage.setItem(key,lang)}catch(e){}
- applying=false;
- if(observer)observer.observe(document.body,{subtree:true,childList:true});
  window.dispatchEvent(new CustomEvent("gmtc:languagechange",{detail:{language:lang}}));
 }
 function boot(){
  mount();
- observer=new MutationObserver(records=>{
-  for(const record of records)for(const node of record.addedNodes)scheduleNode(node);
- });
+ indexSubtree(document.body);
  set(lang);
+ observer=new MutationObserver(records=>{
+  if(muted)return;
+  for(const record of records)for(const node of record.addedNodes)scheduleIndex(node);
+ });
  observer.observe(document.body,{subtree:true,childList:true});
 }
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",boot,{once:true});else boot();
-window.GMTC_LANGUAGE={set,get current(){return lang}};
+window.GMTC_LANGUAGE={set,get current(){return lang},get indexedCount(){return indexed.length}};
 })();
