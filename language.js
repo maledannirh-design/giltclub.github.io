@@ -5,12 +5,79 @@ const key="gmtc-language";let lang="id";
 try{lang=localStorage.getItem(key)==="en"?"en":"id"}catch(e){}
 const titles={id:"Tenis Balikpapan & Tennis Club | GMTC Mabar dan Drill",en:"Tennis Club Balikpapan | GMTC Fun Match & Drill Sessions"};
 const descriptions={id:"Cari klub tenis di Balikpapan? GMTC menghadirkan komunitas tennis, sesi mabar tenis, dan drill tennis. Lihat pilihan sesi, arena, dan cara bergabung.",en:"Looking for a tennis club in Balikpapan? GMTC brings together a tennis community, social Fun Match sessions and tennis drills. Explore sessions, courts and ways to join."};
-function swap(value,map){if(!value)return value;const t=value.trim();return Object.prototype.hasOwnProperty.call(map,t)?value.replace(t,map[t]):value}
-function walk(node,map){if(node.nodeType===3){const n=swap(node.nodeValue,map);if(n!==node.nodeValue)node.nodeValue=n;return}if(node.nodeType!==1||node.matches("script,style,noscript,textarea,code,pre,[data-no-translate]"))return;
-["placeholder","title","aria-label","alt"].forEach(a=>{if(node.hasAttribute(a)){const v=node.getAttribute(a),n=swap(v,map);if(v!==n)node.setAttribute(a,n)}});
-Array.from(node.childNodes).forEach(c=>walk(c,map))}
-function mount(){if(document.getElementById("gmtcLanguageSwitch"))return;const css=document.createElement("style");css.textContent='#gmtcLanguageSwitch{position:fixed;right:22px;top:18px;z-index:10060;display:flex;align-items:center;gap:4px;padding:5px 8px;border:1px solid #aaa8;border-radius:22px;background:#080808d9;backdrop-filter:blur(8px);color:white;font:700 12px Arial;box-shadow:0 3px 14px #0005}#gmtcLanguageSwitch button{border:0;background:transparent;color:#ddd;padding:6px 8px;border-radius:16px;font:inherit;cursor:pointer}#gmtcLanguageSwitch button[aria-pressed=true]{background:#caa24c;color:#111}@media(max-width:700px){#gmtcLanguageSwitch{top:10px;right:10px}header{padding-right:110px!important}}';document.head.appendChild(css);const el=document.createElement("div");el.id="gmtcLanguageSwitch";el.innerHTML='<button type="button" data-lang="id" aria-pressed="false">ID</button><span>|</span><button type="button" data-lang="en" aria-pressed="false">EN</button>';el.addEventListener("click",e=>{const b=e.target.closest("[data-lang]");if(b)set(b.dataset.lang)});document.body.appendChild(el)}
-function set(next){lang=next==="en"?"en":"id";document.documentElement.lang=lang;document.title=titles[lang];const m=document.querySelector('meta[name="description"]');if(m)m.content=descriptions[lang];walk(document.body,dict[lang]);document.querySelectorAll("#gmtcLanguageSwitch button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.lang===lang)));try{localStorage.setItem(key,lang)}catch(e){}window.dispatchEvent(new CustomEvent("gmtc:languagechange",{detail:{language:lang}}))}
-function boot(){mount();set(lang);new MutationObserver(records=>records.forEach(r=>{if(r.type==="characterData")walk(r.target,dict[lang]);else r.addedNodes.forEach(n=>walk(n,dict[lang]))})).observe(document.body,{subtree:true,childList:true,characterData:true})}
-if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",boot,{once:true});else boot();window.GMTC_LANGUAGE={set,get current(){return lang}};
+const skipSelector="script,style,noscript,textarea,code,pre,[data-no-translate]";
+let observer=null, queued=new Set(), framePending=false, applying=false;
+function translateTextNode(node,map){
+ if(!node||node.nodeType!==3)return;
+ const value=node.nodeValue, trimmed=value.trim();
+ if(!trimmed||!Object.prototype.hasOwnProperty.call(map,trimmed))return;
+ const start=value.indexOf(trimmed),end=start+trimmed.length;
+ node.nodeValue=value.slice(0,start)+map[trimmed]+value.slice(end);
+}
+function translateElement(root,map){
+ if(!root)return;
+ if(root.nodeType===3){translateTextNode(root,map);return}
+ if(root.nodeType!==1&&root.nodeType!==9&&root.nodeType!==11)return;
+ if(root.nodeType===1&&root.matches(skipSelector))return;
+ if(root.nodeType===1){
+  for(const attr of ["placeholder","title","aria-label","alt"]){
+   if(root.hasAttribute(attr)){
+    const value=root.getAttribute(attr),trimmed=value.trim();
+    if(Object.prototype.hasOwnProperty.call(map,trimmed))root.setAttribute(attr,value.replace(trimmed,map[trimmed]));
+   }
+  }
+ }
+ const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{
+  acceptNode(node){
+   const parent=node.parentElement;
+   if(!parent||parent.closest(skipSelector))return NodeFilter.FILTER_REJECT;
+   return NodeFilter.FILTER_ACCEPT;
+  }
+ });
+ let node;
+ while((node=walker.nextNode()))translateTextNode(node,map);
+}
+function flushQueued(){
+ framePending=false;
+ const pending=Array.from(queued);queued.clear();
+ for(const node of pending)if(node.isConnected)translateElement(node,dict[lang]);
+}
+function scheduleNode(node){
+ if(!node||node.nodeType===1&&node.matches(skipSelector))return;
+ queued.add(node);
+ if(!framePending){framePending=true;requestAnimationFrame(flushQueued)}
+}
+function mount(){
+ if(document.getElementById("gmtcLanguageSwitch"))return;
+ const css=document.createElement("style");
+ css.textContent='#gmtcLanguageSwitch{position:fixed;right:22px;top:18px;z-index:10060;display:flex;align-items:center;gap:4px;padding:5px 8px;border:1px solid #aaa8;border-radius:22px;background:#080808d9;backdrop-filter:blur(8px);color:white;font:700 12px Arial;box-shadow:0 3px 14px #0005}#gmtcLanguageSwitch button{border:0;background:transparent;color:#ddd;padding:6px 8px;border-radius:16px;font:inherit;cursor:pointer}#gmtcLanguageSwitch button[aria-pressed=true]{background:#caa24c;color:#111}@media(max-width:700px){#gmtcLanguageSwitch{top:10px;right:10px}header{padding-right:110px!important}}';
+ document.head.appendChild(css);
+ const el=document.createElement("div");el.id="gmtcLanguageSwitch";
+ el.innerHTML='<button type="button" data-lang="id" aria-pressed="false">ID</button><span>|</span><button type="button" data-lang="en" aria-pressed="false">EN</button>';
+ el.addEventListener("click",event=>{const button=event.target.closest("[data-lang]");if(button)set(button.dataset.lang)});
+ document.body.appendChild(el);
+}
+function set(next){
+ lang=next==="en"?"en":"id";
+ if(observer)observer.disconnect();
+ queued.clear();framePending=false;applying=true;
+ document.documentElement.lang=lang;document.title=titles[lang];
+ const meta=document.querySelector('meta[name="description"]');if(meta)meta.content=descriptions[lang];
+ translateElement(document.body,dict[lang]);
+ document.querySelectorAll("#gmtcLanguageSwitch button").forEach(button=>button.setAttribute("aria-pressed",String(button.dataset.lang===lang)));
+ try{localStorage.setItem(key,lang)}catch(e){}
+ applying=false;
+ if(observer)observer.observe(document.body,{subtree:true,childList:true});
+ window.dispatchEvent(new CustomEvent("gmtc:languagechange",{detail:{language:lang}}));
+}
+function boot(){
+ mount();
+ observer=new MutationObserver(records=>{
+  for(const record of records)for(const node of record.addedNodes)scheduleNode(node);
+ });
+ set(lang);
+ observer.observe(document.body,{subtree:true,childList:true});
+}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",boot,{once:true});else boot();
+window.GMTC_LANGUAGE={set,get current(){return lang}};
 })();
