@@ -46,11 +46,10 @@ function indexSubtree(root){
   node=walker.nextNode();
  }
 }
-function applyIndex(){
+function applyEntries(entries){
  muted=true;
- for(let i=indexed.length-1;i>=0;i--){
-  const item=indexed[i],node=item.node;
-  if(!node.isConnected){indexed.splice(i,1);continue}
+ for(const item of entries){
+  const node=item.node;if(!node.isConnected)continue;
   const target=lang==="en"?item.en:item.id;
   const value=item.before+target+item.after;
   if(item.kind==="text"){if(node.nodeValue!==value)node.nodeValue=value}
@@ -58,12 +57,17 @@ function applyIndex(){
  }
  muted=false;
 }
+function applyIndex(){
+ for(let i=indexed.length-1;i>=0;i--)if(!indexed[i].node.isConnected)indexed.splice(i,1);
+ applyEntries(indexed);
+}
 function scheduleIndex(node){
  pending.add(node);
  if(!flushScheduled){flushScheduled=true;requestAnimationFrame(()=>{
   flushScheduled=false;const batch=Array.from(pending);pending.clear();
+  const start=indexed.length;
   for(const item of batch)indexSubtree(item);
-  applyIndex();
+  if(indexed.length>start)applyEntries(indexed.slice(start));
  })}
 }
 function mount(){
